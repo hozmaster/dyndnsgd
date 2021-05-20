@@ -1,0 +1,16 @@
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Internet Systems Consortium DHCP Server 4.4.2
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Copyright 2004-2020 Internet Systems Consortium.
+Apr 19 20:52:21 OPNsense dhcpd[25094]: All rights reserved.
+Apr 19 20:52:21 OPNsense dhcpd[25094]: For info, please visit https://www.isc.org/software/dhcp/
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Config file: /etc/dhcpd.conf
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Database file: /var/db/dhcpd.leases
+Apr 19 20:52:21 OPNsense dhcpd[25094]: PID file: /var/run/dhcpd.pid
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Internet Systems Consortium DHCP Server 4.4.2
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Copyright 2004-2020 Internet Systems Consortium.
+Apr 19 20:52:21 OPNsense dhcpd[25094]: All rights reserved.
+Apr 19 20:52:21 OPNsense dhcpd[25094]: For info, please visit https://www.isc.org/software/dhcp/
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Wrote 0 leases to leases file.
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Listening on BPF/em1/08:00:27:7c:f0:c7/192.168.1.0/24
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Sending on   BPF/em1/08:00:27:7c:f0:c7/192.168.1.0/24
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Sending on   Socket/fallback/fallback-net
+Apr 19 20:52:21 OPNsense dhcpd[25094]: Server starting service.

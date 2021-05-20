@@ -1,0 +1,47 @@
+<model>
+    <mount>//OPNsense/DynDNSGD/domains</mount>
+    <description>
+        the OPNsense DynamicDNS mount and model for the domains-view.
+    </description>
+    <version>0.1.0</version>
+    <items>
+        <domains>
+            <domain type="ArrayField">
+                <id type="UniqueIdField">
+                    <Required>N</Required>
+                </id>
+                <enabled type="BooleanField">
+                    <default>1</default>
+                    <Required>Y</Required>
+                </enabled>
+                <domain type="TextField">
+                    <default></default>
+                    <Required>Y</Required>
+                </domain>
+                <account type="OptionField">
+                    <default>GoDaddy</default>
+                    <OptionValues>
+                        <auto>GoDaddy</auto>
+                    </OptionValues>
+                    <Required>Y</Required>
+                </account>
+                <interface type="InterfaceField">
+                    <Required>Y</Required>
+                    <multiple>N</multiple>
+                    <default>wan</default>
+                    <filters>
+                        <enable>/^(?!0).*$/</enable>
+                    </filters>
+                </interface>
+                <description type="TextField">
+                    <default></default>
+                    <Required>N</Required>
+                </description>
+                <at-record  type="BooleanField">
+                    <default>1</default>
+                    <Required>N</Required>
+                </at-record>
+            </domain>
+        </domains>
+    </items>
+</model>

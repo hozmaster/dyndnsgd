@@ -1,0 +1,13 @@
+<!--
+  ~ Copyright (c) 2021.  Olli-Pekka Wallin All rights reserved
+  -->
+<menu>
+    <!-- Plugin Dyndns GD menu -->
+    <Services>
+        <DynDNSGD cssClass="fa fa-tags">
+            <Accounts url="/ui/dyndnsgd/accounts/index" order="10"/>
+            <Domains url="/ui/dyndnsgd/domains/index" order="20"/>
+            <GeneralLog VisibleName="Log file" order="30" url="/ui/diagnostics/log/dyndnsgd"/>
+        </DynDNSGD>
+    </Services>
+</menu>
