@@ -13,4 +13,13 @@ Current functionality of dynamic dns in OPNSense platform is quite limited and w
 
 Status : Tech preview.
 
-Only part what currenlty work is frontend side. User can create and edit and account and domains in their respective views. Data is savved to the internal database whet OPNSense platform offers.
+Only frontend side is work currenyly.  User can create and edit and account and domains in their respective views. Data is savved to the internal database whet OPNSense platform offers.
+
+## GOALS
+
+This plugin should be able to :
+
+* Support to add, edit, delete accounts (v.0.9.0).
+* Support to add,edit, delete and disable/enable domains (v.0.9.0).
+* Suport add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
+* Log activity
