@@ -7,7 +7,7 @@ This plugin allows you to update public ip address to dns service provider when 
 
 ## WHY
 
-Current functionality of dynamic dns in OPNSense platform is quite limited and will handle all most popular dbns service providers.
+Current functionality of dynamic dns in OPNSense platform is quite limited and will handle all most popular dns service providers.
 
 ## STATUS
 
