@@ -13,7 +13,7 @@ Current functionality of dynamic dns in OPNSense platform is quite limited and w
 
 Status : Tech preview.
 
-Only frontend side is work currenyly.  User can create and edit and account and domains in their respective views. Data is saved to the internal database whet OPNSense platform offers.
+Only frontend side is works currently.  User can create and edit and account and domains in their respective views. Data is saved to the internal database whet OPNSense platform offers.
 
 ## GOALS
 
