@@ -1,15 +1,15 @@
 
-#WHAT
+## WHAT
 
 GoDaddy specific Dynamic DNS plugin for OPNsense
 
 This plugin allows you to update public ip address to dns service provider when it's changed by ISP. This plugin will be at first GoDaddy specific, it will be handle all settings what user can do their via web page. 
 
-#WHY
+## WHY
 
 Current functionality of dynamic dns in OPNSense platform is quite limited and will handle all most popular dbns service providers.
 
-#STATUS
+## STATUS
 
 Status : Tech preview.
 
