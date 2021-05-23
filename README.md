@@ -21,5 +21,5 @@ This plugin should be able to :
 
 * Support to add, edit, delete accounts (v.0.9.0).
 * Support to add,edit, delete and disable/enable domains (v.0.9.0).
-* Suport add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
+* Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
 * Log activity
