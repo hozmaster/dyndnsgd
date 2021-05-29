@@ -5,15 +5,16 @@ All notable changes to this project will be documented in this file.
 
 ### KNOWN ISSUES
 
-- Backend is not yet supported.
-- Logging is not yet supported.
-
 ### Added
+
+None
 
 ### Changed
 
 ### Fixed
 
+None
+    
 ## 0.2.7 [Unreleased] - yyyy-mm-dd
 
 ### KNOWN ISSUES
@@ -23,9 +24,22 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+N/A
+
 ### Changed
 
-- Remove edit buttons from both views (Account, Domains)
+Remove Edit-buttons from both views (Account, Domains)
+
+Account dialog :
+- Command buttons for Edit and Delete actions added for account row
+- Delete button from bottom of grid was removed.
+- Tooltip was added to the Add-button.
+- Added data formatter to the Staging-column.
+
+Domain dialog :
+- Command buttons for Edit and Delete actions added for account row
+- Delete button from bottom of grid was removed.
+- Tooltip was added to the Add-button.
 
 ### Fixed
 
