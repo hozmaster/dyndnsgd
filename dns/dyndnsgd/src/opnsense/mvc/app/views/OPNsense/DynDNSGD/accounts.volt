@@ -44,11 +44,22 @@
             rowCount:[10,25,50,100,500,1000],
             url: '/api/dyndnsgd/accounts/search',
             formatters: {
-                 "rowtoggle": function (column, row) {
+                "commands": function (column, row) {
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                },
+                "rowtoggle": function (column, row) {
                     if (parseInt(row[column.id], 2) == 1) {
                         return "<span style=\"cursor: pointer;\" class=\"fa fa-check-square-o command-toggle\" data-value=\"1\" data-row-id=\"" + row.uuid + "\"></span>";
                     } else {
                         return "<span style=\"cursor: pointer;\" class=\"fa fa-square-o command-toggle\" data-value=\"0\" data-row-id=\"" + row.uuid + "\"></span>";
+                    }
+                },
+                "account-type": function (column, row) {
+                    if (row.staging == "0" || row.staging == undefined) {
+                        return "{{ lang._('No') }}";
+                    } else {
+                        return "{{ lang._('Yes') }}";
                     }
                 }
             } // formatter
@@ -143,6 +154,59 @@
             var editDlg = $(this).attr('data-editDialog');
             var gridId = $(this).attr('id');
 
+            // edit item
+            grid_accounts.find(".command-edit").on("click", function(e)
+            {
+                if (editDlg != undefined && gridParams['get'] != undefined) {
+                    var uuid = $(this).data("row-id");
+                    var urlMap = {};
+                    urlMap['frm_' + editDlg] = gridParams['get'] + uuid;
+                    mapDataToFormUI(urlMap).done(function () {
+                        // update selectors
+                        formatTokenizersUI();
+                        $('.selectpicker').selectpicker('refresh');
+                        // clear validation errors (if any)
+                        clearFormValidation('frm_' + editDlg);
+                    });
+
+                    // show dialog for pipe edit
+                    $('#'+editDlg).modal({backdrop: 'static', keyboard: false});
+                    // define save action
+                    $("#btn_"+editDlg+"_save").unbind('click').click(function(){
+                        if (gridParams['set'] != undefined) {
+                            saveFormToEndpoint(url=gridParams['set']+uuid,
+                                formid='frm_' + editDlg, callback_ok=function(){
+                                    $("#"+editDlg).modal('hide');
+                                    std_bootgrid_reload(gridId);
+                                }, true);
+                        } else {
+                            console.log("[grid] action set missing")
+                        }
+                    });
+                } else {
+                    console.log("[grid] action get or data-editDialog missing")
+                }
+            });
+
+            // delete item
+            grid_accounts.find(".command-delete").on("click", function(e)
+            {
+                if (gridParams['del'] != undefined) {
+                    var uuid=$(this).data("row-id");
+                    stdDialogConfirm('{{ lang._('Confirm removal') }}',
+                        '{{ lang._('Do you want to remove the selected item?') }}',
+                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
+                        ajaxCall(url=gridParams['del'] + uuid,
+                            sendData={},callback=function(data,status){
+                                // reload grid after delete
+                                $("#"+gridId).bootgrid("reload");
+                            });
+                    });
+                } else {
+                    console.log("[grid] action del missing")
+                }
+            });
+
             // toggle item, enable or disable domain
             grid_accounts.find(".command-toggle").on("click", function(e)
             {
@@ -177,8 +241,9 @@
                 <th data-column-id="name" data-width="8em" data-type="string">{{ lang._('Name') }}</th>
                 <th data-column-id="service_provider" data-width="6em" data-type="string" data-visible="true">{{ lang._('Service') }}</th>
                 <th data-column-id="description" data-width="8em" data-type="string">{{ lang._('Description') }}</th>
-                <th data-column-id="staging" data-width="7em" data-sortable="false">{{ lang._('Staging') }}</th>
-                <th data-column-id="uuid" data-type="string" data-width="6em" data-identifier="true"  data-visible="false">{{ lang._('ID') }}</th>
+                <th data-column-id="staging" data-width="3em" data-sortable="false" data-formatter="account-type" >{{ lang._('Staging') }}</th>
+                <th data-column-id="commands" data-width="5em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
+                <th data-column-id="uuid" data-type="string" data-width="6em" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -187,8 +252,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                    <button data-action="delete" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
+                    <button data-action="add" type="button" data-toggle="tooltip" data-placement="right" title={{ lang._('Add') }} class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
                 </td>
             </tr>
         </tfoot>

@@ -18,11 +18,18 @@
                     <default></default>
                     <Required>Y</Required>
                 </domain>
-                <account type="OptionField">
-                    <default>GoDaddy</default>
-                    <OptionValues>
-                        <auto>GoDaddy</auto>
-                    </OptionValues>
+                <account type="ModelRelationField">
+                    <Model>
+                        <accounts>
+                            <source>OPNsense.DynDNSGD.Accounts</source>
+                            <items>accounts.account</items>
+                            <display>name</display>
+                            <filters>
+                                <enabled>/^(?!0).*$/</enabled>
+                            </filters>
+                        </accounts>
+                    </Model>
+                    <multiple>N</multiple>
                     <Required>Y</Required>
                 </account>
                 <interface type="InterfaceField">
