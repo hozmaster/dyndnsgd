@@ -15,7 +15,7 @@ None
 
 None
     
-## 0.2.7 [Unreleased] - yyyy-mm-dd
+## 0.2.7 [released] - 2021-05-29
 
 ### KNOWN ISSUES
 
