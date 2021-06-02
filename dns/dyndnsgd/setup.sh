@@ -6,6 +6,7 @@ SOURCE_BASE_PATH=src/opnsense/mvc/app
 rm -r $TARGET_BASE_PATH/models/OPNsense/DynDNSGD
 rm -r $TARGET_BASE_PATH/views/OPNsense/DynDNSGD
 rm -r $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD
+rm -r $TARGET_BASE_PATH/library/OPNsense/DynDNSGD
 
 #
 if [ ! -d $TARGET_BASE_PATH/models/OPNsense/DynDNSGD ]; then
@@ -26,6 +27,11 @@ if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD ]; then
   mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
 fi
 
+# library
+if [ ! -d $TARGET_BASE_PATH/library/OPNsense/DynDNSGD ]; then
+  mkdir $TARGET_BASE_PATH/library/OPNsense/DynDNSGD
+fi
+
 cp -v $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/ACL/* $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/ACL
 cp -v $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/Menu/* $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/Menu
 
@@ -41,3 +47,6 @@ cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/co
 cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/forms/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/forms
 cp helpers/dyndnsgd.log /var/log
 cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
+
+## library
+cp -v $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
