@@ -21,7 +21,7 @@ None
 
 ### Added
 
-None
+- Log view show actual content of log data
 
 ### Changed
 
@@ -31,9 +31,7 @@ Added Library also to the setup.sh-files
 ### Fixed
 
 None
-
-
-    
+                                                                                        
 ## 0.2.7 [released] - 2021-05-29
 
 ### KNOWN ISSUES
