@@ -56,12 +56,13 @@ class AccountsController extends ApiMutableModelControllerBase
 
     public function delAction($uuid)
     {
-        Utils::log("Going to delete account : " . $uuid);
+//        Utils::log("Going to delete account : " . $uuid);
         return $this->delBase('accounts.account', $uuid);
     }
 
     public function toggleAction($uuid, $enabled = null)
     {
+        $this->getLogger()->log("DynDNSGD: status of item has been changed");
         return $this->toggleBase('accounts.account', $uuid);
     }
 

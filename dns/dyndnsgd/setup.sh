@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# This file is for helping development work.
+
 TARGET_BASE_PATH=/usr/local/opnsense/mvc/app
 SOURCE_BASE_PATH=src/opnsense/mvc/app
 
@@ -50,3 +52,6 @@ cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/co
 
 ## library
 cp -v $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
+
+## service
+cp -v src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf  /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
