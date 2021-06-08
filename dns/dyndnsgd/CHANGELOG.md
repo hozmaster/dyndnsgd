@@ -22,6 +22,7 @@ None
 ### Added
 
 - Log view show actual content of log data
+- Service support (kind of)
 
 ### Changed
 
