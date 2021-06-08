@@ -26,17 +26,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDNSGD;
+namespace OPNsense\DynDNSGD\Validation;
 
-/**
- * Class LogsController
- * @package OPNsense\DynDNSGD
- */
-class LogsController extends \OPNsense\Base\IndexController
+use OPNsense\DynDNSGD\ValidationInterface;
+
+class DnsGd implements ValidationInterface
 {
-    public function indexAction()
+    public function prepare()
     {
-        // choose template
-        $this->view->pick('OPNsense/DynDNSGD/logs');
+        // TODO: Implement prepare() method.
+    }
+
+    public function cleanup()
+    {
+        // TODO: Implement cleanup() method.
     }
 }

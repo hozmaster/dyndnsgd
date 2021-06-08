@@ -27,16 +27,21 @@
  */
 
 namespace OPNsense\DynDNSGD;
-
 /**
- * Class LogsController
- * @package OPNsense\DynDNSGD
+ * Interface for Let's Encrypt validation methods
+ * @package OPNsense\Backup
  */
-class LogsController extends \OPNsense\Base\IndexController
+interface ValidationInterface
 {
-    public function indexAction()
-    {
-        // choose template
-        $this->view->pick('OPNsense/DynDNSGD/logs');
-    }
+    /**
+     * add configuration that is required only for this specific validation method
+     * @return bool
+     */
+    public function prepare();
+
+    /**
+     * cleanup tasks that should run after performing the certificate validation
+     * @return bool
+     */
+    public function cleanup();
 }
