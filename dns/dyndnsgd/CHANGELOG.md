@@ -14,7 +14,25 @@ None
 ### Fixed
 
 None
-    
+
+## 0.3.0 [Unreleased] - yyyy-mm-dd
+
+### KNOWN ISSUES
+
+### Added
+
+- Log view show actual content of log data
+- Service support (kind of)
+
+### Changed
+
+the BSD-2 License added to php files, previous licences removed from use.
+Added Library also to the setup.sh-files
+
+### Fixed
+
+None
+                                                                                        
 ## 0.2.7 [released] - 2021-05-29
 
 ### KNOWN ISSUES
