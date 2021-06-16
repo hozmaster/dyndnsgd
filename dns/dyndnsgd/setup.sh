@@ -9,6 +9,7 @@ rm -r $TARGET_BASE_PATH/models/OPNsense/DynDNSGD
 rm -r $TARGET_BASE_PATH/views/OPNsense/DynDNSGD
 rm -r $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD
 rm -r $TARGET_BASE_PATH/library/OPNsense/DynDNSGD
+rm -r /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 
 #
 if [ ! -d $TARGET_BASE_PATH/models/OPNsense/DynDNSGD ]; then
@@ -27,6 +28,11 @@ if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD ]; then
   mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD
   mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/forms
   mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
+fi
+
+# scripts
+if [ ! -d /usr/local/opnsense/scripts/OPNsense/DynDNSGD ]; then
+   mkdir /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 fi
 
 # library
@@ -52,6 +58,10 @@ cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/co
 
 ## library
 cp -v $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
+chmod a+x $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/account.php
+
+## script
+cp -v src/opnsense/scripts/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 
 ## service
 cp -v src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf  /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf

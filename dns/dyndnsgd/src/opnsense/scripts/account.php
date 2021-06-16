@@ -1,3 +1,4 @@
+#!/usr/local/bin/php
 <?php
 
 /*
@@ -26,52 +27,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDnsGD\Api;
+// Supported modes and their help text
+const MODES = [
+    'verify' => [
+        'description' => 'Verify status of the account.',
+    ]
+];
 
-use OPNsense\AcmeClient\Utils;
-use OPNsense\Base\ApiMutableModelControllerBase;
-use OPNsense\Core\Backend;
-
-class AccountsController extends ApiMutableModelControllerBase
+function help()
 {
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Accounts';
+}
 
-    public function getAction($uuid = null)
-    {
-        $this->sessionClose();
-        return $this->getBase('account', 'accounts.account', $uuid);
+function validateMode($mode)
+{
+    $return = false;
+    foreach (MODES as $name => $options) {
+        if ($mode === $name) {
+            $return = true;
+            break;
+        }
+    }
+    return $return;
+}
+
+function main()
+{
+    // Parse command line arguments
+    syslog(LOG_NOTICE, "DynDNSGD: account.php script called");
+
+    $options = getopt('h', ['account:', 'help', 'mode:']);
+    if (empty($options) || isset($options['h']) || isset($options['help']) ||
+        (isset($options['mode']) and !validateMode($options['mode']))) {
+        // Not enough or invalid arguments specified.
+        help();
     }
 
-    public function addAction()
-    {
-        return $this->addBase('account', 'accounts.account');
-    }
-
-    public function updateAction($uuid)
-    {
-        return $this->setBase('account', 'accounts.account', $uuid);
-    }
-
-    public function delAction($uuid)
-    {
-        return $this->delBase('accounts.account', $uuid);
-    }
-
-    public function toggleAction($uuid, $enabled = null)
-    {
-        $this->verifyAccount();
-        return $this->toggleBase('accounts.account', $uuid);
-    }
-
-    public function searchAction()
-    {
-        return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
-    }
-
-    private function verifyAccount ()
-    {
-        $backend = new Backend();
-        $response = $backend->configdRun("dyndnsgd verify-account");
+    if ($options['mode'] === 'verify') {
+        syslog(LOG_NOTICE, "DynDNSGD: 'verify account called.'");
     }
 }
+
+// Run!
+main();
