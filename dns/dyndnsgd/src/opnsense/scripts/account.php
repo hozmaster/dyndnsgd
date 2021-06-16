@@ -53,8 +53,6 @@ function validateMode($mode)
 function main()
 {
     // Parse command line arguments
-    syslog(LOG_NOTICE, "DynDNSGD: account.php script called");
-
     $options = getopt('h', ['account:', 'help', 'mode:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
