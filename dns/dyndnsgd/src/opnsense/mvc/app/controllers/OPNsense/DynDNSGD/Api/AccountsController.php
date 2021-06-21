@@ -60,7 +60,6 @@ class AccountsController extends ApiMutableModelControllerBase
 
     public function toggleAction($uuid, $enabled = null)
     {
-        $this->verifyAccount();
         return $this->toggleBase('accounts.account', $uuid);
     }
 
@@ -69,7 +68,7 @@ class AccountsController extends ApiMutableModelControllerBase
         return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
     }
 
-    private function verifyAccount ()
+    public function verifyAction ($uuid)
     {
         $backend = new Backend();
         $response = $backend->configdRun("dyndnsgd verify-account");
