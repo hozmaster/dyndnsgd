@@ -68,9 +68,19 @@ class AccountsController extends ApiMutableModelControllerBase
         return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
     }
 
-    public function verifyAction ($uuid)
+    public function verifyAction($uuid)
     {
         $backend = new Backend();
-        $response = $backend->configdRun("dyndnsgd verify-account");
+        if ($uuid != null) {
+            $response = $backend->configdRun("dyndnsgd verify-account ${uuid}");
+            return array("response" => $response);
+            //            $node = $mdlAcme->getNodeByReference('accounts.account.' . $uuid);
+            //            if ($node != null) {
+            //                $backend = new Backend();
+            //                $response = $backend->configdRun("acmeclient register-account ${uuid}");
+            //                return array("response" => $response);
+            //            }
+        }
+
     }
 }
