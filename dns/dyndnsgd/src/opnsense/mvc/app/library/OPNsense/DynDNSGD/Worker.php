@@ -32,9 +32,6 @@ use Common;
 
 class Worker extends Common
 {
-    private $staging_url = 'api.ote-godaddy.com';
-    private $production_url = "api.godaddy.com";
-
     public function __construct($api_key, $api_secret)
     {
 //        $dms = $this->curl_get_domains_request($api_key, $api_secret);

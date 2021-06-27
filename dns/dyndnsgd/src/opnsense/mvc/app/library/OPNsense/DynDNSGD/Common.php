@@ -32,6 +32,9 @@ abstract class Common
     protected string $api_key;
     protected string $api_secret;
 
+    protected $production_url = "api.godaddy.com";
+    protected $staging_url = 'api.ote-godaddy.com';
+
     protected function do_godaddy_get_request($url, $header)
     {
         //open connection
