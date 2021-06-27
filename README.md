@@ -30,5 +30,5 @@ Domains :
 
 GoDaddy :
 
-* Fecth all aquired domains from the GoDaddy service
+* Fetch all aquired domains from the GoDaddy service
 * Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
