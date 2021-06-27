@@ -19,7 +19,16 @@ Only frontend side is works currently.  User can create and edit and account and
 
 This plugin should be able to :
 
-* Support to add, edit, delete accounts (v.0.9.0).
-* Support to add,edit, delete and disable/enable domains (v.0.9.0).
-* Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
+Account : 
+* Support to add, edit, delete accounts (v.0.9.0). Enable, disable account.
+* Support to fetch all owned domains from service (v.0.9.0).
+* Check and update status of domains repeatedly owned by account
 * Log activity
+
+Domains :
+* Ability to add subdomains and specified parameters to it.
+
+GoDaddy :
+
+* Fecth all aquired domains from the GoDaddy service
+* Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
