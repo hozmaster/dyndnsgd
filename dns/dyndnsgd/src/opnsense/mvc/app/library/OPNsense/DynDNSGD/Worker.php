@@ -35,37 +35,28 @@ class Worker extends Common
     private $staging_url = 'api.ote-godaddy.com';
     private $production_url = "api.godaddy.com";
 
-    public function __construct(string $uuid)
+    public function __construct($api_key, $api_secret)
     {
-        // Store basic information
-        $this->uuid = $uuid;
+//        $dms = $this->curl_get_domains_request($api_key, $api_secret);
+//        // check if error code
+//        if (isset($domains['code'])) {
+//            $msg = explode(":", $domains['message']);
+//            echo 'error code ' . $msg . PHP_EOL;
+//        } else {
+//            foreach ($dms as $dm) {
+//                echo 'Domain : ' . $dm['domain'] . ', expires ' . $dm['expires'] . PHP_EOL;
+//            }
+//        }
     }
 
-    public function verifyAccount()
+    public function curl_get_domains_request($status='ACTIVE')
     {
+        $url = "https://api.godaddy.com/v1/domains?statuses=$status";
+        // set your key and secret
+        $header = array(
+            "Authorization: sso-key $this->api_key:$this->api_secret"
+        );
+        return $this->do_godaddy_get_request($url, $header);
     }
 
-    // send request to
-    private function sendRequest()
-    {
-
-        //        $url = 'http://server.com/path';
-        //        $data = array('key1' => 'value1', 'key2' => 'value2');
-        //
-        //        // use key 'http' even if you send the request to https://...
-        //        $options = array(
-        //            'http' => array(
-        //                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-        //                'method' => 'POST',
-        //                'content' => http_build_query($data)
-        //            )
-        //        );
-        //
-        //        $context = stream_context_create($options);
-        //        $result = file_get_contents($url, false, $context);
-        //        if ($result === FALSE) {
-        //            echo "failed";
-        //        }
-
-    }
 }
