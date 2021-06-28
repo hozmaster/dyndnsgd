@@ -32,18 +32,26 @@ use Common;
 
 class Worker extends Common
 {
-    public function __construct($api_key, $api_secret)
+    public function __construct($uuid)
     {
-//        $dms = $this->curl_get_domains_request($api_key, $api_secret);
-//        // check if error code
-//        if (isset($domains['code'])) {
-//            $msg = explode(":", $domains['message']);
-//            echo 'error code ' . $msg . PHP_EOL;
-//        } else {
-//            foreach ($dms as $dm) {
-//                echo 'Domain : ' . $dm['domain'] . ', expires ' . $dm['expires'] . PHP_EOL;
-//            }
-//        }
+        // Store basic information
+        $this->uuid = $uuid;
+
+        //        $dms = $this->curl_get_domains_request($api_key, $api_secret);
+        //        // check if error code
+        //        if (isset($domains['code'])) {
+        //            $msg = explode(":", $domains['message']);
+        //            echo 'error code ' . $msg . PHP_EOL;
+        //        } else {
+        //            foreach ($dms as $dm) {
+        //                echo 'Domain : ' . $dm['domain'] . ', expires ' . $dm['expires'] . PHP_EOL;
+        //            }
+        //        }
+    }
+
+    public function some_empty_method()
+    {
+        return $this->uuid;
     }
 
     public function curl_get_domains_request($status='ACTIVE')

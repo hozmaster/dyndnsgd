@@ -33,6 +33,9 @@ use OPNsense\DynDNSGD\Worker;
 const MODES = [
     'verify' => [
         'description' => 'Verify status of the account.',
+    ],
+    'account' => [
+        'description' => 'Account actions',
     ]
 ];
 
@@ -55,7 +58,7 @@ function validateMode($mode)
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h', ['account:', 'help', 'mode:']);
+    $options = getopt('h', ['account:', 'help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         // Not enough or invalid arguments specified.
@@ -63,10 +66,11 @@ function main()
     }
 
     if ($options['mode'] === 'verify') {
-        syslog(LOG_NOTICE, "DynDNSGD: 'verify account called.'");
-        $worker = new Worker($options['cert']);
-        $worker->verifyAccount();
-    }  else {
+        //        $worker = new Worker($options['uuid']);
+        //        $response = $worker->some_empty_method();
+        $msg = "DynDNSGD: " . $options['uuid'];
+        syslog (LOG_NOTICE, $msg);
+    } else {
         help();
     }
 }

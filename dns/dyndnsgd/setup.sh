@@ -62,6 +62,7 @@ chmod a+x $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/account.php
 
 ## script
 cp -v src/opnsense/scripts/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
+chmod a+x /usr/local/opnsense/scripts/OPNsense/DynDNSGD/*.php
 
 ## service
 cp -v src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf  /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
