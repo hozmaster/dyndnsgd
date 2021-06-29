@@ -27,6 +27,7 @@
  */
 
 namespace OPNsense\DynDNSGD;
+
 /**
  * Interface for Let's Encrypt validation methods
  * @package OPNsense\Backup

@@ -58,7 +58,6 @@ cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/co
 
 ## library
 cp -v $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
-chmod a+x $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/account.php
 
 ## script
 cp -v src/opnsense/scripts/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD

@@ -1,4 +1,7 @@
 <?php
+
+namespace OPNsense\DynDNSGD;
+
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -25,12 +28,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
+
 abstract class Common
 {
-    protected string $uuid;                # config object uuid
+    protected $uuid;                # config object uuid
 
-    protected string $api_key;
-    protected string $api_secret;
+    protected $api_key;
+    protected $api_secret;
 
     protected $production_url = "api.godaddy.com";
     protected $staging_url = 'api.ote-godaddy.com';

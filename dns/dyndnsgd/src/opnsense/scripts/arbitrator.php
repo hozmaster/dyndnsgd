@@ -27,6 +27,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+@include_once('config.inc');
+@include_once('certs.inc');
+@include_once('util.inc');
+
 use OPNsense\DynDNSGD\Worker;
 
 // Supported modes and their help text
@@ -66,9 +70,9 @@ function main()
     }
 
     if ($options['mode'] === 'verify') {
-        //        $worker = new Worker($options['uuid']);
-        //        $response = $worker->some_empty_method();
-        $msg = "DynDNSGD: " . $options['uuid'];
+        $worker = new Worker($options['uuid']);
+        $response = $worker->some_empty_method();
+        $msg = "DynDNSGD: " . $response;
         syslog (LOG_NOTICE, $msg);
     } else {
         help();

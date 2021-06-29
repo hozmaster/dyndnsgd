@@ -28,15 +28,14 @@ namespace OPNsense\DynDNSGD;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-use Common;
 
 class Worker extends Common
 {
     public function __construct($uuid)
     {
-        // Store basic information
         $this->uuid = $uuid;
 
+        //
         //        $dms = $this->curl_get_domains_request($api_key, $api_secret);
         //        // check if error code
         //        if (isset($domains['code'])) {
