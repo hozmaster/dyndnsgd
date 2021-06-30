@@ -236,8 +236,8 @@
             <tr>
                 <th data-column-id="enabled" data-width="4em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
                 <th data-column-id="domain" data-width="8em" data-type="string">{{ lang._('Domain') }}</th>
+                <th data-column-id="account" data-width="7em" data-sortable="yes" data-visible="true">{{ lang._('Account') }}</th>
                 <th data-column-id="description" data-width="7em" data-sortable="yes">{{ lang._('Description') }}</th>
-                <th data-column-id="account" data-width="7em" data-sortable="yes" data-visible="false">{{ lang._('Account') }}</th>
                 <th data-column-id="interface" data-width="4em" data-sortable="yes">{{ lang._('Interface') }}</th>
                 <th data-column-id="commands" data-width="5em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
                 <th data-column-id="uuid" data-width="6em" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
