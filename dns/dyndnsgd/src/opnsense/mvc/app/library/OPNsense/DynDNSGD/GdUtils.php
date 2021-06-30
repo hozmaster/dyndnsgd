@@ -30,7 +30,7 @@ namespace OPNsense\DynDNSGD;
 
 @include_once("util.inc");
 
-class Utils
+class GdUtils
 {
 
     /**

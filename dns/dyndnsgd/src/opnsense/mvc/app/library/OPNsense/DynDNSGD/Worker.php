@@ -28,6 +28,7 @@ namespace OPNsense\DynDNSGD;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+use OPNsense\Core\Config;
 
 class Worker extends Common
 {
@@ -50,10 +51,16 @@ class Worker extends Common
 
     public function some_empty_method()
     {
-        return $this->uuid;
+        $path = self::ACCOUNT_MODEL_PATH;
+        $loaded = $this->loadAccount($path, $this->uuid);
+        if ($loaded) {
+            return $this->getName();
+        } else {
+            return $this->uuid;
+        }
     }
 
-    public function curl_get_domains_request($status='ACTIVE')
+    public function curl_get_domains_request($status = 'ACTIVE')
     {
         $url = "https://api.godaddy.com/v1/domains?statuses=$status";
         // set your key and secret

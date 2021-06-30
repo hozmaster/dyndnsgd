@@ -28,7 +28,7 @@ namespace OPNsense\DynDNSGD;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
+use OPNsense\DynDNSGD\Accounts;
 
 abstract class Common
 {
@@ -36,9 +36,48 @@ abstract class Common
 
     protected $api_key;
     protected $api_secret;
+    protected $mdl_account;
 
     protected $production_url = "api.godaddy.com";
     protected $staging_url = 'api.ote-godaddy.com';
+
+    private $config  = null;
+
+    protected const ACCOUNT_MODEL_PATH = 'accounts.account';
+
+    protected function getId()
+    {
+        return (string)$this->config->id;
+    }
+
+    protected function getName()
+    {
+        return (string)$this->config->name;
+    }
+
+    protected function getKey()
+    {
+        return (string)$this->config->key;
+    }
+
+    protected function getSecretKey()
+    {
+        return (string)$this->config->key;
+    }
+
+    public function loadAccount(string $path, string $uuid)
+    {
+        // Get config object
+        $model = new Accounts();
+        $obj = $model->getNodeByReference("${path}.${uuid}");
+        if ($obj == null) {
+            GdUtils::log_error("config of type ${path} not found: ${uuid}");
+            return false;
+        }
+        $this->mdl_account = $model;
+        $this->config = $obj;
+        return true;
+    }
 
     protected function do_godaddy_get_request($url, $header)
     {
