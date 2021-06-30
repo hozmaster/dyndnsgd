@@ -62,7 +62,7 @@ abstract class Common
 
     protected function getSecretKey()
     {
-        return (string)$this->config->key;
+        return (string)$this->config->secret_key;
     }
 
     public function loadAccount(string $path, string $uuid)
