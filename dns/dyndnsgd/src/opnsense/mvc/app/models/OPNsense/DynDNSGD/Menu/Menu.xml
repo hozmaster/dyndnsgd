@@ -5,7 +5,7 @@
             <Accounts url="/ui/dyndnsgd/accounts/index" order="10"/>
             <Domains url="/ui/dyndnsgd/domains/index" order="20"/>
             <Logs VisibleName="Log Files" order="30" url="/ui/dyndnsgd/logs">
-                <GeneralLog VisibleName="General Log" order="30" url="/ui/diagnostics/log/dyndnsgd"/>
+                <SystemLog VisibleName="System Log" order="30" url="/ui/dyndnsgd/logs"/>
             </Logs>
         </DynDNSGD>
     </Services>

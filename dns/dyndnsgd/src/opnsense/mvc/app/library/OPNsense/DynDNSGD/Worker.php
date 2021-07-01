@@ -51,9 +51,10 @@ class Worker extends Common
 
     public function some_empty_method()
     {
-        $path = self::ACCOUNT_MODEL_PATH;
+        $path = self::ACCOUNT_CONFIG_PATH;
         $loaded = $this->loadAccount($path, $this->uuid);
         if ($loaded) {
+            GdUtils::log('name of account ' . $this->getName());
             return $this->getName();
         } else {
             return $this->uuid;

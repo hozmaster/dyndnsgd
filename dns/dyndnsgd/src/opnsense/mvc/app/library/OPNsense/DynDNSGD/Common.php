@@ -43,7 +43,7 @@ abstract class Common
 
     private $config  = null;
 
-    protected const ACCOUNT_MODEL_PATH = 'accounts.account';
+    protected const ACCOUNT_CONFIG_PATH = 'accounts.account';
 
     protected function getId()
     {

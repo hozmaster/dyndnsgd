@@ -53,7 +53,6 @@ cp -v $SOURCE_BASE_PATH/views/OPNsense/DynDNSGD/*.volt $TARGET_BASE_PATH/views/O
 ## controllers
 cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/
 cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/forms/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/forms
-cp helpers/dyndnsgd.log /var/log
 cp -v $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
 
 ## library
