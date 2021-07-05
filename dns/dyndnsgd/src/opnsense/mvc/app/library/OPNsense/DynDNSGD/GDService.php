@@ -53,7 +53,7 @@ class GDService
                 $status = 'Request was malformed';
                 break;
             case 401:
-                $status = '	Authentication info not sent or invalid';
+                $status = 'Authentication info not sent or invalid';
                 break;
             case 403:
                 $status = "Authenticated user is not allowed access";
@@ -68,6 +68,7 @@ class GDService
                 $status = "Internal server error";
                 break;
         }
+        return $status;
     }
 
     protected function do_godaddy_get_request($url, $header)
