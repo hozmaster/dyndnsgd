@@ -33,13 +33,19 @@
 
 use OPNsense\DynDNSGD\Worker;
 
-// Supported modes and their help text
-const MODES = [
+
+const EXAMPLES = <<<TXT
+- Fetch all domains of account
+  arbitrator.php --domains fetch_domains --uuid 00000000-0000-0000-0000-000000000000
+TXT;
+
+// Supported account actions and their help text
+const ACTIONS = [
     'verify' => [
         'description' => 'Verify status of the account.',
     ],
-    'account' => [
-        'description' => 'Account actions',
+    'fetch_domnains' => [
+        'description' => 'Fetch all domains for account',
     ]
 ];
 
@@ -50,7 +56,7 @@ function help()
 function validateMode($mode)
 {
     $return = false;
-    foreach (MODES as $name => $options) {
+    foreach (ACTIONS as $name => $options) {
         if ($mode === $name) {
             $return = true;
             break;
@@ -68,15 +74,22 @@ function main()
         // Not enough or invalid arguments specified.
         help();
     }
-
+    if ($options['domains'] === 'fetch_domains') {
+        log_notice("fetch all domains for account");
+        // $worker = new Worker($options['uuid']);
+        // $response = $worker->some_empty_method();
+    }
     if ($options['mode'] === 'verify') {
         $worker = new Worker($options['uuid']);
-        $response = $worker->some_empty_method();
-        $msg = "DynDNSGD: " . $response;
-        syslog (LOG_NOTICE, $msg);
+        log_notice($worker->some_empty_method());
     } else {
         help();
     }
+}
+
+function log_notice($msg)
+{
+    syslog(LOG_NOTICE, "DynDNSGD: " . $msg);
 }
 
 // Run!

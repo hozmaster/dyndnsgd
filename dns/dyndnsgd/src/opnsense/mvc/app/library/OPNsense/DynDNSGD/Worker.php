@@ -61,8 +61,21 @@ class Worker extends Common
         }
     }
 
-    public function curl_get_domains_request($status = 'ACTIVE')
+    public function fetch_all_domains($status = 'ACTIVE')
     {
+
+        $path = self::ACCOUNT_CONFIG_PATH;
+        $loaded = $this->loadAccount($path, $this->uuid);
+        if ($loaded) {
+            $gd_key = $this->getKey();
+            $gd_secret = $this->getSecretKey();
+        //            GdUtils::log('name of account ' . $this->getName());
+        //            return $this->getName();
+        } else {
+            return $this->uuid;
+        }
+
+
         $url = "https://api.godaddy.com/v1/domains?statuses=$status";
         // set your key and secret
         $header = array(
