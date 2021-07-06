@@ -30,9 +30,12 @@ namespace OPNsense\DynDNSGD;
 
 class GDService
 {
-    protected $response_code;
-    protected $error_code;
-    protected $message;
+    const REQUEST_OK = 200;
+
+    private $response_code;
+    private $data;
+    private $production_url = "api.godaddy.com";
+    private $staging_url = 'api.ote-godaddy.com';
 
     public function parse_error_response($rsp)
     {
@@ -42,10 +45,15 @@ class GDService
         }
     }
 
-    private function gd_parse_response_info($ri)
+    public function get_base_url($is_test_url = false)
     {
-        $status = "";
-        switch ($ri['http_code']) {
+        $is_test_url == false ? $url = "https://$this->production_url" : $url = "https://$this->staging_url";
+        return $url;
+    }
+
+    public function gd_parse_response_info($code)
+    {
+        switch ($code) {
             case 200:
                 $status = 'Ok';
                 break;
@@ -67,11 +75,23 @@ class GDService
             case 500:
                 $status = "Internal server error";
                 break;
+            default:
+                $status = "Undefined error occur.";
         }
         return $status;
     }
 
-    protected function do_godaddy_get_request($url, $header)
+    public function get_data()
+    {
+        return $this->data;
+    }
+
+    public function get_response_code()
+    {
+        return $this->response_code;
+    }
+
+    public function do_godaddy_get_request($url, $header)
     {
         //open connection
         $ch = curl_init();
@@ -94,7 +114,8 @@ class GDService
         //close curl connection
         curl_close($ch);
         // decode and return the json response
-        return json_decode($result, true);
+        $this->data = json_decode($result, true);
+        return $this->response_code;
     }
 
 }

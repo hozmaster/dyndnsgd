@@ -81,7 +81,7 @@ function main()
     }
     if ($options['mode'] === 'verify') {
         $worker = new Worker($options['uuid']);
-        log_notice($worker->some_empty_method());
+        $worker->fetch_all_domains();
     } else {
         help();
     }

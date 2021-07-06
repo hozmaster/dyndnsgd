@@ -34,16 +34,12 @@ abstract class Common
 {
     protected $uuid;                # config object uuid
 
-    protected $api_key;
-    protected $api_secret;
     protected $mdl_account;
-
-    protected $production_url = "api.godaddy.com";
-    protected $staging_url = 'api.ote-godaddy.com';
-
-    private $config  = null;
+    protected $gd_service;
+    private $config = null;
 
     protected const ACCOUNT_CONFIG_PATH = 'accounts.account';
+
 
     protected function getId()
     {
@@ -77,29 +73,6 @@ abstract class Common
         $this->mdl_account = $model;
         $this->config = $obj;
         return true;
-    }
-
-    protected function do_godaddy_get_request($url, $header)
-    {
-        //open connection
-        $ch = curl_init();
-        $timeout = 60;
-        //set the url and other options for curl
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET'); // Values: GET, POST, PUT, DELETE, PATCH, UPDATE
-        //curl_setopt($ch, CURLOPT_POSTFIELDS, $variable);
-        //curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        //execute call and return response data.
-        $result = curl_exec($ch);
-        //close curl connection
-        curl_close($ch);
-        // decode and return the json response
-        return json_decode($result, true);
     }
 
 }

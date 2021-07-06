@@ -35,53 +35,47 @@ class Worker extends Common
     public function __construct($uuid)
     {
         $this->uuid = $uuid;
-
-        //
-        //        $dms = $this->curl_get_domains_request($api_key, $api_secret);
-        //        // check if error code
-        //        if (isset($domains['code'])) {
-        //            $msg = explode(":", $domains['message']);
-        //            echo 'error code ' . $msg . PHP_EOL;
-        //        } else {
-        //            foreach ($dms as $dm) {
-        //                echo 'Domain : ' . $dm['domain'] . ', expires ' . $dm['expires'] . PHP_EOL;
-        //            }
-        //        }
+        $this->gd_service = new GDService();
     }
 
-    public function some_empty_method()
+    public function fetch_all_domains()
+    {
+        $status = 'ACTIVE';
+        $this->fetch_all_gd_domains($status);
+    }
+
+    private function fetch_all_gd_domains($status = 'ACTIVE')
     {
         $path = self::ACCOUNT_CONFIG_PATH;
         $loaded = $this->loadAccount($path, $this->uuid);
-        if ($loaded) {
-            GdUtils::log('name of account ' . $this->getName());
-            return $this->getName();
-        } else {
-            return $this->uuid;
-        }
-    }
-
-    public function fetch_all_domains($status = 'ACTIVE')
-    {
-
-        $path = self::ACCOUNT_CONFIG_PATH;
-        $loaded = $this->loadAccount($path, $this->uuid);
-        if ($loaded) {
-            $gd_key = $this->getKey();
-            $gd_secret = $this->getSecretKey();
-        //            GdUtils::log('name of account ' . $this->getName());
-        //            return $this->getName();
-        } else {
-            return $this->uuid;
+        if (!$loaded) {
+            GdUtils::log(' Cant find account for given uuid ' . $this->uuid);
+            return false;
         }
 
-
-        $url = "https://api.godaddy.com/v1/domains?statuses=$status";
+        $base_url = $this->gd_service->get_base_url();
+        $url = "$base_url/v1/domains?statuses=$status";
         // set your key and secret
+        $api_key = $this->getKey();
+        $api_secret = $this->getSecretKey();
         $header = array(
-            "Authorization: sso-key $this->api_key:$this->api_secret"
+            "Authorization: sso-key $api_key:$api_secret"
         );
-        return $this->do_godaddy_get_request($url, $header);
+
+        $response_code = $this->gd_service->do_godaddy_get_request($url, $header);
+
+        if ($response_code == GDService::REQUEST_OK) {
+            $domains = $this->gd_service->get_data();
+            foreach ($domains as $domain) {
+                GdUtils::log(' domain  ' . $domain['domain'] . ', domainId : ' . $domain['domainId']);
+            }
+        } else {
+            GdUtils::log('Request failed with code ' . $response_code . ', ' .
+                $this->gd_service->gd_parse_response_info($response_code));
+
+        }
+        return true;
+
     }
 
 }
