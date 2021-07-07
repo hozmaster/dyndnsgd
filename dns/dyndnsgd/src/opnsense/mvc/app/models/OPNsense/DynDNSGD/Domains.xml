@@ -48,6 +48,9 @@
                     <default>1</default>
                     <Required>N</Required>
                 </at-record>
+                <domain_id type="TextField">
+                    <Required>N</Required>
+                </domain_id>
             </domain>
         </domains>
     </items>
