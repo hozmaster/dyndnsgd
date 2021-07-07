@@ -66,9 +66,12 @@ class Worker extends Common
 
         if ($response_code == GDService::REQUEST_OK) {
             $domains = $this->gd_service->get_data();
+            $gd_domains = new GDDomains();
             foreach ($domains as $domain) {
-                GdUtils::log(' domain  ' . $domain['domain'] . ', domainId : ' . $domain['domainId']);
+                // Verify at first existing record
+                $gd_domains->saveNewRecord($this->uuid, $domain);
             }
+
         } else {
             GdUtils::log('Request failed with code ' . $response_code . ', ' .
                 $this->gd_service->gd_parse_response_info($response_code));
