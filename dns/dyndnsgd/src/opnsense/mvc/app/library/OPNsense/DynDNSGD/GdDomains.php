@@ -31,7 +31,7 @@ use OPNsense\Base\BaseModel;
 use OPNsense\Core\Config;
 use OPNsense\DynDNSGD\Domains;
 
-class GDDomains
+class GdDomains
 {
     protected const DOMAIN_CONFIG_PATH = 'domains.domain';
     private $mdl_domain;
@@ -51,6 +51,13 @@ class GDDomains
         return true;
     }
 
+    public function getAllDomains()
+    {
+        $model = new Domains();
+        $obj = $model->getNodes();
+        return $obj['domains']['domain'];
+    }
+
     public function saveNewRecord($account_uuid, $content)
     {
         $model = new Domains();
@@ -59,7 +66,7 @@ class GDDomains
         $node->enabled = 0;
         $node->domain = $content['domain'];
         $node->account = $account_uuid;
-        $node->domain_id = $content['domain_id'];
+        $node->domain_id = $content['domainId'];
         $validationMessages = $model->performValidation();
         foreach ($validationMessages as $messsage) {
             GdUtils::log("validation failure on field " . $messsage->getField() . "  returning message : " . $messsage->getMessage());

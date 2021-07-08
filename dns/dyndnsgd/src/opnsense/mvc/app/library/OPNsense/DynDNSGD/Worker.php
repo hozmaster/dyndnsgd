@@ -35,7 +35,7 @@ class Worker extends Common
     public function __construct($uuid)
     {
         $this->uuid = $uuid;
-        $this->gd_service = new GDService();
+        $this->gd_service = new GdService();
     }
 
     public function fetch_all_domains()
@@ -64,14 +64,16 @@ class Worker extends Common
 
         $response_code = $this->gd_service->do_godaddy_get_request($url, $header);
 
-        if ($response_code == GDService::REQUEST_OK) {
+        if ($response_code == GdService::REQUEST_OK) {
             $domains = $this->gd_service->get_data();
-            $gd_domains = new GDDomains();
+            $gd_domains = new GdDomains();
+            $c_domains = $gd_domains->getAllDomains();
             foreach ($domains as $domain) {
-                // Verify at first existing record
-                $gd_domains->saveNewRecord($this->uuid, $domain);
+                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
+                if ($key === false) {
+                    $gd_domains->saveNewRecord($this->uuid, $domain);
+                }
             }
-
         } else {
             GdUtils::log('Request failed with code ' . $response_code . ', ' .
                 $this->gd_service->gd_parse_response_info($response_code));

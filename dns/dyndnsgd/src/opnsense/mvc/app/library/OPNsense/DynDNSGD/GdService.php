@@ -28,7 +28,7 @@
 namespace OPNsense\DynDNSGD;
 
 
-class GDService
+class GdService
 {
     const REQUEST_OK = 200;
 
