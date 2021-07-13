@@ -42,11 +42,6 @@ class DomainsController extends ApiMutableModelControllerBase
         return $this->getBase('domain', 'domains.domain', $uuid);
     }
 
-    public function addAction()
-    {
-        return $this->addBase('domain', 'domains.domain');
-    }
-
     public function updateAction($uuid)
     {
         return $this->setBase('domain', 'domains.domain', $uuid);

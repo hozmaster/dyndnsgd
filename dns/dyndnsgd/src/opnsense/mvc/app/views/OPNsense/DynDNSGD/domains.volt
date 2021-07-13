@@ -32,7 +32,6 @@
             search:'/api/dyndnsgd/domains/search',
             get:'/api/dyndnsgd/domains/get/',
             set:'/api/dyndnsgd/domains/update/',
-            add:'/api/dyndnsgd/domains/add/',
             toggle:'/api/dyndnsgd/domains/toggle/',
         };
 
@@ -111,32 +110,8 @@
                     console.log("[grid] action add missing")
                 }
             });
-
-            // link delete selected items action
-            $(this).find("*[data-action=delete]").click(function(){
-                if ( gridParams['del'] != undefined) {
-                    stdDialogConfirm('{{ lang._('Confirm removal') }}',
-                        '{{ lang._('Do you want to remove the selected item?') }}',
-                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
-                        var rows =$("#"+gridId).bootgrid('getSelectedRows');
-                        if (rows != undefined){
-                            var deferreds = [];
-                            $.each(rows, function(key,uuid){
-
-                                deferreds.push(ajaxCall(url=gridParams['del'] + uuid, sendData={},null));
-                            });
-                            // refresh after load
-                            $.when.apply(null, deferreds).done(function(){
-                                std_bootgrid_reload(gridId);
-                            });
-                        }
-                    });
-                } else {
-                    console.log("[grid] action del missing")
-                }
-            });
-
         });
+
 
         /**
          * copy actions for items from opnsense_bootgrid_plugin.js
@@ -227,9 +202,6 @@
         <tfoot>
             <tr>
                 <td></td>
-                <td>
-                    <button data-action="add" type="button" data-toggle="tooltip" data-placement="right" title={{ lang._('Add') }} class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                </td>
             </tr>
         </tfoot>
     </table>
