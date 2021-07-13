@@ -90,3 +90,21 @@ function dyndns_gd_cron()
 
     return $jobs;
 }
+
+function dyndns_gd_configure_do($verbose = false, $int = '')
+{
+    // TODO : remove me
+    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_configure_do()");
+    global $config;
+
+    // $gwgroups = return_gateway_groups_array();
+
+    //    if ((empty($int)) || (is_array($gwgroups[$dyndns['interface']]))) {
+    //        $dyndns['verboselog'] = isset($dyndns['verboselog']);
+    //        $dyndns['curl_ipresolve_v4'] = isset($dyndns['curl_ipresolve_v4']);
+    //        $dyndns['curl_ssl_verifypeer'] = isset($dyndns['curl_ssl_verifypeer']);
+    //        dyndns_configure_client($dyndns);
+    //        sleep(1);
+    //    }
+
+}
