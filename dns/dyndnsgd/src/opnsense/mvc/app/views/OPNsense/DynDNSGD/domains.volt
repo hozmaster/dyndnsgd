@@ -33,7 +33,6 @@
             get:'/api/dyndnsgd/domains/get/',
             set:'/api/dyndnsgd/domains/update/',
             add:'/api/dyndnsgd/domains/add/',
-            del:'/api/dyndnsgd/domains/del/',
             toggle:'/api/dyndnsgd/domains/toggle/',
         };
 
@@ -45,8 +44,7 @@
             url: '/api/dyndnsgd/domains/search',
             formatters: {
                 "commands": function (column, row) {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " ;
                 },
                 "rowtoggle": function (column, row) {
                     if (parseInt(row[column.id], 2) == 1) {
@@ -180,25 +178,6 @@
                     });
                 } else {
                     console.log("[grid] action get or data-domainDlg missing")
-                }
-            });
-
-            // delete item
-            grid_domains.find(".command-delete").on("click", function(e)
-            {
-                if (gridParams['del'] != undefined) {
-                    var uuid=$(this).data("row-id");
-                    stdDialogConfirm('{{ lang._('Confirm removal') }}',
-                        '{{ lang._('Do you want to remove the selected item?') }}',
-                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
-                        ajaxCall(url=gridParams['del'] + uuid,
-                            sendData={},callback=function(data,status){
-                                // reload grid after delete
-                                $("#"+gridId).bootgrid("reload");
-                            });
-                    });
-                } else {
-                    console.log("[grid] action del missing")
                 }
             });
 
