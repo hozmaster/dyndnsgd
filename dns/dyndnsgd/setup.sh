@@ -32,7 +32,7 @@ fi
 
 # scripts
 if [ ! -d /usr/local/opnsense/scripts/OPNsense/DynDNSGD ]; then
-   mkdir /usr/local/opnsense/scripts/OPNsense/DynDNSGD
+  mkdir /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 fi
 
 # library
@@ -63,4 +63,9 @@ cp -v src/opnsense/scripts/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 chmod a+x /usr/local/opnsense/scripts/OPNsense/DynDNSGD/*.php
 
 ## service
-cp -v src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf  /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
+cp -vf src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
+
+## legacy plugins support
+cp -vf usr/local/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
+chmod a+x /usr/local/etc/rc.dyndnsgd
+cp -vf src/etc/inc/plugins.inc.d/dyndnsgd.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd.inc
