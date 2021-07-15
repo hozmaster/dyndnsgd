@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -28,12 +27,8 @@
 
 namespace OPNsense\DynDNSGD;
 
-class SettingsController extends \OPNsense\Base\IndexController
+use OPNsense\Base\BaseModel;
+
+class Settings extends BaseModel
 {
-    public function indexAction()
-    {
-        $this->view->formViewSettings = $this->getForm("settings");
-        // pick the template to serve to our users.
-        $this->view->pick('OPNsense/DynDNSGD/settings');
-    }
 }

@@ -29,11 +29,13 @@
         <id>settings.enabled</id>
         <label>Enable: </label>
         <type>checkbox</type>
-        <help>Enable this plugin</help>
+        <help>Enable or disable DyndnsGD</help>
     </field>
     <field>
         <id>settings.log_level</id>
         <label>log level: </label>
-        <type>text</type>
+        <type>dropdown</type>
+        <allownew>false</allownew>
+        <help>Select logging level</help>
     </field>
 </form>
