@@ -37,13 +37,15 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         $("#saveAct").click(function(){
-            saveFormToEndpoint(url="/api/dyndnsgd/setting/set", formid='frm_settings',callback_ok=function(){
-            $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
-                ajaxCall(url="/api/dyndnsgd/setting/reconfigure", sendData={}, callback=function(data,status) {
-                    updateServiceControlUI('dyndnsgd');
-                    $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+            saveFormToEndpoint(url="/api/dyndnsgd/settings/set", formid='frm_settings',callback_ok=function(){
+            $('.selectpicker').selectpicker('refresh');
+                // TODO: Check this one
+                //             $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
+                //                 ajaxCall(url="/api/dyndnsgd/service/reconfigure", sendData={}, callback=function(data,status) {
+                //                     updateServiceControlUI('dyndnsgd');
+                //                     $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+                //                 });
                 });
-            });
         });
 
     });

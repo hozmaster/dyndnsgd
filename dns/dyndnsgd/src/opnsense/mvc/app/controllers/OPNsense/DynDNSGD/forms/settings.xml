@@ -26,13 +26,13 @@
 
 <form>
     <field>
-        <id>dyndnsgd.settings.enabled</id>
+        <id>settings.enabled</id>
         <label>Enable: </label>
         <type>checkbox</type>
         <help>Enable or disable DyndnsGD</help>
     </field>
     <field>
-        <id>dyndnsgd.settings.log_level</id>
+        <id>settings.log_level</id>
         <label>log level: </label>
         <type>dropdown</type>
         <allownew>false</allownew>

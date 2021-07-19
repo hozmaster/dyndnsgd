@@ -33,7 +33,7 @@ use OPNsense\Base\ApiMutableModelControllerBase;
 
 class SettingsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\settings';
+    protected static $internalModelClass = '\OPNsense\DynDNSGD\Settings';
     protected static $internalModelName = 'settings';
 
     //    public function getAction($uuid = null)
