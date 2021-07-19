@@ -26,6 +26,30 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #}
 
+<script>
+
+    $( document ).ready(function() {
+
+        var data_get_map = {'frm_settings':"/api/dyndnsgd/settings/get"};
+        mapDataToFormUI(data_get_map).done(function(data){
+            formatTokenizersUI();
+            $('.selectpicker').selectpicker('refresh');
+        });
+
+        $("#saveAct").click(function(){
+            saveFormToEndpoint(url="/api/dyndnsgd/setting/set", formid='frm_settings',callback_ok=function(){
+            $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
+                ajaxCall(url="/api/dyndnsgd/setting/reconfigure", sendData={}, callback=function(data,status) {
+                    updateServiceControlUI('dyndnsgd');
+                    $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+                });
+            });
+        });
+
+    });
+
+</script>
+
 <ul class="nav nav-tabs" data-tabs="tabs" id="settings_tabs">
     <li class="active"><a data-toggle="tab" href="#settings">{{ lang._('Settings') }}</a></li>
 </ul>

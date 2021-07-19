@@ -3,26 +3,19 @@
     <description>
         the OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <items>
-        <settings>
-            <setting type="ArrayField">
-                <id type="UniqueIdField">
-                    <Required>N</Required>
-                </id>
-                <enabled type="BooleanField">
-                    <default>1</default>
-                    <Required>Y</Required>
-                </enabled>
-                <log_level type="OptionField">
-                    <Required>Y</Required>
-                    <default>normal</default>
-                    <OptionValues>
-                        <normal>normal</normal>
-                        <debug>debug</debug>
-                    </OptionValues>
-                </log_level>
-            </setting>
-        </settings>
+        <enabled type="BooleanField">
+            <default>1</default>
+            <Required>Y</Required>
+        </enabled>
+        <log_level type="OptionField">
+            <Required>Y</Required>
+            <default>normal</default>
+            <OptionValues>
+                <normal>normal</normal>
+                <debug>debug</debug>
+            </OptionValues>
+        </log_level>
     </items>
 </model>
