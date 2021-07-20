@@ -26,12 +26,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-//@include_once("util.inc");
-
 function dyndns_gd_configure()
 {
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_configure()");
     return array(
         'bootup' => array('dyndns_gd_configure_do'),
         'local' => array('dyndns_gd_configure_do'),
@@ -41,10 +37,9 @@ function dyndns_gd_configure()
 
 function dyndns_gd_enabled(): bool
 {
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_enabled()");
     global $config;
-    return true;
+    return isset($config['OPNsense']['DynDNSGD']['settings']['enabled']) &&
+        $config['OPNsense']['DynDNSGD']['settings']['enabled'] == 1;
 }
 
 function dyndns_gd_services()
@@ -65,7 +60,6 @@ function dyndns_gd_services()
             'name' => 'dyndns_gd',
         );
     }
-
     return $services;
 }
 
@@ -79,32 +73,32 @@ function dyndns_gd_list()
     );
 }
 
-function dyndns_gd_cron()
-{
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_cron()");
-    $jobs = array();
-    if (dyndns_enabled()) {
-        $jobs[]['autocron'] = array('/usr/local/etc/rc.dyndns_gd', '11', '1');
-    }
-
-    return $jobs;
-}
+//
+//function dyndns_gd_cron()
+//{
+//    // TODO : remove me
+//    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_cron()");
+//    $jobs = array();
+//    if (dyndns_enabled()) {
+//        $jobs[]['autocron'] = array('/usr/local/etc/rc.dyndns_gd', '11', '1');
+//    }
+//
+//    return $jobs;
+//}
 
 function dyndns_gd_configure_do($verbose = false, $int = '')
 {
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_configure_do()");
     global $config;
-
-    // $gwgroups = return_gateway_groups_array();
-
-    //    if ((empty($int)) || (is_array($gwgroups[$dyndns['interface']]))) {
-    //        $dyndns['verboselog'] = isset($dyndns['verboselog']);
-    //        $dyndns['curl_ipresolve_v4'] = isset($dyndns['curl_ipresolve_v4']);
-    //        $dyndns['curl_ssl_verifypeer'] = isset($dyndns['curl_ssl_verifypeer']);
-    //        dyndns_configure_client($dyndns);
-    //        sleep(1);
-    //    }
+    if (dyndns_gd_enabled()) {
+        $outgoing_group = return_gateway_groups_array();
+        var_dump($outgoing_group);
+        //    if ((empty($int)) || (is_array($gwgroups[$dyndns['interface']]))) {
+        //        $dyndns['verboselog'] = isset($dyndns['verboselog']);
+        //        $dyndns['curl_ipresolve_v4'] = isset($dyndns['curl_ipresolve_v4']);
+        //        $dyndns['curl_ssl_verifypeer'] = isset($dyndns['curl_ssl_verifypeer']);
+        //        dyndns_configure_client($dyndns);
+        //        sleep(1);
+        //    }
+    }
 
 }
