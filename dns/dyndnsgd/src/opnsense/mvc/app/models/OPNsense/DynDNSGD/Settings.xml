@@ -9,6 +9,14 @@
             <default>1</default>
             <Required>Y</Required>
         </enabled>
+        <interface type="InterfaceField">
+            <Required>Y</Required>
+            <multiple>N</multiple>
+            <default>wan</default>
+            <filters>
+                <enable>/^(?!0).*$/</enable>
+            </filters>
+        </interface>
         <log_level type="OptionField">
             <Required>Y</Required>
             <default>normal</default>

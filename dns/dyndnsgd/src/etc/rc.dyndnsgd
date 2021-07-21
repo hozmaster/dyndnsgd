@@ -31,5 +31,10 @@ require_once("util.inc");
 require_once("filter.inc");
 require_once("plugins.inc.d/dyndnsgd.inc");
 
+$argument = "WAN";
+echo "dfasdfasdf";
+//$interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
+$address = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getAddress("WAN");
+var_dump($address);
 
-dyndns_gd_configure_do(true);
+# dyndns_gd_configure_do(true);

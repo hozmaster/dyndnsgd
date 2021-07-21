@@ -91,7 +91,7 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
     global $config;
     if (dyndns_gd_enabled()) {
         $outgoing_group = return_gateway_groups_array();
-        var_dump($outgoing_group);
+        var_dump("ddd " . $outgoing_group);
         //    if ((empty($int)) || (is_array($gwgroups[$dyndns['interface']]))) {
         //        $dyndns['verboselog'] = isset($dyndns['verboselog']);
         //        $dyndns['curl_ipresolve_v4'] = isset($dyndns['curl_ipresolve_v4']);
