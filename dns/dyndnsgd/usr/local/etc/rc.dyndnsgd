@@ -39,10 +39,26 @@ if (isset($argv[1])) {
     $argument = null;
 }
 
+//$gws = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getGateways();
+//var_dump($gws);
+//
+//$defGW = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getDefaultGW();
+//var_dump($defGW);
+//
+//$address = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getAddress($defGW['name']);
+//echo 'gw ip address ' . $address . PHP_EOL;
+//
+//$r_if = get_real_interface('wan');
+//$r_ip_addr = find_interface_ip($r_if);
+//
+//echo 'real if address ' . $r_ip_addr . PHP_EOL;
+
 if (empty($argument)) {
     dyndns_gd_configure_do(true);
 } else {
     $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
+    var_dump($interface);
+
     if (empty($interface)) {
         $interface = $argument;
     }
