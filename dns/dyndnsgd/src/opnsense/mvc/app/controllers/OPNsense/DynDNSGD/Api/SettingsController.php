@@ -36,25 +36,4 @@ class SettingsController extends ApiMutableModelControllerBase
     protected static $internalModelClass = '\OPNsense\DynDNSGD\Settings';
     protected static $internalModelName = 'settings';
 
-    //    public function getAction($uuid = null)
-    //    {
-    //        $this->sessionClose();
-    //        return $this->getBase('setting', 'settings.setting', $uuid);
-    //    }
-    //
-    //    public function updateAction($uuid)
-    //    {
-    //        return $this->setBase('setting', 'settings.setting', $uuid);
-    //    }
-    //
-    //    public function toggleAction($uuid, $enabled = null)
-    //    {
-    //        return $this->toggleBase('settings.setting', $uuid);
-    //    }
-    //
-    //    public function searchAction()
-    //    {
-    //        return $this->searchBase('settings.setting', array('enabled', 'log_level'), 'setting');
-    //    }
-
 }
