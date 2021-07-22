@@ -20,10 +20,10 @@
     </field>
     <field>
         <id>domain.interface</id>
-        <label>Interface</label>
+        <label>Interface to monitor:</label>
         <type>dropdown</type>
         <allownew>false</allownew>
-        <help>Set a interface to listen on.</help>
+        <help>Set a outgoing interface to listen on.</help>
     </field>
     <field>
         <id>domain.description</id>

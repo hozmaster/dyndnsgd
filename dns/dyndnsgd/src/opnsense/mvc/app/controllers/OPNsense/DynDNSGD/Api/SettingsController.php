@@ -1,4 +1,3 @@
-#!/usr/local/bin/php
 <?php
 
 /*
@@ -27,38 +26,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-require_once("config.inc");
-require_once("interfaces.inc");
-require_once("util.inc");
-require_once("filter.inc");
-require_once("plugins.inc.d/dyndnsgd.inc");
+namespace OPNsense\DynDnsGD\Api;
 
-if (isset($argv[1])) {
-    $argument = trim($argv[1], " \n");
-} else {
-    $argument = null;
-}
+use OPNsense\Base\ApiMutableModelControllerBase;
 
-//$gws = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getGateways();
-//var_dump($gws);
-//
-//$defGW = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getDefaultGW();
-//var_dump($defGW);
-//
-//$address = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getAddress($defGW['name']);
-//echo 'gw ip address ' . $address . PHP_EOL;
-//
-//$r_if = get_real_interface('wan');
-//$r_ip_addr = find_interface_ip($r_if);
-//
-//echo 'real if address ' . $r_ip_addr . PHP_EOL;
 
-if (empty($argument)) {
-    dyndns_gd_configure_do(true);
-} else {
-    $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
-    if (empty($interface)) {
-        $interface = $argument;
-    }
-    dyndns_gd_configure_do(true, $interface);
+class SettingsController extends ApiMutableModelControllerBase
+{
+    protected static $internalModelClass = '\OPNsense\DynDNSGD\Settings';
+    protected static $internalModelName = 'settings';
+
 }
