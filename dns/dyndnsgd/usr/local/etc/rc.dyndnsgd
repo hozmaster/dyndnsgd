@@ -57,8 +57,6 @@ if (empty($argument)) {
     dyndns_gd_configure_do(true);
 } else {
     $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
-    var_dump($interface);
-
     if (empty($interface)) {
         $interface = $argument;
     }
