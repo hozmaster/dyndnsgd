@@ -102,7 +102,7 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
             return;
         }
 
-        if (!$updater->addAccounts($dyndns_gd['Accounts'])) {
+        if (!$updater->addAccounts($dyndns_gd['accounts'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
             return;
         }
