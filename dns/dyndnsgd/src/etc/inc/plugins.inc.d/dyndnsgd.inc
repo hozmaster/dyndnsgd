@@ -27,6 +27,8 @@
  */
 
 require_once("interfaces.inc");
+require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
+
 
 function dyndns_gd_configure()
 {
@@ -64,7 +66,6 @@ function dyndns_gd_services()
     }
     return $services;
 }
-
 function dyndns_gd_list()
 {
     // TODO : remove me
@@ -93,20 +94,33 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
     global $config;
     if (dyndns_gd_enabled()) {
 
+        $dyndns_gd = $config['OPNsense']['DynDNSGD'];
+        $updater = new gdDnsUpdater();
+
+        if (!count($dyndns_gd)) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            return;
+        }
+
+        if (!$updater->addAccounts($dyndns_gd['Accounts'])) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            return;
+        }
+
+        if (!$updater->addDomains($dyndns_gd['domains'])) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            echo 'Failed' . PHP_EOL;
+            return;
+        }
+
         // get r if addr of used gateway address.
         $r_if = get_real_interface('wan');
-        $r_ip_addr = find_interface_ip($r_if);
-        echo 'r if addr ' . $r_ip_addr . PHP_EOL;
+        $updater->_if = $r_if;
+        $updater->_if_addr4 = find_interface_ip($r_if);
 
-        //        $outgoing_group = return_gateway_groups_array();
-        //        var_dump("ddd " . $outgoing_group);
-        //    if ((empty($int)) || (is_array($gwgroups[$dyndns['interface']]))) {
-        //        $dyndns['verboselog'] = isset($dyndns['verboselog']);
-        //        $dyndns['curl_ipresolve_v4'] = isset($dyndns['curl_ipresolve_v4']);
-        //        $dyndns['curl_ssl_verifypeer'] = isset($dyndns['curl_ssl_verifypeer']);
-        //        dyndns_configure_client($dyndns);
-        //        sleep(1);
-        //    }
+        $updater->checkAndDoDNSUpdate();
+        sleep(1);
+
     }
 
 }
