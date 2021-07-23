@@ -68,8 +68,6 @@ function dyndns_gd_services()
 }
 function dyndns_gd_list()
 {
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_list()");
     return array(
         'godaddy' => 'GoDaddy',
         'godaddy-v6' => 'GoDaddy (v6)',
@@ -98,18 +96,20 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         $updater = new gdDnsUpdater();
 
         if (!count($dyndns_gd)) {
-            // TODO : No data for dyndnsgd. Exit with error code in the log
+            // TODO : No data for dyndnsgd. Exi with error code in the log
+            echo 'frontend side is not completed' . PHP_EOL;
             return;
         }
 
         if (!$updater->addAccounts($dyndns_gd['accounts'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
+            echo 'failed accounts' . PHP_EOL;
             return;
         }
 
         if (!$updater->addDomains($dyndns_gd['domains'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            echo 'Failed' . PHP_EOL;
+            echo 'Failed domains' . PHP_EOL;
             return;
         }
 
@@ -118,6 +118,7 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         $updater->_if = $r_if;
         $updater->_if_addr4 = find_interface_ip($r_if);
 
+        // do actual verification and the update process if needed
         $updater->checkAndDoDNSUpdate();
         sleep(1);
 

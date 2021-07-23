@@ -31,15 +31,25 @@ class gdDnsUpdater
     public $_if_addr4;
     private array $_accounts = [];
     private array $_domains = [];
-    private string $_UserAgent = 'User-Agent: gdDnsUpdater/0.1';
+    private array $dnsServiceList = [];
+    private string $dnsService = 'gd';
 
     public function __construct()
     {
+        $this->dnsServiceList = dyndns_gd_list();
     }
 
-    public function checkAndDoDNSUpdate ()
+    public function checkAndDoDNSUpdate()
     {
-        echo  "checkAndDoDNSUpdate" . PHP_EOL;
+        $updater_lck = lock("dyndns_gd_" . LOCK_EX);
+        switch ($this->dnsService){
+            case 'gd':
+                include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GDService.inc');
+                $obj = new GDService();
+            break;
+        }
+        var_dump($obj->supportedRecords());
+        unlock($updater_lck);
     }
 
     public function addDomains($defs_domains): bool
@@ -48,7 +58,7 @@ class gdDnsUpdater
             foreach ($defs_domains['domains']['domain'] as $domain) {
                 if ($domain['enabled']) {
                     $temp['domain'] = $domain['domain'];
-                    $temp['account_uuid'] = $domain['account'];
+                    $temp['account_uuid'] = $domain['acco   unt'];
                     $temp['interface'] = $domain['interface'];
                     $temp['at_record'] = $domain['at_record'];
                     array_push($this->_domains, $temp);
@@ -68,7 +78,8 @@ class gdDnsUpdater
     public function addAccounts($defs_acc_s): bool
     {
         if (isset($defs_acc_s['accounts'])) {
-            foreach ($defs_acc_s['accounts']['account'] as $acc) {
+            $accs = $defs_acc_s['accounts'];
+            foreach ($accs as $acc) {
                 if ($acc['enabled']) {
                     $temp['key'] = $acc['key'][0];
                     $temp['secret'] = $acc['secret_key'];

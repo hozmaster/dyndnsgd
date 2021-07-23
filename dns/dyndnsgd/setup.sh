@@ -69,6 +69,8 @@ cp -vf src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf /usr/local/opns
 cp -vf usr/local/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
 chmod a+x /usr/local/etc/rc.dyndnsgd
 cp -vf src/etc/inc/plugins.inc.d/dyndnsgd.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd.inc
+cp -vf src/etc/inc/plugins.inc.d/dyndnsgd/GDService.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/GDService.inc
+cp -vf src/etc/inc/plugins.inc.d/dyndnsgd/ServiceBase.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/ServiceBase.inc
 
 if [ ! -d /usr/local/etc/inc/plugins.inc.d/dyndnsgd ]; then
   mkdir /usr/local/etc/inc/plugins.inc.d/dyndnsgd
