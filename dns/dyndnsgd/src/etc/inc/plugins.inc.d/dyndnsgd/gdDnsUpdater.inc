@@ -58,7 +58,7 @@ class gdDnsUpdater
             foreach ($defs_domains['domains']['domain'] as $domain) {
                 if ($domain['enabled']) {
                     $temp['domain'] = $domain['domain'];
-                    $temp['account_uuid'] = $domain['acco   unt'];
+                    $temp['account_uuid'] = $domain['account'];
                     $temp['interface'] = $domain['interface'];
                     $temp['at_record'] = $domain['at_record'];
                     array_push($this->_domains, $temp);
