@@ -32,7 +32,7 @@ class GDService extends ServiceBase
 
     public function supportedRecords(): array
     {
-        return ['@', 'A', 'AAAA', 'MX'];
+        return ['A', 'AAAA', 'MX'];
     }
 
 }
