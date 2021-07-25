@@ -25,14 +25,79 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-require_once ("ServiceBase.inc");
+require_once("ServiceBase.inc");
 
 class GDService extends ServiceBase
 {
 
+    private $ttl = 600;
+
+    public function __construct()
+    {
+        $this->basApiUrl = 'https://api.godaddy.com/v1/domains/';
+        $this->stagingApiUrl = 'https://api.ote-godaddy.com';
+
+    }
+
     public function supportedRecords(): array
     {
-        return ['A', 'AAAA', 'MX'];
+        return ['A', 'AAAA', 'MX', 'TXT', 'CNAME'];
+    }
+
+    public function updateA1Records($domain, $keys, $if_ip_addr)
+    {
+        $this->initCurl();
+
+        $payload = array();
+
+        // for now, will be changed later on.
+        $record_type = 'TXT';
+        $record_name = '@';
+
+        $record_object = (object)[
+            'data' => $if_ip_addr,
+            'ttl' => $this->ttl,
+        ];
+
+        array_push($payload, $record_object);
+//
+        $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
+        $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
+//
+        curl_setopt($this->ch, CURLOPT_URL, $url);
+        curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
+//        $result = curl_exec($this->ch);
+////        $responseInfo = curl_getinfo($this->ch);
+////
+////        if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
+////            print_r($responseInfo['http_code']);
+////        }
+////
+////        if (empty($result)) {
+////            $result = "{\"status\" : \"ok\"}";
+////        }
+////
+//        $back = json_decode($result, true);
+////
+//        curl_close($this->ch);
+
+    }
+
+    private function getBaseUrl(): string
+    {
+        // forgot staging for while.
+        return 'https://api.ote-godaddy.com';
+    }
+
+    private function getHeader($api_key, $api_secret): array
+    {
+        return array(
+            "Authorization: sso-key $api_key:$api_secret",
+            "Content-Type: application/json",
+            "Accept: application/json"
+        );
     }
 
 }

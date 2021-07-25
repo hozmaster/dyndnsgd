@@ -27,10 +27,26 @@
 
 class ServiceBase
 {
-    protected string $_UserAgent = 'User-Agent: gdDnsUpdater/0.1';
+    protected string $_UserAgent = 'User-Agent: gdDnsUpdater/1.0';
+    protected string $baseApiUrl;
+    protected string $stagingApiUrl;
+    protected $ch;
+    protected bool $ipv6Supported;
 
-    public function updateDNSARecords()
+    public function updateARecords($dnsHost, $recordType, $dnsDomain)
     {
+    }
+
+    protected function initCurl()
+    {
+        $this->ch = curl_init();
+        curl_setopt($this->ch, CURLOPT_HEADER, 0);
+        curl_setopt($this->ch, CURLOPT_USERAGENT, $this->_UserAgent);
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($this->ch, CURLOPT_INTERFACE, $this->_dnsRequestIfIP);
+        curl_setup($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->ch, CURLOPT_TIMEOUT, 15);
+
     }
 
     public function supportedRecords(): array

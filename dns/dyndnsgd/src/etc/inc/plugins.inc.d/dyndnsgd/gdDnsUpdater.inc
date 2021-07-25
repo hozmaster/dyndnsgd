@@ -48,6 +48,11 @@ class gdDnsUpdater
                 $obj = new GDService();
             break;
         }
+
+        foreach ($this->_domains as $domain) {
+
+        }
+
         var_dump($obj->supportedRecords());
         unlock($updater_lck);
     }
