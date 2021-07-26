@@ -66,6 +66,7 @@ function dyndns_gd_services()
     }
     return $services;
 }
+
 function dyndns_gd_list()
 {
     return array(

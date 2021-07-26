@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-class ServiceBase
+class RequesterBase
 {
     protected string $_UserAgent = 'User-Agent: gdDnsUpdater/1.0';
     protected string $baseApiUrl;
@@ -44,7 +44,7 @@ class ServiceBase
         curl_setopt($this->ch, CURLOPT_USERAGENT, $this->_UserAgent);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         //curl_setopt($this->ch, CURLOPT_INTERFACE, $this->_dnsRequestIfIP);
-        curl_setup($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($this->ch, CURLOPT_TIMEOUT, 15);
 
     }

@@ -25,9 +25,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-require_once("ServiceBase.inc");
+require_once("RequesterBase.inc");
 
-class GDService extends ServiceBase
+class GoDaddy extends RequesterBase
 {
 
     private $ttl = 600;
@@ -46,7 +46,7 @@ class GDService extends ServiceBase
 
     public function updateA1Records($domain, $keys, $if_ip_addr)
     {
-        $this->initCurl();
+//        $this->initCurl();
 
         $payload = array();
 
@@ -60,28 +60,32 @@ class GDService extends ServiceBase
         ];
 
         array_push($payload, $record_object);
-//
+
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
+        var_dump($url);
+
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
-//
-        curl_setopt($this->ch, CURLOPT_URL, $url);
-        curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        var_dump($headers);
+////
+//        curl_setopt($this->ch, CURLOPT_URL, $url);
+//        curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
+//        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+//        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
 //        $result = curl_exec($this->ch);
-////        $responseInfo = curl_getinfo($this->ch);
-////
-////        if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
-////            print_r($responseInfo['http_code']);
-////        }
-////
-////        if (empty($result)) {
-////            $result = "{\"status\" : \"ok\"}";
-////        }
-////
-//        $back = json_decode($result, true);
-////
+//        $responseInfo = curl_getinfo($this->ch);
+//
+//        if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
+//            print_r($responseInfo['http_code']);
+//        }
+//
+//        if (empty($result)) {
+//            $result = (object)[
+//                "status" => "ok"
+//            ];
+//        }
 //        curl_close($this->ch);
+//        return json_decode($result, true);
+
 
     }
 

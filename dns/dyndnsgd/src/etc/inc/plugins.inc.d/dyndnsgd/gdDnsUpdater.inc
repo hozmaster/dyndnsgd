@@ -33,6 +33,7 @@ class gdDnsUpdater
     private array $_domains = [];
     private array $dnsServiceList = [];
     private string $dnsService = 'gd';
+    private $handler;
 
     public function __construct()
     {
@@ -42,18 +43,20 @@ class gdDnsUpdater
     public function checkAndDoDNSUpdate()
     {
         $updater_lck = lock("dyndns_gd_" . LOCK_EX);
-        switch ($this->dnsService){
+        switch ($this->dnsService) {
             case 'gd':
-                include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GDService.inc');
-                $obj = new GDService();
-            break;
+                include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
+                $this->handler = new GoDaddy();
+                break;
         }
 
         foreach ($this->_domains as $domain) {
-
+            $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
+            if ($keys) {
+                $this->handler->updateA1Records($domain, $keys, '0.0.0.0');
+            }
         }
 
-        var_dump($obj->supportedRecords());
         unlock($updater_lck);
     }
 
@@ -83,7 +86,7 @@ class gdDnsUpdater
     public function addAccounts($defs_acc_s): bool
     {
         if (isset($defs_acc_s['accounts'])) {
-            $accs = $defs_acc_s['accounts'];
+            $accs = $defs_acc_s['accounts']['account'];
             foreach ($accs as $acc) {
                 if ($acc['enabled']) {
                     $temp['key'] = $acc['key'][0];
@@ -101,6 +104,21 @@ class gdDnsUpdater
             return false;
         }
         return true;
+    }
+
+    private function getAccountKeysForDomain($uuid): ?array
+    {
+        $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
+        var_dump($result);
+        if ($result !== false) {
+            $keys = [
+                'api.key' => $this->_accounts[$result]['key'],
+                'api.secret' => $this->_accounts[$result]['secret']
+            ];
+        } else {
+            $keys = null;
+        }
+        return $keys;
     }
 
 }
