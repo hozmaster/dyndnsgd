@@ -53,7 +53,8 @@ class gdDnsUpdater
         foreach ($this->_domains as $domain) {
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
-                $this->handler->updateA1Records($domain, $keys, '0.0.0.0');
+                $result = $this->handler->updateA1Records($domain['domain'], $keys, '0.0.0.0');
+                var_dump($result);
             }
         }
 
@@ -109,7 +110,6 @@ class gdDnsUpdater
     private function getAccountKeysForDomain($uuid): ?array
     {
         $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
-        var_dump($result);
         if ($result !== false) {
             $keys = [
                 'api.key' => $this->_accounts[$result]['key'],
