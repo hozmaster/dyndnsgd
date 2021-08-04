@@ -32,6 +32,7 @@ require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 
 function dyndns_gd_configure()
 {
+    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_configure()");
     return array(
         'bootup' => array('dyndns_gd_configure_do'),
         'local' => array('dyndns_gd_configure_do'),
@@ -48,20 +49,18 @@ function dyndns_gd_enabled(): bool
 
 function dyndns_gd_services()
 {
-    // TODO : remove me
     syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_services()");
     global $config;
-
     $services = array();
-
     if (dyndns_gd_enabled()) {
         $services[] = array(
             'description' => gettext('Dynamic DNS'),
-            //            'configd' => array(
-            //                'restart' => array('dyndns_gd reload'),
-            //            ),
+            'configd' => array(
+                'restart' => array('dyndnsgd reload'),
+                'status' => array('dyndnsgd status'),
+            ),
             'nocheck' => true,
-            'name' => 'dyndns_gd',
+            'name' => 'dyndnsgd',
         );
     }
     return $services;
