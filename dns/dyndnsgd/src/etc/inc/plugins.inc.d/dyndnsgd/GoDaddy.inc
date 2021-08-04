@@ -36,7 +36,6 @@ class GoDaddy extends RequesterBase
     {
         $this->basApiUrl = 'https://api.godaddy.com/v1/domains/';
         $this->stagingApiUrl = 'https://api.ote-godaddy.com';
-
     }
 
     public function supportedRecords(): array
@@ -73,11 +72,11 @@ class GoDaddy extends RequesterBase
         $result = curl_exec($this->ch);
         $responseInfo = curl_getinfo($this->ch);
         if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
-            print_r($responseInfo['http_code'] . PHP_EOL);
+            $result = '{ "status" : "failed", "code" : ' . $responseInfo["http_code"] . ' }';
         }
 
         if (empty($result)) {
-            $result = '{ "status" : "ok"}';
+            $result = '{ "status" : "ok, "code" : 200 "}';
         }
         curl_close($this->ch);
         return json_decode($result, true);

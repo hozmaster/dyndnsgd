@@ -54,7 +54,9 @@ class gdDnsUpdater
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, '0.0.0.0');
-                var_dump($result);
+                if ($result['status'] == 'failed') {
+                    var_dump($result);
+                }
             }
         }
 
