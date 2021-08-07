@@ -29,7 +29,7 @@ None
 
 ### Changed
 
-he BSD-2 License added to php files, previous licences removed from use. Added Library also to the setup.sh-files
+The BSD-2 License added to php files, previous licences removed from use. Added Library also to the setup.sh-files
 
 ### Fixed
 
