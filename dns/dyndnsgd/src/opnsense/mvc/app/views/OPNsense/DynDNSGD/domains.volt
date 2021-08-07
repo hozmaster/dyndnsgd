@@ -32,8 +32,6 @@
             search:'/api/dyndnsgd/domains/search',
             get:'/api/dyndnsgd/domains/get/',
             set:'/api/dyndnsgd/domains/update/',
-            add:'/api/dyndnsgd/domains/add/',
-            del:'/api/dyndnsgd/domains/del/',
             toggle:'/api/dyndnsgd/domains/toggle/',
         };
 
@@ -45,8 +43,7 @@
             url: '/api/dyndnsgd/domains/search',
             formatters: {
                 "commands": function (column, row) {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " ;
                 },
                 "rowtoggle": function (column, row) {
                     if (parseInt(row[column.id], 2) == 1) {
@@ -113,32 +110,8 @@
                     console.log("[grid] action add missing")
                 }
             });
-
-            // link delete selected items action
-            $(this).find("*[data-action=delete]").click(function(){
-                if ( gridParams['del'] != undefined) {
-                    stdDialogConfirm('{{ lang._('Confirm removal') }}',
-                        '{{ lang._('Do you want to remove the selected item?') }}',
-                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
-                        var rows =$("#"+gridId).bootgrid('getSelectedRows');
-                        if (rows != undefined){
-                            var deferreds = [];
-                            $.each(rows, function(key,uuid){
-
-                                deferreds.push(ajaxCall(url=gridParams['del'] + uuid, sendData={},null));
-                            });
-                            // refresh after load
-                            $.when.apply(null, deferreds).done(function(){
-                                std_bootgrid_reload(gridId);
-                            });
-                        }
-                    });
-                } else {
-                    console.log("[grid] action del missing")
-                }
-            });
-
         });
+
 
         /**
          * copy actions for items from opnsense_bootgrid_plugin.js
@@ -183,25 +156,6 @@
                 }
             });
 
-            // delete item
-            grid_domains.find(".command-delete").on("click", function(e)
-            {
-                if (gridParams['del'] != undefined) {
-                    var uuid=$(this).data("row-id");
-                    stdDialogConfirm('{{ lang._('Confirm removal') }}',
-                        '{{ lang._('Do you want to remove the selected item?') }}',
-                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
-                        ajaxCall(url=gridParams['del'] + uuid,
-                            sendData={},callback=function(data,status){
-                                // reload grid after delete
-                                $("#"+gridId).bootgrid("reload");
-                            });
-                    });
-                } else {
-                    console.log("[grid] action del missing")
-                }
-            });
-
             // toggle item, enable or disable domain
             grid_domains.find(".command-toggle").on("click", function(e)
             {
@@ -236,11 +190,11 @@
             <tr>
                 <th data-column-id="enabled" data-width="4em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
                 <th data-column-id="domain" data-width="8em" data-type="string">{{ lang._('Domain') }}</th>
+                <th data-column-id="account" data-width="7em" data-sortable="yes" data-visible="true">{{ lang._('Account') }}</th>
                 <th data-column-id="description" data-width="7em" data-sortable="yes">{{ lang._('Description') }}</th>
-                <th data-column-id="account" data-width="7em" data-sortable="yes" data-visible="false">{{ lang._('Account') }}</th>
                 <th data-column-id="interface" data-width="4em" data-sortable="yes">{{ lang._('Interface') }}</th>
                 <th data-column-id="commands" data-width="5em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
-                <th data-column-id="uuid" data-width="6em" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
+                <th data-column-id="uuid" data-width="8em" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -248,9 +202,6 @@
         <tfoot>
             <tr>
                 <td></td>
-                <td>
-                    <button data-action="add" type="button" data-toggle="tooltip" data-placement="right" title={{ lang._('Add') }} class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                </td>
             </tr>
         </tfoot>
     </table>

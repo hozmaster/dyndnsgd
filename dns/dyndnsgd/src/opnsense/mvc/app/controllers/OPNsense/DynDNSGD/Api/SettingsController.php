@@ -31,30 +31,9 @@ namespace OPNsense\DynDnsGD\Api;
 use OPNsense\Base\ApiMutableModelControllerBase;
 
 
-class DomainsController extends ApiMutableModelControllerBase
+class SettingsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Domains';
-
-    public function getAction($uuid = null)
-    {
-        $this->sessionClose();
-        return $this->getBase('domain', 'domains.domain', $uuid);
-    }
-
-    public function updateAction($uuid)
-    {
-        return $this->setBase('domain', 'domains.domain', $uuid);
-    }
-
-    public function toggleAction($uuid, $enabled = null)
-    {
-        return $this->toggleBase('domains.domain', $uuid);
-    }
-
-    public function searchAction()
-    {
-        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface', 'description', 'domain_id'), 'domain');
-    }
+    protected static $internalModelClass = '\OPNsense\DynDNSGD\Settings';
+    protected static $internalModelName = 'settings';
 
 }

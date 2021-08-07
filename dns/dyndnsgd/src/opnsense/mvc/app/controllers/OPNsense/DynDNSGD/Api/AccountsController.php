@@ -30,7 +30,9 @@ namespace OPNsense\DynDnsGD\Api;
 
 use OPNsense\AcmeClient\Utils;
 use OPNsense\Base\ApiMutableModelControllerBase;
+use OPNsense\Base\BaseModel;
 use OPNsense\Core\Backend;
+use OPNsense\DynDNSGD\Accounts;
 
 class AccountsController extends ApiMutableModelControllerBase
 {
@@ -71,4 +73,18 @@ class AccountsController extends ApiMutableModelControllerBase
         return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
     }
 
+    public function verifyAction($uuid)
+    {
+        $backend = new Backend();
+        if ($uuid != null) {
+            $mdlAccount = new Accounts();
+            $node = $mdlAccount->getNodeByReference('accounts.account.' . $uuid);
+            if ($node != null) {
+                $backend = new Backend();
+                $response = $backend->configdRun("dyndnsgd verify-account ${uuid}");
+                return array("response" => $response);
+            }
+        }
+        return array("response" => "status: account not found from device.");
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -28,21 +27,8 @@
 
 namespace OPNsense\DynDNSGD;
 
-/**
- * Interface for Let's Encrypt validation methods
- * @package OPNsense\Backup
- */
-interface ValidationInterface
-{
-    /**
-     * add configuration that is required only for this specific validation method
-     * @return bool
-     */
-    public function prepare();
+use OPNsense\Base\BaseModel;
 
-    /**
-     * cleanup tasks that should run after performing the certificate validation
-     * @return bool
-     */
-    public function cleanup();
+class Settings extends BaseModel
+{
 }

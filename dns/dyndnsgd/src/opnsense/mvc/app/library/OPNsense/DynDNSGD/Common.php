@@ -1,5 +1,7 @@
 <?php
 
+namespace OPNsense\DynDNSGD;
+
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -26,23 +28,51 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDNSGD;
+use OPNsense\DynDNSGD\Accounts;
 
-/**
- * Interface for Let's Encrypt validation methods
- * @package OPNsense\Backup
- */
-interface ValidationInterface
+abstract class Common
 {
-    /**
-     * add configuration that is required only for this specific validation method
-     * @return bool
-     */
-    public function prepare();
+    protected $uuid;                # config object uuid
 
-    /**
-     * cleanup tasks that should run after performing the certificate validation
-     * @return bool
-     */
-    public function cleanup();
+    protected $mdl_account;
+    protected $gd_service;
+    private $config = null;
+
+    protected const ACCOUNT_CONFIG_PATH = 'accounts.account';
+
+
+    protected function getId()
+    {
+        return (string)$this->config->id;
+    }
+
+    protected function getName()
+    {
+        return (string)$this->config->name;
+    }
+
+    protected function getKey()
+    {
+        return (string)$this->config->key;
+    }
+
+    protected function getSecretKey()
+    {
+        return (string)$this->config->secret_key;
+    }
+
+    public function loadAccount(string $path, string $uuid)
+    {
+        // Get config object
+        $model = new Accounts();
+        $obj = $model->getNodeByReference("${path}.${uuid}");
+        if ($obj == null) {
+            GdUtils::log_error("config of type ${path} not found: ${uuid}");
+            return false;
+        }
+        $this->mdl_account = $model;
+        $this->config = $obj;
+        return true;
+    }
+
 }

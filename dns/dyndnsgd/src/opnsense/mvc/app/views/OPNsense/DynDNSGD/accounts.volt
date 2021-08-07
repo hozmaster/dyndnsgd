@@ -35,6 +35,7 @@
             add:'/api/dyndnsgd/accounts/add/',
             del:'/api/dyndnsgd/accounts/del/',
             toggle:'/api/dyndnsgd/accounts/toggle/',
+            verify:'/api/dyndnsgd/accounts/verify/',
         };
 
         var gridopt = {
@@ -46,7 +47,9 @@
             formatters: {
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-verify\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-address-book-o\"></span></button>"
+                        ;
                 },
                 "rowtoggle": function (column, row) {
                     if (parseInt(row[column.id], 2) == 1) {
@@ -206,6 +209,25 @@
                     console.log("[grid] action del missing")
                 }
             });
+
+            // verify account
+            grid_accounts.find(".command-verify").on("click", function(e)
+            {
+                if (gridParams['verify'] != undefined) {
+                    var uuid=$(this).data("row-id");
+                    stdDialogConfirm('{{ lang._('Confirmation Required') }}',
+                        '{{ lang._('Verify the selected account with service provider?') }}',
+                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function() {
+                        ajaxCall(url=gridParams['verify'] + uuid,sendData={},callback=function(data,status){
+                            // reload grid afterwards
+                            $("#"+gridId).bootgrid("reload");
+                        });
+                    });
+                } else {
+                    console.log("[grid] action verify missing")
+                }
+            });
+
 
             // toggle item, enable or disable domain
             grid_accounts.find(".command-toggle").on("click", function(e)
