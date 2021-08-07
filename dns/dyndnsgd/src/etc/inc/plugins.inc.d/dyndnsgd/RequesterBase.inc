@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -26,23 +25,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDNSGD;
-
-/**
- * Interface for Let's Encrypt validation methods
- * @package OPNsense\Backup
- */
-interface ValidationInterface
+class RequesterBase
 {
-    /**
-     * add configuration that is required only for this specific validation method
-     * @return bool
-     */
-    public function prepare();
+    protected string $_UserAgent = 'User-Agent: gdDnsUpdater/1.0';
+    protected string $baseApiUrl;
+    protected string $stagingApiUrl;
+    protected $ch;
+    protected bool $ipv6Supported;
 
-    /**
-     * cleanup tasks that should run after performing the certificate validation
-     * @return bool
-     */
-    public function cleanup();
+    public function updateARecords($dnsHost, $recordType, $dnsDomain)
+    {
+    }
+
+    protected function initCurl()
+    {
+        $this->ch = curl_init();
+        curl_setopt($this->ch, CURLOPT_HEADER, 0);
+        curl_setopt($this->ch, CURLOPT_USERAGENT, $this->_UserAgent);
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($this->ch, CURLOPT_INTERFACE, $this->_dnsRequestIfIP);
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->ch, CURLOPT_TIMEOUT, 15);
+
+    }
+
+    public function supportedRecords(): array
+    {
+    }
+
 }

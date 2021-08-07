@@ -28,21 +28,12 @@
 
 namespace OPNsense\DynDNSGD;
 
-/**
- * Interface for Let's Encrypt validation methods
- * @package OPNsense\Backup
- */
-interface ValidationInterface
+class SettingsController extends \OPNsense\Base\IndexController
 {
-    /**
-     * add configuration that is required only for this specific validation method
-     * @return bool
-     */
-    public function prepare();
-
-    /**
-     * cleanup tasks that should run after performing the certificate validation
-     * @return bool
-     */
-    public function cleanup();
+    public function indexAction()
+    {
+        $this->view->formViewSettings = $this->getForm("settings");
+        // pick the template to serve to our users.
+        $this->view->pick('OPNsense/DynDNSGD/settings');
+    }
 }

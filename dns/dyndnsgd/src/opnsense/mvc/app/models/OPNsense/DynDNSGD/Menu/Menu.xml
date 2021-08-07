@@ -2,10 +2,11 @@
     <!-- Plugin Dyndns GD menu -->
     <Services>
         <DynDNSGD cssClass="fa fa-tags">
-            <Accounts url="/ui/dyndnsgd/accounts/index" order="10"/>
-            <Domains url="/ui/dyndnsgd/domains/index" order="20"/>
+           <Settings url="/ui/dyndnsgd/settings/index" order="10"/>
+            <Accounts url="/ui/dyndnsgd/accounts/index" order="20"/>
+            <Domains url="/ui/dyndnsgd/domains/index" order="30"/>
             <Logs VisibleName="Log Files" order="30" url="/ui/dyndnsgd/logs">
-                <GeneralLog VisibleName="General Log" order="30" url="/ui/diagnostics/log/dyndnsgd"/>
+                <SystemLog VisibleName="System Log" order="30" url="/ui/dyndnsgd/logs"/>
             </Logs>
         </DynDNSGD>
     </Services>

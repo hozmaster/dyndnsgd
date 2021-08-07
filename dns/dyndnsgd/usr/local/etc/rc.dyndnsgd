@@ -1,3 +1,4 @@
+#!/usr/local/bin/php
 <?php
 
 /*
@@ -26,35 +27,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDnsGD\Api;
+require_once("config.inc");
+require_once("interfaces.inc");
+require_once("util.inc");
+require_once("filter.inc");
+require_once("plugins.inc.d/dyndnsgd.inc");
 
-use OPNsense\Base\ApiMutableModelControllerBase;
+if (isset($argv[1])) {
+    $argument = trim($argv[1], " \n");
+} else {
+    $argument = null;
+}
 
+//$gws = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getGateways();
+//var_dump($gws);
+//
+//$defGW = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getDefaultGW();
+//var_dump($defGW);
+//
+//$address = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getAddress($defGW['name']);
+//echo 'gw ip address ' . $address . PHP_EOL;
+//
+//$r_if = get_real_interface('wan');
+//$r_ip_addr = find_interface_ip($r_if);
+//
+//echo 'real if address ' . $r_ip_addr . PHP_EOL;
 
-class DomainsController extends ApiMutableModelControllerBase
-{
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Domains';
-
-    public function getAction($uuid = null)
-    {
-        $this->sessionClose();
-        return $this->getBase('domain', 'domains.domain', $uuid);
+if (empty($argument)) {
+    dyndns_gd_configure_do(true);
+} else {
+    $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
+    if (empty($interface)) {
+        $interface = $argument;
     }
-
-    public function updateAction($uuid)
-    {
-        return $this->setBase('domain', 'domains.domain', $uuid);
-    }
-
-    public function toggleAction($uuid, $enabled = null)
-    {
-        return $this->toggleBase('domains.domain', $uuid);
-    }
-
-    public function searchAction()
-    {
-        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface', 'description', 'domain_id'), 'domain');
-    }
-
+    dyndns_gd_configure_do(true, $interface);
 }

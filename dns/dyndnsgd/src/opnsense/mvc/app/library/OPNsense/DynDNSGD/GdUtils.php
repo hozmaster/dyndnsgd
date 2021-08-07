@@ -1,5 +1,7 @@
 <?php
 
+namespace OPNsense\DynDNSGD;
+
 /*
  * Copyright (C) 2021 Olli-Pekka Wallin
  * All rights reserved.
@@ -26,35 +28,35 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\DynDnsGD\Api;
+@include_once("util.inc");
 
-use OPNsense\Base\ApiMutableModelControllerBase;
-
-
-class DomainsController extends ApiMutableModelControllerBase
+class GdUtils
 {
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Domains';
 
-    public function getAction($uuid = null)
+    /**
+     * log runtime information
+     */
+    public static function log($msg)
     {
-        $this->sessionClose();
-        return $this->getBase('domain', 'domains.domain', $uuid);
+        syslog(LOG_NOTICE, "DynDNSGD: ${msg}");
     }
 
-    public function updateAction($uuid)
+    /**
+     * log additional debug output
+     */
+    public static function log_debug($msg, bool $debug = false)
     {
-        return $this->setBase('domain', 'domains.domain', $uuid);
+        if ($debug) {
+            syslog(LOG_NOTICE, "DynDNSGD: ${msg}");
+        }
     }
 
-    public function toggleAction($uuid, $enabled = null)
+    /**
+     * log error messages
+     */
+    public static function log_error($msg)
     {
-        return $this->toggleBase('domains.domain', $uuid);
-    }
-
-    public function searchAction()
-    {
-        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface', 'description', 'domain_id'), 'domain');
+        syslog(LOG_ERR, "DynDNSGD: ${msg}");
     }
 
 }

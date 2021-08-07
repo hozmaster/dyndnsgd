@@ -28,20 +28,27 @@
      $( document ).ready(function() {
 
        // get entries from dyndnsgd.log
-       let grid_generallog = $("#grid-generallog").UIBootgrid({
+      let grid_systemlog = $("#grid-systemlog").UIBootgrid({
           options:{
+              // Hide nonfunctional search field
+              navigation:2,
               sorting:false,
               rowSelect: false,
               selection: false,
               rowCount:[20,50,100,200,500,1000,-1],
+             requestHandler: function(request){
+                    // Show only log entries that match 'DynDNSGD'
+                    request['searchPhrase'] = 'DynDNSGD:';
+                    return request;
+              },
            },
-           search:'/api/diagnostics/log/core/dyndnsgd'
+           search:'/api/diagnostics/log/core/system'
        });
 
-      grid_generallog.on("loaded.rs.jquery.bootgrid", function(){
+      grid_systemlog.on("loaded.rs.jquery.bootgrid", function(){
           $(".action-page").click(function(event){
               event.preventDefault();
-              $("#grid-generallog").bootgrid("search",  "");
+              $("#grid-systemlog").bootgrid("search",  "");
               let new_page = parseInt((parseInt($(this).data('row-id')) / $("#grid-log").bootgrid("getRowCount")))+1;
               $("input.search-field").val("");
               // XXX: a bit ugly, but clearing the filter triggers a load event.
@@ -56,14 +63,14 @@
 
 
 <ul class="nav nav-tabs" role="tablist" id="maintabs">
-    <li class="active"><a data-toggle="tab" href="#generallog"><b>{{ lang._('General Log') }}</b></a></li>
+   <li class="active"><a data-toggle="tab" href="#systemlog"><b>{{ lang._('System Log') }}</b></a></li>
 </ul>
 
 <div class="content-box tab-content">
-    <div id="generallog" class="tab-pane fade in active">
+    <div id="systemlog" class="tab-pane fade in active">
         <div class="content-box" style="padding-bottom: 1.5em;">
             <div  class="col-sm-12">
-                <table id="grid-generallog" class="table table-condensed table-hover table-striped table-responsive" data-store-selection="true">
+                <table id="grid-systemlog" class="table table-condensed table-hover table-striped table-responsive" data-store-selection="true">
                     <thead>
                     <tr>
                         <th data-column-id="timestamp" data-width="11em" data-type="string">{{ lang._('Date') }}</th>
