@@ -26,7 +26,8 @@ Account :
 * Log activity
 
 Domains :
-* Ability to add subdomains and specified parameters to it.
+* Ability to fetch subdomains from service.
+* Ability maintain records for domain.
 
 GoDaddy :
 
