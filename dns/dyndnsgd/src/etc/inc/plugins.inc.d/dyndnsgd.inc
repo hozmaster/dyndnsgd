@@ -56,12 +56,13 @@ function dyndns_gd_services()
 
     if (dyndns_gd_enabled()) {
         $services[] = array(
-            'description' => gettext('Dynamic DNS'),
+            'description' => gettext('Dynamic DNS GD'),
             //            'configd' => array(
             //                'restart' => array('dyndns_gd reload'),
             //            ),
             'nocheck' => true,
             'name' => 'dyndns_gd',
+            'pidfile' => '/var/run/dyndnsgd.pid'
         );
     }
     return $services;

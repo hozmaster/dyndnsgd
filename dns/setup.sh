@@ -92,8 +92,9 @@ chmod a+x /usr/local/opnsense/scripts/OPNsense/DynDNSGD/*.php
 cp -vf dyndnsgd/src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
 
 ## legacy plugins support
-cp -vf usr/local/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
-chmod a+x /usr/local/etc/rc.dyndnsgd
+cp -vf src/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
+## chmod a+x /usr/local/etc/rc.dyndnsgd
+
 cp -vf src/etc/inc/plugins.inc.d/dyndnsgd.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd.inc
 cp -vf src/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc
 cp -vf src/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc
