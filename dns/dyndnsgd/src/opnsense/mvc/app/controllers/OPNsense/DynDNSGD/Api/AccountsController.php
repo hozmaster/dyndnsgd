@@ -70,7 +70,7 @@ class AccountsController extends ApiMutableModelControllerBase
         return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
     }
 
-    public function verifyAction($uuid)
+    public function fetchAction($uuid)
     {
         $backend = new Backend();
         if ($uuid != null) {

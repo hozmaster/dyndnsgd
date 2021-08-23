@@ -35,7 +35,7 @@
             add:'/api/dyndnsgd/accounts/add/',
             del:'/api/dyndnsgd/accounts/del/',
             toggle:'/api/dyndnsgd/accounts/toggle/',
-            verify:'/api/dyndnsgd/accounts/verify/',
+            fetch:'/api/dyndnsgd/accounts/fetch/',
         };
 
         var gridopt = {
@@ -48,7 +48,7 @@
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
                         "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>" +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-verify\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-address-book-o\"></span></button>"
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-fetch\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-address-book-o\"></span></button>"
                         ;
                 },
                 "rowtoggle": function (column, row) {
@@ -210,21 +210,21 @@
                 }
             });
 
-            // verify account
-            grid_accounts.find(".command-verify").on("click", function(e)
+            // fetch all domains from service.
+            grid_accounts.find(".command-fetch").on("click", function(e)
             {
-                if (gridParams['verify'] != undefined) {
+                if (gridParams['fetch'] != undefined) {
                     var uuid=$(this).data("row-id");
                     stdDialogConfirm('{{ lang._('Confirmation Required') }}',
-                        '{{ lang._('Verify the selected account with service provider?') }}',
+                        '{{ lang._('Fetch all domains which are related to account from service ?') }}',
                         '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function() {
-                        ajaxCall(url=gridParams['verify'] + uuid,sendData={},callback=function(data,status){
+                        ajaxCall(url=gridParams['fetch'] + uuid,sendData={},callback=function(data,status){
                             // reload grid afterwards
                             $("#"+gridId).bootgrid("reload");
                         });
                     });
                 } else {
-                    console.log("[grid] action verify missing")
+                    console.log("[grid] action fetch domains missing")
                 }
             });
 
