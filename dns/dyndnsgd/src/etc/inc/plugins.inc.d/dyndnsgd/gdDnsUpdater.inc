@@ -28,21 +28,32 @@
 class gdDnsUpdater
 {
     public $_if;
-    public $_if_addr4;
+    private string $_if_addr4;
     private array $_accounts = [];
     private array $_domains = [];
     private array $dnsServiceList = [];
     private string $dnsService = 'gd';
     private $handler;
+    private $verboseLogging = false;
 
-    public function __construct()
+    public function __construct(
+        $if4_addr,
+        $verboseLogging
+    )
     {
+        $this->_if_addr4 = $if4_addr;
+        $this->verboseLogging = $verboseLogging;
         $this->dnsServiceList = dyndns_gd_list();
+        touch('/tmp/dyndnsgd.update');
     }
 
     public function checkAndDoDNSUpdate()
     {
         $updater_lck = lock("dyndns_gd_" . LOCK_EX);
+        if ($this->verboseLogging) {
+            log_error("Dynamic DNS GD : updater lock has been set ");
+        }
+
         switch ($this->dnsService) {
             case 'gd':
                 include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
@@ -53,15 +64,22 @@ class gdDnsUpdater
         foreach ($this->_domains as $domain) {
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
-                $result = $this->handler->updateA1Records($domain['domain'], $keys, '0.0.0.0');
+                if ($this->verboseLogging) {
+                    log_error("Dynamic DNS GD : Updating A-record for domain : " . $domain['domain']);
+                }
+                $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
                 if ($result['status'] == 'failed') {
-                    var_dump($result);
+                    log_error("Dynamic DNS GD : 'A'-record update failed for domain : " . $domain['domain']);
                 }
             }
         }
 
         unlock($updater_lck);
+        if ($this->verboseLogging) {
+            log_error("Dynamic DNS GD : updater lock has released. ");
+        }
     }
+
 
     public function addDomains($defs_domains): bool
     {

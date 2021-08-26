@@ -51,9 +51,9 @@ class GoDaddy extends RequesterBase
 
         // for now, will be changed later on.
         $record_type = 'TXT';
-        $record_name = '@';
+        $record_name = 'dyndnsgd';
 
-        $content = date("Y-m-d h:i:s", strtotime("now"));
+        $content = date("Y-m-d H:i:s", strtotime("now"));
         $record_object = (object)[
             'data' => $content,
             'ttl' => $this->ttl,
