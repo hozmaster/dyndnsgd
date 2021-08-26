@@ -44,7 +44,6 @@ class gdDnsUpdater
         $this->_if_addr4 = $if4_addr;
         $this->verboseLogging = $verboseLogging;
         $this->dnsServiceList = dyndns_gd_list();
-        touch('/tmp/dyndnsgd.update');
     }
 
     public function checkAndDoDNSUpdate()
