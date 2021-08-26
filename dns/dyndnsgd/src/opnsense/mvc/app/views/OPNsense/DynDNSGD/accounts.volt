@@ -48,7 +48,7 @@
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
                         "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>" +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-fetch\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-address-book-o\"></span></button>"
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-fetch\" title='Fetch domains' data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-address-book-o\"></span></button>"
                         ;
                 },
                 "rowtoggle": function (column, row) {

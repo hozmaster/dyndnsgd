@@ -51,6 +51,7 @@ class RequesterBase
 
     public function supportedRecords(): array
     {
+        return array();
     }
 
 }
