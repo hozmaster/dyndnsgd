@@ -200,7 +200,7 @@
                         '{{ lang._('Do you want to remove the selected item?') }}',
                         '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
                         ajaxCall(url=gridParams['del'] + uuid,
-                            sendData={},callback=function(data,status){
+                            sendData={},callback=function(data,status) {
                                 // reload grid after delete
                                 $("#"+gridId).bootgrid("reload");
                             });
@@ -217,17 +217,33 @@
                     var uuid=$(this).data("row-id");
                     stdDialogConfirm('{{ lang._('Confirmation Required') }}',
                         '{{ lang._('Fetch all domains which are related to account from service ?') }}',
-                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function() {
+                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function(){
                         ajaxCall(url=gridParams['fetch'] + uuid,sendData={},callback=function(data,status){
                             // reload grid afterwards
-                            $("#"+gridId).bootgrid("reload");
+                            message = '';
+                            type='info'
+                            if (data.response[0] == 'Error') {
+                                message = '{{ lang._('Fetching domains failed, code : ')}}' + data.response[1];
+                            } else {
+                                message = '{{ lang._('Possible domains fetched.')}}';
+                                type='warning'
+                            }
+                            stdDialogInform(
+                                '{{ lang._('Status') }}',
+                                message,
+                                '{{ lang._('Close') }}',
+                                callback=function(){
+                                    // do nothing here
+                                }),
+                                type
+                            });
+                        $("#"+gridId).bootgrid("reload");
                         });
-                    });
-                } else {
-                    console.log("[grid] action fetch domains missing")
-                }
-            });
 
+              } else {
+                 console.log("[grid] action fetch domains missing")
+              }
+            });
 
             // toggle item, enable or disable domain
             grid_accounts.find(".command-toggle").on("click", function(e)
