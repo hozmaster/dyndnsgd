@@ -44,7 +44,7 @@ const ACTIONS = [
     'verify' => [
         'description' => 'Verify status of the account.',
     ],
-    'fetch_domnains' => [
+    'fetch_domains' => [
         'description' => 'Fetch all domains for account',
     ]
 ];
@@ -71,13 +71,11 @@ function main()
     $options = getopt('h', ['account:', 'help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
-        // Not enough or invalid arguments specified.
+        log_error("Invalid or not valid amount of arguments passed.");
         help();
     }
     if ($options['domains'] === 'fetch_domains') {
         log_notice("fetch all domains for account");
-        // $worker = new Worker($options['uuid']);
-        // $response = $worker->some_empty_method();
     }
     if ($options['mode'] === 'verify') {
         $worker = new Worker($options['uuid']);
@@ -85,6 +83,11 @@ function main()
     } else {
         help();
     }
+}
+
+function log_error($msg)
+{
+    syslog(LOG_ERR, "DynDNSGD: " . $msg);
 }
 
 function log_notice($msg)

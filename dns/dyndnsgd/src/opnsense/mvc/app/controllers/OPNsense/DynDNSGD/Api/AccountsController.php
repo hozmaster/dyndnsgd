@@ -68,17 +68,26 @@ class AccountsController extends ApiMutableModelControllerBase
         return $this->searchBase('accounts.account', array('enabled', 'service_provider', 'name', 'description', 'staging'), 'name');
     }
 
-    public function fetchAction($uuid) : array
+    public function fetchAction($uuid): array
     {
         if ($uuid != null) {
             $mdlAccount = new Accounts();
             $node = $mdlAccount->getNodeByReference('accounts.account.' . $uuid);
             if ($node != null) {
                 $backend = new Backend();
-                $response = $backend->configdRun("dyndnsgd verify-account ${uuid}");
+                $response = $this->parseResponse($backend->configdRun("dyndnsgd verify-account ${uuid}"));
                 return array("response" => $response);
             }
         }
         return array("response" => "status: account not found from device.");
+    }
+
+    private function parseResponse($response): array
+    {
+        $target = explode(' ', trim($response));
+        if ($target[0] == 'Error') {
+            $target[1] = str_replace(array('(', ')'), '', $target[1]);
+        }
+        return $target;
     }
 }
