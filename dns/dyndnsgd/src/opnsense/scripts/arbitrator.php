@@ -96,6 +96,11 @@ function main()
     }
 }
 
+function log_error($msg)
+{
+    syslog(LOG_ERR, "DynDNSGD: " . $msg);
+}
+
 function log_notice($msg)
 {
     syslog(LOG_NOTICE, "DynDNSGD: " . $msg);
