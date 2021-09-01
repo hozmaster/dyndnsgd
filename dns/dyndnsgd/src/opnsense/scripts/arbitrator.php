@@ -79,7 +79,7 @@ function main()
     $options = getopt('h', ['account:', 'help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
-        // log_error("Invalid or not valid amount of arguments passed.");
+        arb_log_error("Invalid or not valid amount of arguments passed.");
         help();
     }
     if ($options['help']) {
@@ -96,7 +96,7 @@ function main()
     }
 }
 
-function log_error($msg)
+function arb_log_error($msg)
 {
     syslog(LOG_ERR, "DynDNSGD: " . $msg);
 }
