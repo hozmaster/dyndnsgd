@@ -27,12 +27,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-@include_once('config.inc');
-@include_once('certs.inc');
-@include_once('util.inc');
+include_once('config.inc');
+include_once('certs.inc');
+include_once('util.inc');
 
 use OPNsense\DynDNSGD\Worker;
 
+// Summary that will be displayed in usage information.
+const ABOUT = <<<TXT
+
+This script acts as a bridge between the OPNsense WebGUI/API and the
+DynDNSGD library.
+
+TXT;
 
 const EXAMPLES = <<<TXT
 - Fetch all domains of account
@@ -51,6 +58,7 @@ const ACTIONS = [
 
 function help()
 {
+    echo ABOUT . PHP_EOL;
 }
 
 function validateMode($mode)
@@ -71,11 +79,14 @@ function main()
     $options = getopt('h', ['account:', 'help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
-        log_error("Invalid or not valid amount of arguments passed.");
+        // log_error("Invalid or not valid amount of arguments passed.");
+        help();
+    }
+    if ($options['help']) {
         help();
     }
     if ($options['domains'] === 'fetch_domains') {
-        log_notice("fetch all domains for account");
+        log_notice("Action not yet supported.");
     }
     if ($options['mode'] === 'verify') {
         $worker = new Worker($options['uuid']);
@@ -83,11 +94,6 @@ function main()
     } else {
         help();
     }
-}
-
-function log_error($msg)
-{
-    syslog(LOG_ERR, "DynDNSGD: " . $msg);
 }
 
 function log_notice($msg)
