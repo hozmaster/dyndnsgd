@@ -37,28 +37,48 @@ use OPNsense\DynDNSGD\Worker;
 const ABOUT = <<<TXT
 
 This script acts as a bridge between the OPNsense WebGUI/API and the
-DynDNSGD library.
+GoDaddy account.
 
 TXT;
 
 const EXAMPLES = <<<TXT
-- Fetch all domains of account
-  arbitrator.php --domains fetch_domains --uuid 00000000-0000-0000-0000-000000000000
+- Fetch all users domains from GoDaddy service.
+  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000
+- Validate key and secret key are valid against GoDaddy account
+  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000  
 TXT;
 
 // Supported account actions and their help text
-const ACTIONS = [
-    'verify' => [
-        'description' => 'Verify status of the account.',
+const MODES = [
+    'validate' => [
+        'description' => 'Verify key and secret key are valid.',
     ],
-    'fetch_domains' => [
+    'fetch' => [
         'description' => 'Fetch all domains for account',
     ]
 ];
 
-function help()
+// Supported command line options and their usage information.
+const STATIC_OPTIONS = <<<TXT
+-h, --help          Print commandline help
+--mode              Specify the mode of operation
+--uuid              The id of the account in the Account-model
+TXT;
+
+function arb_help()
 {
-    echo ABOUT . PHP_EOL;
+    echo ABOUT . PHP_EOL
+        . "Usage: " . basename($GLOBALS["argv"][0]) . " --mode MODE [options]" . PHP_EOL
+        . PHP_EOL . STATIC_OPTIONS . PHP_EOL;
+
+    echo PHP_EOL . 'Available modes:' . PHP_EOL;
+    foreach (MODES as $name => $options) {
+        echo "\"$name\" - {$options["description"]}" . PHP_EOL;
+    }
+
+    echo PHP_EOL . "Examples:" . PHP_EOL
+        . str_replace('/\r\n|\n|\r/g', PHP_EOL, EXAMPLES)
+        . PHP_EOL . PHP_EOL;
 }
 
 function validateMode($mode)
@@ -76,29 +96,18 @@ function validateMode($mode)
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h', ['account:', 'help', 'mode:', 'uuid:']);
+    $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
-        arb_log_error("Invalid or not valid amount of arguments passed.");
-        help();
-    }
-    if ($options['help']) {
-        help();
-    }
-    if ($options['domains'] === 'fetch_domains') {
-        log_notice("Action not yet supported.");
-    }
-    if ($options['mode'] === 'verify') {
+        arb_help();
+    } elseif (($options['mode'] === 'validate') && (isset($options['uuid']))) {
+        log_notice("mode: validate, nothing yet");
+    } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
         $worker = new Worker($options['uuid']);
         $worker->fetch_all_domains();
     } else {
-        help();
+        arb_help();
     }
-}
-
-function arb_log_error($msg)
-{
-    syslog(LOG_ERR, "DynDNSGD: " . $msg);
 }
 
 function log_notice($msg)

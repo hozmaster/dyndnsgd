@@ -75,7 +75,7 @@ class AccountsController extends ApiMutableModelControllerBase
             $node = $mdlAccount->getNodeByReference('accounts.account.' . $uuid);
             if ($node != null) {
                 $backend = new Backend();
-                $response = $this->parseResponse($backend->configdRun("dyndnsgd verify-account ${uuid}"));
+                $response = $this->parseResponse($backend->configdRun("dyndnsgd fetch-domains ${uuid}"));
                 return array("response" => $response);
             }
         }
