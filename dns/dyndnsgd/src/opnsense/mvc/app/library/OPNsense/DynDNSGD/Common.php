@@ -33,13 +33,18 @@ use OPNsense\DynDNSGD\Accounts;
 abstract class Common
 {
     protected $uuid;                # config object uuid
-
     protected $mdl_account;
     protected $gd_service;
     private $config = null;
+    private $verbose = false;
 
     protected const ACCOUNT_CONFIG_PATH = 'accounts.account';
 
+    public function toggleVerbose()
+    {
+        $this->verbose = !$this->verbose;
+        GdUtils::log_debug("verbose mode toggled " . $this->verbose);
+    }
 
     protected function getId()
     {

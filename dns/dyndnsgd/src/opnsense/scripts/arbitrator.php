@@ -63,6 +63,7 @@ const STATIC_OPTIONS = <<<TXT
 -h, --help          Print commandline help
 --mode              Specify the mode of operation
 --uuid              The id of the account in the Account-model
+--verbose           Turn verbose mode on. Note: key and secret key are not logged when setting is on.
 TXT;
 
 function arb_help()
@@ -96,7 +97,7 @@ function validateMode($mode)
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:']);
+    $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:', 'verbose::']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
@@ -104,6 +105,10 @@ function main()
         log_notice("mode: validate, nothing yet");
     } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
         $worker = new Worker($options['uuid']);
+        if (isset($options['verbose'])) {
+            log_notice("mode: fetch, toggle mode on");
+            $worker->toggleVerbose();
+        }
         $worker->fetch_all_domains();
     } else {
         arb_help();
