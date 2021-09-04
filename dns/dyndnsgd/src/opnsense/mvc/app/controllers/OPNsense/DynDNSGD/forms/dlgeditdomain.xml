@@ -8,8 +8,8 @@
     <field>
         <id>domain.domain</id>
         <label>Domain</label>
-        <type>text</type>
-        <help>Set a name of the domain.</help>
+        <type>info</type>
+        <help>Name of the domain.</help>
     </field>
     <field>
         <id>domain.account</id>
