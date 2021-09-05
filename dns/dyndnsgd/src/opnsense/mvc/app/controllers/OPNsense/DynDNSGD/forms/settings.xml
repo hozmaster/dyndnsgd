@@ -29,7 +29,7 @@
         <id>settings.enabled</id>
         <label>Enable: </label>
         <type>checkbox</type>
-        <help>Enable or disable DyndnsGD</help>
+        <help>Enable or disable DyndnsGD-service</help>
     </field>
     <field>
         <id>settings.interface</id>
@@ -37,6 +37,13 @@
         <type>dropdown</type>
         <allownew>false</allownew>
         <help>Set a default interface used by this plugin.</help>
+    </field>
+    <field>
+        <id>settings.atrecord</id>
+        <label>Add @-records by default ?</label>
+        <type>checkbox</type>
+        <allownew>false</allownew>
+        <help>Should domains support at records by default.</help>
     </field>
     <field>
         <id>settings.log_level</id>

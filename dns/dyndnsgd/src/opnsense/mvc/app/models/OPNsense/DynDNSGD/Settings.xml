@@ -17,6 +17,10 @@
                 <enable>/^(?!0).*$/</enable>
             </filters>
         </interface>
+        <atrecord type="BooleanField">
+            <default>1</default>
+            <Required>Y</Required>
+        </atrecord>
         <log_level type="OptionField">
             <Required>Y</Required>
             <default>normal</default>

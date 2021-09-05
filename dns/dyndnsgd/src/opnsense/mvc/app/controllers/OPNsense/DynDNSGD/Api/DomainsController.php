@@ -54,7 +54,8 @@ class DomainsController extends ApiMutableModelControllerBase
 
     public function searchAction()
     {
-        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface', 'description', 'domain_id'), 'domain');
+        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
+            'cachedip4address', 'description', 'domain_id'), 'domain');
     }
 
 }

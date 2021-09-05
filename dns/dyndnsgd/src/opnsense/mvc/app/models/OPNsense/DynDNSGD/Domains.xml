@@ -40,6 +40,16 @@
                         <enable>/^(?!0).*$/</enable>
                     </filters>
                 </interface>
+                <cachedip4address type="TextField">
+                    <Required>N</Required>
+                    <mask>/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-4]|2[0-5][0-9]|[01]?[0-9][0-9]?)$/</mask>
+                    <ValidationMessage>Cached address must be a valid IPv4 address</ValidationMessage>
+                    <default>127.0.0.1</default>
+                </cachedip4address>
+                <cachedip6address type="TextField">
+                    <Required>N</Required>
+                    <default>::1/128</default>
+                </cachedip6address>
                 <description type="TextField">
                     <default></default>
                     <Required>N</Required>
