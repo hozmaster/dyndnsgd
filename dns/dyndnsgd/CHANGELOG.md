@@ -2,19 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - yyyy-mm-dd
+## 0.3.x-dev [Unreleased] - yyyy-mm-dd
 
 ### KNOWN ISSUES
 
 ### Added
 
-None
+Settings view
+- Add @-records by default ?-option
+
+Account view
+- Fetch domains GoDaddy service.
+
+Overall
+
+- Ability to define Cron job to fetch
+- Settings model: Add new column for 'Add @-records by default'-option
+- Domains: Added  IP4(6) address columns to the Domains-model
 
 ### Changed
 
+Account view
+- Verify button renamed to Fetch Domains-button
+
 ### Fixed
 
-None
+- [Can now actually fetch owned domains from GoDaddy service.]
 
 ## 0.3.0 [Unreleased] - yyyy-mm-dd
 
