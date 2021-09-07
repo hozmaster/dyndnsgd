@@ -66,7 +66,6 @@ class GdDomains
         $node->enabled = 0;
         $node->domain = $content['domain'];
         $node->account = $account_uuid;
-        $node->chachedip4address = $content[''];
         $node->domain_id = $content['domainId'];
 
         $validationMessages = $model->performValidation();
