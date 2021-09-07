@@ -84,7 +84,7 @@ function arb_help()
 function validateMode($mode)
 {
     $return = false;
-    foreach (ACTIONS as $name => $options) {
+    foreach (MODES as $name => $options) {
         if ($mode === $name) {
             $return = true;
             break;
