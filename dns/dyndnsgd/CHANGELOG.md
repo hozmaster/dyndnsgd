@@ -16,7 +16,7 @@ Account view
 
 Overall
 
-- Ability to define Cron job to fetch
+- Ability to define Cron job so record updating can done by this plugin.
 - Settings model: Add new column for 'Add @-records by default'-option
 - Domains: Added  IP4(6) address columns to the Domains-model
 
