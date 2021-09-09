@@ -31,11 +31,11 @@ class GoDaddy extends RequesterBase
 {
 
     private $ttl = 600;
+    private string $gdApiUrl;
 
     public function __construct()
     {
-        $this->basApiUrl = 'https://api.godaddy.com/v1/domains/';
-        $this->stagingApiUrl = 'https://api.ote-godaddy.com';
+        $this->gdApiUrl = 'https://api.godaddy.com/v1/domains/';
     }
 
     public function supportedRecords(): array
@@ -85,8 +85,7 @@ class GoDaddy extends RequesterBase
 
     private function getBaseUrl(): string
     {
-        // forgot staging for while.
-        return 'https://api.godaddy.com';
+        return $this->gdApiUrl;
     }
 
     private function getHeader($api_key, $api_secret): array
