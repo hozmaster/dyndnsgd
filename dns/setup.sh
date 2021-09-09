@@ -85,7 +85,7 @@ cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/c
 cp -vf $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
 
 ## script
-cp -vf dyndnsgd/src/opnsense/scripts/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
+cp -vf dyndnsgd/src/opnsense/scripts/OPNsense/DynDNSGD/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
 chmod a+x /usr/local/opnsense/scripts/OPNsense/DynDNSGD/*.php
 
 ## service
