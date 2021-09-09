@@ -84,6 +84,10 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
 
+        if ($verbose) {
+            syslog( LOG_NOTICE, "DynDNSGD: Started dns update process");
+        }
+
         // get r if addr of used gateway address.
         $r_ifddr4 = get_real_interface('wan');
 
@@ -94,19 +98,20 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
 
         if (!count($models)) {
             // TODO : No data for dyndnsgd. Exi with error code in the log
-            echo 'frontend side is not completed' . PHP_EOL;
+            syslog( LOG_NOTICE, "DynDNSGD: Internal model problems");
+            return;
+
+        }
+
+        if (!$updater->fetchAccounts($models['accounts'])) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            syslog( LOG_NOTICE, "DynDNSGD: No valid accounts.");
             return;
         }
 
-        if (!$updater->addAccounts($models['accounts'])) {
+        if (!$updater->fetchDomains($models['domains'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            echo 'failed accounts' . PHP_EOL;
-            return;
-        }
-
-        if (!$updater->addDomains($models['domains'])) {
-            // TODO : No data for dyndnsgd. Exit with error code in the log
-            echo 'Failed domains' . PHP_EOL;
+            syslog( LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
             return;
         }
 
@@ -114,6 +119,8 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         $updater->checkAndDoDNSUpdate();
         sleep(1);
 
+    } else {
+        syslog( LOG_NOTICE, "DynDNSGD: plugin is disabled");
     }
 
 }

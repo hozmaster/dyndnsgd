@@ -50,7 +50,7 @@ class gdDnsUpdater
     {
         $updater_lck = lock("dyndns_gd_" . LOCK_EX);
         if ($this->verboseLogging) {
-            log_error("Dynamic DNS GD : updater lock has been set ");
+            log_error("Dynamic DNS GD : updater lock set ");
         }
 
         switch ($this->dnsService) {
@@ -75,12 +75,12 @@ class gdDnsUpdater
 
         unlock($updater_lck);
         if ($this->verboseLogging) {
-            log_error("Dynamic DNS GD : updater lock has released. ");
+            log_error("Dynamic DNS GD : updater lock released. ");
         }
     }
 
 
-    public function addDomains($defs_domains): bool
+    public function fetchDomains($defs_domains): bool
     {
         if (isset($defs_domains['domains'])) {
             foreach ($defs_domains['domains']['domain'] as $domain) {
@@ -103,7 +103,7 @@ class gdDnsUpdater
         return true;
     }
 
-    public function addAccounts($defs_acc_s): bool
+    public function fetchAccounts($defs_acc_s): bool
     {
         if (isset($defs_acc_s['accounts'])) {
             $accs = $defs_acc_s['accounts']['account'];
