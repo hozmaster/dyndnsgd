@@ -89,7 +89,7 @@ class gdDnsUpdater
     public function addAccounts($defs_acc_s): bool
     {
         if (isset($defs_acc_s['accounts'])) {
-            $accs = $defs_acc_s['accounts'];
+            $accs = $defs_acc_s['accounts']['account'];
             foreach ($accs as $acc) {
                 if ($acc['enabled']) {
                     $temp['key'] = $acc['key'][0];
