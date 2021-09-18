@@ -3,7 +3,7 @@
     <description>
         the OPNsense DynamicDNS mount and model for the accounts-view
     </description>
-    <version>0.2.0</version>
+    <version>0.2.8</version>
     <items>
         <accounts>
             <account type="ArrayField">
@@ -22,21 +22,24 @@
                     <Required>Y</Required>
                 </service_provider>
                 <name type="TextField">
-                    <default></default>
                     <Required>Y</Required>
                 </name>
                 <description type="TextField">
                     <default></default>
                     <Required>N</Required>
                 </description>
-                <key type="TextField">
-                    <default></default>
+                <api_key type="TextField">
+                    <default> </default>
                     <Required>Y</Required>
-                </key>
-                <secret_key type="TextField">
-                    <default></default>
+                </api_key>
+                <api_secret type="TextField">
+                    <default> </default>
                     <Required>Y</Required>
-                </secret_key>
+                </api_secret>
+                <description type="TextField">
+                    <default></default>
+                    <Required>N</Required>
+                </description>
                 <staging type="BooleanField">
                     <default>0</default>
                     <Required>N</Required>
