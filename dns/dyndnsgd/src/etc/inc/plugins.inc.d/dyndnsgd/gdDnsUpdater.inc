@@ -99,6 +99,7 @@ class gdDnsUpdater
         if (isset($defs_domains['domains'])) {
             foreach ($defs_domains['domains']['domain'] as $domain) {
                 if ($domain['enabled']) {
+                    $this->log_message(json_encode($domain));
                     $temp['domain'] = $domain['domain'];
                     $temp['account_uuid'] = $domain['account'];
                     $temp['interface'] = $domain['interface'];
@@ -123,8 +124,8 @@ class gdDnsUpdater
             $accs = $defs_acc_s['accounts'];
             foreach ($accs as $acc) {
                 if ($acc['enabled']) {
-                    $temp['key'] = $acc['api_key'];
-                    $temp['secret'] = $acc['api_secret'];
+                    $temp['api.key'] = $acc['api_key'];
+                    $temp['api.secret'] = $acc['api_secret'];
                     $temp['uuid'] = $acc['@attributes']['uuid'];
                     $temp['test'] = $acc['staging'];
                     array_push($this->_accounts, $temp);
@@ -144,6 +145,7 @@ class gdDnsUpdater
     {
         $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
         if ($result !== false) {
+            $this->log_message(json_encode($result));
             $keys = [
                 'api.key' => $this->_accounts[$result]['api_key'],
                 'api.secret' => $this->_accounts[$result]['api_secret']

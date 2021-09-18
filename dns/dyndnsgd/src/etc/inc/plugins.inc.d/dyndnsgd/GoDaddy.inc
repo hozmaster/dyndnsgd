@@ -25,6 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+use OPNsense\DynDNSGD\GdUtils;
+
 require_once("RequesterBase.inc");
 
 class GoDaddy extends RequesterBase
@@ -35,7 +37,7 @@ class GoDaddy extends RequesterBase
 
     public function __construct()
     {
-        $this->gdApiUrl = 'https://api.godaddy.com/v1/domains/';
+        $this->gdApiUrl = 'https://api.godaddy.com';
     }
 
     public function supportedRecords(): array
@@ -46,6 +48,8 @@ class GoDaddy extends RequesterBase
     public function updateA1Records($domain, $keys, $if_ip_addr)
     {
         $this->initCurl();
+
+        GdUtils::log("payload " . json_encode($keys));
 
         $payload = array();
 
@@ -63,7 +67,11 @@ class GoDaddy extends RequesterBase
 
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
 
+        GdUtils::log("url " . $url);
+        GdUtils::log("payload " . json_encode($payload));
+
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
+        GdUtils::log("payload " . json_encode($headers));
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
@@ -73,6 +81,7 @@ class GoDaddy extends RequesterBase
         $responseInfo = curl_getinfo($this->ch);
         if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
             $result = '{ "status" : "failed", "code" : ' . $responseInfo["http_code"] . ' }';
+            GdUtils::log($result);
         }
 
         if (empty($result)) {

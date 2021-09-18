@@ -52,6 +52,15 @@ class GdService
         return $url;
     }
 
+    public function getHeader($api_key, $api_secret): array
+    {
+        return array(
+            "Authorization: sso-key $api_key:$api_secret",
+            "Content-Type: application/json",
+            "Accept: application/json"
+        );
+    }
+
     public function gd_parse_response_info($code)
     {
         switch ($code) {
@@ -103,7 +112,6 @@ class GdService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET'); // Values: GET, POST, PUT, DELETE, PATCH, UPDATE
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         //execute call and return response data.
