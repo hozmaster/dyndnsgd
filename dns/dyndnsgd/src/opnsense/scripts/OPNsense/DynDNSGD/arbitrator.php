@@ -55,10 +55,7 @@ const MODES = [
     ],
     'fetch' => [
         'description' => 'Fetch all domains for account',
-    ],
-//    'db_clear' => [
-//        'description' => 'Clears content from all tables which are related to this plugin.',
-//    ]
+    ]
 ];
 
 // Supported command line options and their usage information.
@@ -108,9 +105,6 @@ function main()
     } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
         $worker = new Worker($options['uuid']);
         $worker->fetch_all_domains();
-//    } elseif ($options['mode'] === 'db_clear') {
-//        $worker = new Worker('00-900');
-//        $worker->delAllDomains();
     } else {
         arb_help();
     }
