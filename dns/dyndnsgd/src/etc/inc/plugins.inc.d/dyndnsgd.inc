@@ -97,7 +97,7 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         );
 
         if (!count($models)) {
-            // TODO : No data for dyndnsgd. Exi with error code in the log
+            // TODO : No data for dyndnsgd. Exit with error code in the log
             syslog( LOG_NOTICE, "DynDNSGD: Internal model problems");
             return;
 

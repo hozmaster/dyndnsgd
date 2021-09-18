@@ -25,6 +25,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+define("FOO", "something");
+
+
 class gdDnsUpdater
 {
     public $_if;
@@ -35,6 +38,8 @@ class gdDnsUpdater
     private string $dnsService = 'gd';
     private $handler;
     private $verboseLogging = false;
+
+    const LOG_PREFIX = "DynDNSGD";
 
     public function __construct(
         $if4_addr,
@@ -50,7 +55,7 @@ class gdDnsUpdater
     {
         $updater_lck = lock("dyndns_gd_" . LOCK_EX);
         if ($this->verboseLogging) {
-            log_error("Dynamic DNS GD : updater lock set ");
+            $this->log_message(" updater lock set ");
         }
 
         switch ($this->dnsService) {
@@ -60,22 +65,27 @@ class gdDnsUpdater
                 break;
         }
 
+        if ($this->verboseLogging) {
+            $this->log_message(" domain count  : " . count($this->_domains));
+            $this->log_message(" account count : " . count($this->_accounts));
+        }
+
         foreach ($this->_domains as $domain) {
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
                 if ($this->verboseLogging) {
-                    log_error("Dynamic DNS GD : Updating A-record for domain : " . $domain['domain']);
+                    $this->log_message(" Updating A-record for domain : " . $domain['domain']);
                 }
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
                 if ($result['status'] == 'failed') {
-                    log_error("Dynamic DNS GD : 'A'-record update failed for domain : " . $domain['domain']);
+                    $this->log_message(" 'A'-record update failed for domain : " . $domain['domain']);
                 }
             }
         }
 
         unlock($updater_lck);
         if ($this->verboseLogging) {
-            log_error("Dynamic DNS GD : updater lock released. ");
+            $this->log_message(" updater lock released. ");
         }
     }
 
@@ -106,8 +116,9 @@ class gdDnsUpdater
     public function fetchAccounts($defs_acc_s): bool
     {
         if (isset($defs_acc_s['accounts'])) {
-            $accs = $defs_acc_s['accounts']['account'];
+            $accs = $defs_acc_s['accounts'];
             foreach ($accs as $acc) {
+                $this->log_message(" type " . gettype($acc));
                 if ($acc['enabled']) {
                     $temp['key'] = $acc['key'][0];
                     $temp['secret'] = $acc['secret_key'];
@@ -138,6 +149,11 @@ class gdDnsUpdater
             $keys = null;
         }
         return $keys;
+    }
+
+    private function log_message($msg)
+    {
+        log_error(self::LOG_PREFIX . ' ' . $msg);
     }
 
 }
