@@ -80,6 +80,10 @@ class gdDnsUpdater
                 if ($result['status'] == 'failed') {
                     $this->log_message(" 'A'-record update failed for domain : " . $domain['domain']);
                 }
+            } else {
+                if ($this->verboseLogging) {
+                    $this->log_message('No account/API keys cant found for domain ' . $domain['domain'] );
+                }
             }
         }
 
@@ -118,10 +122,9 @@ class gdDnsUpdater
         if (isset($defs_acc_s['accounts'])) {
             $accs = $defs_acc_s['accounts'];
             foreach ($accs as $acc) {
-                $this->log_message(" type " . gettype($acc));
                 if ($acc['enabled']) {
-                    $temp['key'] = $acc['key'][0];
-                    $temp['secret'] = $acc['secret_key'];
+                    $temp['key'] = $acc['api_key'];
+                    $temp['secret'] = $acc['api_secret'];
                     $temp['uuid'] = $acc['@attributes']['uuid'];
                     $temp['test'] = $acc['staging'];
                     array_push($this->_accounts, $temp);
@@ -142,8 +145,8 @@ class gdDnsUpdater
         $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
         if ($result !== false) {
             $keys = [
-                'api.key' => $this->_accounts[$result]['key'],
-                'api.secret' => $this->_accounts[$result]['secret']
+                'api.key' => $this->_accounts[$result]['api_key'],
+                'api.secret' => $this->_accounts[$result]['api_secret']
             ];
         } else {
             $keys = null;
