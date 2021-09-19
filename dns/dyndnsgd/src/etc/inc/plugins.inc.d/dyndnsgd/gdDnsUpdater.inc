@@ -74,22 +74,23 @@ class gdDnsUpdater
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
                 if ($this->verboseLogging) {
-                    $this->log_message(" Updating A-record for domain : " . $domain['domain']);
+                    $this->log_message("Updating records for domain : " . $domain['domain']);
                 }
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
                 if ($result['status'] == 'failed') {
-                    $this->log_message(" 'A'-record update failed for domain : " . $domain['domain']);
+                    $this->log_message(" Update operation  failed for domain : " . $domain['domain']);
+                } else {
+                    $this->log_message(" Record updated :" . $domain['domain']);
                 }
             } else {
                 if ($this->verboseLogging) {
-                    $this->log_message('No account/API keys cant found for domain ' . $domain['domain'] );
+                    $this->log_message('No account/API keys cant found for domain ' . $domain['domain']);
                 }
             }
-        }
-
-        unlock($updater_lck);
-        if ($this->verboseLogging) {
-            $this->log_message(" updater lock released. ");
+            unlock($updater_lck);
+            if ($this->verboseLogging) {
+                $this->log_message(" updater lock released. ");
+            }
         }
     }
 
@@ -99,7 +100,6 @@ class gdDnsUpdater
         if (isset($defs_domains['domains'])) {
             foreach ($defs_domains['domains']['domain'] as $domain) {
                 if ($domain['enabled']) {
-                    $this->log_message(json_encode($domain));
                     $temp['domain'] = $domain['domain'];
                     $temp['account_uuid'] = $domain['account'];
                     $temp['interface'] = $domain['interface'];
@@ -145,10 +145,9 @@ class gdDnsUpdater
     {
         $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
         if ($result !== false) {
-            $this->log_message(json_encode($result));
             $keys = [
-                'api.key' => $this->_accounts[$result]['api_key'],
-                'api.secret' => $this->_accounts[$result]['api_secret']
+                'api.key' => $this->_accounts[$result]['api.key'],
+                'api.secret' => $this->_accounts[$result]['api.secret']
             ];
         } else {
             $keys = null;

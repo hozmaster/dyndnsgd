@@ -49,8 +49,6 @@ class GoDaddy extends RequesterBase
     {
         $this->initCurl();
 
-        GdUtils::log("payload " . json_encode($keys));
-
         $payload = array();
 
         // for now, will be changed later on.
@@ -67,11 +65,7 @@ class GoDaddy extends RequesterBase
 
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
 
-        GdUtils::log("url " . $url);
-        GdUtils::log("payload " . json_encode($payload));
-
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
-        GdUtils::log("payload " . json_encode($headers));
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
