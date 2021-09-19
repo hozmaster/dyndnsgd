@@ -55,14 +55,10 @@ class Worker extends Common
 
         $base_url = $this->gd_service->get_base_url();
         $url = "$base_url/v1/domains?statuses=$status";
-        // set your key and secret
-        $api_key = $this->getKey();
-        $api_secret = $this->getSecretKey();
-        $header = array(
-            "Authorization: sso-key $api_key:$api_secret"
-        );
+        $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
 
         $response_code = $this->gd_service->do_godaddy_get_request($url, $header);
+        GdUtils::log("Response code" . $response_code);
 
         if ($response_code == GdService::REQUEST_OK) {
             $domains = $this->gd_service->get_data();

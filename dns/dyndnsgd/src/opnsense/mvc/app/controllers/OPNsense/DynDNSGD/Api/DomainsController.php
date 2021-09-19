@@ -52,6 +52,11 @@ class DomainsController extends ApiMutableModelControllerBase
         return $this->toggleBase('domains.domain', $uuid);
     }
 
+    public function delAction($uuid)
+    {
+        return $this->delBase('domains.domain', $uuid);
+    }
+
     public function searchAction()
     {
         return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',

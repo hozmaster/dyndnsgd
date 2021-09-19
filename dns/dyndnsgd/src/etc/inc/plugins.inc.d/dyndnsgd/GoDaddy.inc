@@ -25,6 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+use OPNsense\DynDNSGD\GdUtils;
+
 require_once("RequesterBase.inc");
 
 class GoDaddy extends RequesterBase
@@ -35,7 +37,7 @@ class GoDaddy extends RequesterBase
 
     public function __construct()
     {
-        $this->gdApiUrl = 'https://api.godaddy.com/v1/domains/';
+        $this->gdApiUrl = 'https://api.godaddy.com';
     }
 
     public function supportedRecords(): array
@@ -73,6 +75,7 @@ class GoDaddy extends RequesterBase
         $responseInfo = curl_getinfo($this->ch);
         if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
             $result = '{ "status" : "failed", "code" : ' . $responseInfo["http_code"] . ' }';
+            GdUtils::log($result);
         }
 
         if (empty($result)) {
