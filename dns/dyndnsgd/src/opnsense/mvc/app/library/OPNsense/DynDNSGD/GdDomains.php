@@ -69,8 +69,8 @@ class GdDomains
         $node->domain_id = $content['domainId'];
 
         $validationMessages = $model->performValidation();
-        foreach ($validationMessages as $messsage) {
-            GdUtils::log("validation failure on field " . $messsage->getField() . "  returning message : " . $messsage->getMessage());
+        foreach ($validationMessages as $message) {
+            GdUtils::log("validation failure on field " . $message->getField() . "  returning message : " . $message->getMessage());
         }
 
         //

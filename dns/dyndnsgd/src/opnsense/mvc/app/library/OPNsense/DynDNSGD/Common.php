@@ -53,12 +53,12 @@ abstract class Common
 
     protected function getKey()
     {
-        return (string)$this->config->key;
+        return (string)$this->config->api_key;
     }
 
     protected function getSecretKey()
     {
-        return (string)$this->config->secret_key;
+        return (string)$this->config->api_secret;
     }
 
     public function loadAccount(string $path, string $uuid)
