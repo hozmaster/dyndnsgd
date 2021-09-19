@@ -58,18 +58,21 @@ class Worker extends Common
         $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
 
         $response_code = $this->gd_service->do_godaddy_get_request($url, $header);
-        GdUtils::log("Response code" . $response_code);
+        GdUtils::log("Fetching domains, response : " . $response_code);
 
         if ($response_code == GdService::REQUEST_OK) {
             $domains = $this->gd_service->get_data();
             $gd_domains = new GdDomains();
             $c_domains = $gd_domains->getAllDomains();
+            $save_count = 0;
             foreach ($domains as $domain) {
                 $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
                 if ($key === false) {
                     $gd_domains->saveNewRecord($this->uuid, $domain);
+                    $save_count ++;
                 }
             }
+            GdUtils::log("Count of added domains:" . $save_count);
         } else {
             GdUtils::log('Request failed with code ' . $response_code . ', ' .
                 $this->gd_service->gd_parse_response_info($response_code));
