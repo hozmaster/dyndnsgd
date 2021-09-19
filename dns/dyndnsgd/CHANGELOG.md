@@ -4,25 +4,38 @@ All notable changes to this project will be documented in this file.
 
 ## 0.3.x-dev [Unreleased] - yyyy-mm-dd
 
+* Domain fetching from GoDaddy service with valid keys should work 
+* DNS records update should work (hard coded TXT record testing purpose only)
+
 ### KNOWN ISSUES
 
 ### Added
 
 Settings view
+
 - Add @-records by default ?-option
 
 Account view
+
 - Fetch domains GoDaddy service.
+
+Domains view
+
+- Added ability to remove domains from the view
 
 Overall
 
 - Ability to define Cron job so record updating can done by this plugin.
 - Settings model: Add new column for 'Add @-records by default'-option
-- Domains: Added  IP4(6) address columns to the Domains-model
+- Account model : Replace two column names with better one. Increase model version.
+- Domains model : Increase model version.
+- Domains model : Added IP4(6) address columns to the Domains-model
+- Fix problems and bugs in various places.
 
 ### Changed
 
 Account view
+
 - Verify button renamed to Fetch Domains-button
 
 ### Fixed
