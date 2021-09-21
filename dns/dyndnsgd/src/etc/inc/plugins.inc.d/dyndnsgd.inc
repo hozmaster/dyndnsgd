@@ -30,7 +30,7 @@ require_once("interfaces.inc");
 require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 
 
-function dyndns_gd_configure()
+function dyndnsgd_configure()
 {
     return array(
         'bootup' => array('dyndns_gd_configure_do'),
@@ -39,36 +39,31 @@ function dyndns_gd_configure()
     );
 }
 
-function dyndns_gd_enabled(): bool
+function dyndnsgd_enabled(): bool
 {
     global $config;
     return isset($config['OPNsense']['DynDNSGD']['settings']['enabled']) &&
         $config['OPNsense']['DynDNSGD']['settings']['enabled'] == 1;
 }
 
-function dyndns_gd_services()
+function dyndnsgd_services()
 {
-    // TODO : remove me
-    syslog(LOG_NOTICE, "DynDNSGD: dyndns_gd_services()");
-    global $config;
-
     $services = array();
-
-    if (dyndns_gd_enabled()) {
+    if (dyndnsgd_enabled()) {
         $services[] = array(
-            'description' => gettext('Dynamic DNS GD'),
-            //            'configd' => array(
-            //                'restart' => array('dyndns_gd reload'),
-            //            ),
+            'description' => gettext('GoDaddy specific Dynamic DNS updater'),
+            'configd' => array(
+                'restart' => array('dyndns_gd reload'),
+            ),
             'nocheck' => true,
-            'name' => 'dyndns_gd',
+            'name' => 'dyndnsgd',
             'pidfile' => '/var/run/dyndnsgd.pid'
         );
     }
     return $services;
 }
 
-function dyndns_gd_list()
+function dyndnsgd_list()
 {
     return array(
         'godaddy' => 'GoDaddy',
@@ -76,16 +71,16 @@ function dyndns_gd_list()
     );
 }
 
-function dyndns_gd_configure_do($verbose = false, $int = '')
+function dyndnsgd_configure_do($verbose = false, $int = '')
 {
     global $config;
-    if (dyndns_gd_enabled()) {
+    if (dyndnsgd_enabled()) {
 
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
 
         if ($verbose) {
-            syslog( LOG_NOTICE, "DynDNSGD: Started dns update process");
+            syslog(LOG_NOTICE, "DynDNSGD: Started dns update process");
         }
 
         // get r if addr of used gateway address.
@@ -98,20 +93,20 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
 
         if (!count($models)) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog( LOG_NOTICE, "DynDNSGD: Internal model problems");
+            syslog(LOG_NOTICE, "DynDNSGD: Internal model problems");
             return;
 
         }
 
         if (!$updater->fetchAccounts($models['accounts'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog( LOG_NOTICE, "DynDNSGD: No valid accounts.");
+            syslog(LOG_NOTICE, "DynDNSGD: No valid accounts.");
             return;
         }
 
         if (!$updater->fetchDomains($models['domains'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog( LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
+            syslog(LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
             return;
         }
 
@@ -120,7 +115,7 @@ function dyndns_gd_configure_do($verbose = false, $int = '')
         sleep(1);
 
     } else {
-        syslog( LOG_NOTICE, "DynDNSGD: plugin is disabled");
+        syslog(LOG_NOTICE, "DynDNSGD: plugin is disabled");
     }
 
 }
