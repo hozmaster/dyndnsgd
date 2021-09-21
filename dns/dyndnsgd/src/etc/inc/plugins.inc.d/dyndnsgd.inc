@@ -75,40 +75,17 @@ function dyndnsgd_configure_do($verbose = false, $int = '')
 {
     global $config;
     if (dyndnsgd_enabled()) {
-
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
-
-        if ($verbose) {
-            syslog(LOG_NOTICE, "DynDNSGD: Started dns update process");
-        }
 
         // get r if addr of used gateway address.
         $r_ifddr4 = get_real_interface('wan');
 
         $updater = new gdDnsUpdater(
             $r_ifddr4,
-            $verbose
+            $verbose,
+            $models
         );
-
-        if (!count($models)) {
-            // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog(LOG_NOTICE, "DynDNSGD: Internal model problems");
-            return;
-
-        }
-
-        if (!$updater->fetchAccounts($models['accounts'])) {
-            // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog(LOG_NOTICE, "DynDNSGD: No valid accounts.");
-            return;
-        }
-
-        if (!$updater->fetchDomains($models['domains'])) {
-            // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog(LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
-            return;
-        }
 
         // do actual verification and the update process if needed
         $updater->checkAndDoDNSUpdate();

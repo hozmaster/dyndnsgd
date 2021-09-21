@@ -36,6 +36,7 @@ class gdDnsUpdater
     private array $_domains = [];
     private array $dnsServiceList = [];
     private string $dnsService = 'gd';
+    private $models;
     private $handler;
     private $verboseLogging = false;
 
@@ -43,13 +44,17 @@ class gdDnsUpdater
 
     public function __construct(
         $if4_addr,
-        $verboseLogging
+        $verboseLogging,
+        $models
     )
     {
         $this->_if_addr4 = $if4_addr;
         $this->verboseLogging = $verboseLogging;
+        $this->models = $models;
         $this->dnsServiceList = dyndns_gd_list();
     }
+
+
 
     public function checkAndDoDNSUpdate()
     {
@@ -160,4 +165,24 @@ class gdDnsUpdater
         log_error(self::LOG_PREFIX . ' ' . $msg);
     }
 
+    private function getDataFromModels()
+    {
+        if (!count($this->models)) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            syslog(LOG_NOTICE, "DynDNSGD: Internal model problems");
+            return;
+        }
+
+        if (!$this->fetchAccounts($this->models['accounts'])) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            syslog(LOG_NOTICE, "DynDNSGD: No valid accounts.");
+            return;
+        }
+
+        if (!$this->fetchDomains($this->models['domains'])) {
+            // TODO : No data for dyndnsgd. Exit with error code in the log
+            syslog(LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
+            return;
+        }
+    }
 }
