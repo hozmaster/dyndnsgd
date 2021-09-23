@@ -45,11 +45,11 @@ if (isset($argv[1])) {
 //syslog(LOG_NOTICE, "DynDNSGD: default gw ${address}");
 
 if (empty($argument)) {
-    dyndns_gd_configure_do(true);
+    dyndnsgd_configure_do(true);
 } else {
     $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
     if (empty($interface)) {
         $interface = $argument;
     }
-    dyndns_gd_configure_do(true, $interface);
+    dyndnsgd_configure_do(true, $interface);
 }

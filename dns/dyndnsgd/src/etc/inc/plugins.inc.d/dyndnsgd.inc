@@ -33,9 +33,9 @@ require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 function dyndnsgd_configure()
 {
     return array(
-        'bootup' => array('dyndns_gd_configure_do'),
-        'local' => array('dyndns_gd_configure_do'),
-        'newwanip' => array('dyndns_gd_configure_do:2'),
+        'bootup' => array('dyndnsgd_configure_do'),
+        'local' => array('dyndnsgd_configure_do'),
+        'newwanip' => array('dyndnsgd_configure_do:2'),
     );
 }
 

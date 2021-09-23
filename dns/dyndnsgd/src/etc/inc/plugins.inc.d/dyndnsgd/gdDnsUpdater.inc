@@ -51,24 +51,20 @@ class gdDnsUpdater
         $this->_if_addr4 = $if4_addr;
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
-        $this->dnsServiceList = dyndns_gd_list();
+        $this->dnsServiceList = dyndnsgd_list();
     }
-
-
 
     public function checkAndDoDNSUpdate()
     {
-        $updater_lck = lock("dyndns_gd_" . LOCK_EX);
+        $updater_lck = lock("dyndnsgd_" . LOCK_EX);
         if ($this->verboseLogging) {
             $this->log_message(" updater lock set ");
         }
 
-        switch ($this->dnsService) {
-            case 'gd':
-                include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
-                $this->handler = new GoDaddy();
-                break;
-        }
+        include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
+        $this->handler = new GoDaddy();
+
+        $this->getDataFromModels();
 
         if ($this->verboseLogging) {
             $this->log_message(" domain count  : " . count($this->_domains));
