@@ -2,12 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.3.x-dev [Unreleased] - yyyy-mm-dd
+## 0.3.8 - 2021-09-27
 
 * Domain fetching from GoDaddy service with valid keys should work 
 * DNS records update should work (hard coded TXT record testing purpose only)
+* Plugin is now listed in the Dashboard as a service.
 
 ### KNOWN ISSUES
+
+Beta product. All db changes are now done. 
+Not yet save a WAN address to the GoDaddy service.   
 
 ### Added
 

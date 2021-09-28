@@ -59,6 +59,7 @@ class gdDnsUpdater
         $updater_lck = lock("dyndnsgd_" . LOCK_EX);
         if ($this->verboseLogging) {
             $this->log_message(" updater lock set ");
+            $this->log_message(" wan address : " . $this->_if_addr4);
         }
 
         include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
@@ -79,7 +80,7 @@ class gdDnsUpdater
                 }
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
                 if ($result['status'] == 'failed') {
-                    $this->log_message(" Update operation  failed for domain : " . $domain['domain']);
+                    $this->log_message(" Update operation failed for domain : " . $domain['domain']);
                 } else {
                     $this->log_message(" Record updated :" . $domain['domain']);
                 }

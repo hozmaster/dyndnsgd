@@ -79,10 +79,11 @@ function dyndnsgd_configure_do($verbose = false, $int = '')
         $verbose = $models['settings']['log_level'] == 'debug';
 
         // get r if addr of used gateway address.
-        $r_ifddr4 = get_real_interface('wan');
+        $r_if_name = get_real_interface('wan');
+        $r_ip_addr = get_interface_ip('wan');
 
         $updater = new gdDnsUpdater(
-            $r_ifddr4,
+            $r_ip_addr,
             $verbose,
             $models
         );
