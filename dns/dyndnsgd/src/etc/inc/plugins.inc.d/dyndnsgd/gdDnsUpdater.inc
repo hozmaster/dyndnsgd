@@ -44,11 +44,13 @@ class gdDnsUpdater
 
     public function __construct(
         $if4_addr,
+        $if,
         $verboseLogging,
         $models
     )
     {
         $this->_if_addr4 = $if4_addr;
+        $this->_if = $if;
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
         $this->dnsServiceList = dyndnsgd_list();
@@ -60,6 +62,13 @@ class gdDnsUpdater
         if ($this->verboseLogging) {
             $this->log_message(" updater lock set ");
             $this->log_message(" wan address : " . $this->_if_addr4);
+        }
+
+        // Ensure that we were able to lookup the IP
+        if (!is_ipaddr($this->_if_addr4)) {
+            $this->log_message( "There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.");
+            unlock($updater_lck);
+            return;
         }
 
         include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');

@@ -39,17 +39,12 @@ if (isset($argv[1])) {
     $argument = null;
 }
 
-//$defGW = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getDefaultGW();
-//$address = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getAddress($defGW['name']);
-//
-//syslog(LOG_NOTICE, "DynDNSGD: default gw ${address}");
-
 if (empty($argument)) {
-    dyndnsgd_configure_do(true);
+    dyndnsgd_configure_do();
 } else {
     $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
     if (empty($interface)) {
         $interface = $argument;
     }
-    dyndnsgd_configure_do(true, $interface);
+    dyndnsgd_configure_do($interface);
 }

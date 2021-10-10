@@ -26,7 +26,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# This file is for helping development work.
+# This script is for help development work.
 
 TARGET_BASE_PATH=/usr/local/opnsense/mvc/app
 SOURCE_BASE_PATH=dyndnsgd/src/opnsense/mvc/app

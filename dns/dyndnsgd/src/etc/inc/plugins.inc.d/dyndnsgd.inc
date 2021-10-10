@@ -32,6 +32,7 @@ require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 
 function dyndnsgd_configure()
 {
+    syslog(LOG_NOTICE, "DynDNSGD: dyndnsgd_configure()");
     return array(
         'bootup' => array('dyndnsgd_configure_do'),
         'local' => array('dyndnsgd_configure_do'),
@@ -71,19 +72,23 @@ function dyndnsgd_list()
     );
 }
 
-function dyndnsgd_configure_do($verbose = false, $int = '')
+function dyndnsgd_configure_do($interface = '')
 {
     global $config;
     if (dyndnsgd_enabled()) {
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
 
-        // get r if addr of used gateway address.
-        $r_if_name = get_real_interface('wan');
-        $r_ip_addr = get_interface_ip('wan');
+        if (empty($interface))  {
+            syslog(LOG_NOTICE, "DynDNSGD: No interface given. Quit.");
+        }
 
+        // get r if addr of used gateway address.
+        $r_if_name = get_real_interface($interface);
+        $r_ip_addr = get_interface_ip($interface);
         $updater = new gdDnsUpdater(
             $r_ip_addr,
+            $r_if_name,
             $verbose,
             $models
         );

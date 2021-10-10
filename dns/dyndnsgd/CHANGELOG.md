@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.4.0-dev [Unreleased] - yyyy-mm-dd
+
+This is development version and not yet should use in the production environment.
+
+Targets: 
+- Initial SQLite3 support (IP cache etc)
+- Proper WAN interface detection
+- Dynamic dns Ip update detection
+
+### KNOWN ISSUES
+
+Not work correctly (interface detection failed)
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## 0.3.8 - 2021-09-27
 
 * Domain fetching from GoDaddy service with valid keys should work 
