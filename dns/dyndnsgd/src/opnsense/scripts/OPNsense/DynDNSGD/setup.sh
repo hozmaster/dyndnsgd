@@ -24,3 +24,7 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+
+mkdir -p /var/run/dyndnsgd
+chown -R bind:bind /var/run/dyndnsgd
+chmod 755 /var/run/dyndnsgd
