@@ -28,3 +28,5 @@
 mkdir -p /var/run/dyndnsgd
 chown -R bind:bind /var/run/dyndnsgd
 chmod 755 /var/run/dyndnsgd
+
+./create_db.sh
