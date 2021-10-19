@@ -79,21 +79,13 @@ function dyndnsgd_configure_do($interface = '')
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
 
-        if (empty($interface))  {
-            syslog(LOG_NOTICE, "DynDNSGD: No interface given. Quit.");
-        }
-
-        // get r if addr of used gateway address.
-        $r_if_name = get_real_interface($interface);
-        $r_ip_addr = get_interface_ip($interface);
         $updater = new gdDnsUpdater(
-            $r_ip_addr,
-            $r_if_name,
+            $models['settings']['interface'],
             $verbose,
             $models
         );
 
-        // do actual verification and the update process if needed
+        // do actual verification and the update process if needed                      <
         $updater->checkAndDoDNSUpdate();
         sleep(1);
 
