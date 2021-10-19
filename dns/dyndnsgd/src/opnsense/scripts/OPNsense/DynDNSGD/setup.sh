@@ -29,4 +29,8 @@ mkdir -p /var/run/dyndnsgd
 chown -R root:wheel /var/run/dyndnsgd
 chmod 755 /var/run/dyndnsgd
 
+mkdir -p /var/dyndnsgd
+chown -R root:wheel /var/dyndnsgd
+chmod 755 /var/dyndnsgd
+
 ./create_db.sh

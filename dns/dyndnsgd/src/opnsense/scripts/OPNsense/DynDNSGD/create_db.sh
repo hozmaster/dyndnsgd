@@ -32,7 +32,7 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 # create a database for cached ip's.
-sqlite3 /var/run/dyndnsgd/dyndnsgd.db <<EOF
+sqlite3 /var/dyndnsgd/dyndnsgd.db <<EOF
 CREATE TABLE IF NOT EXISTS cached_ip (uuid TEXT NOT NULL, domain_id TEXT, ip4_address TEXT, ip6_address TEXT, \
  insert_at TEXT DEFAULT (datetime()), active  BOOLEAN DEFAULT (FALSE) );
 CREATE TABLE IF NOT EXISTS migrations (id INT PRIMARY KEY, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );
