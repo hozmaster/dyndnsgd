@@ -27,11 +27,13 @@
 
 define("FOO", "something");
 
+use OPNsense\DynDNSGD\Worker;
 
 class gdDnsUpdater
 {
-    public $_if;
+    private $_if;
     private string $_if_addr4;
+    private bool $_useIPv6;
     private array $_accounts = [];
     private array $_domains = [];
     private array $dnsServiceList = [];
@@ -43,14 +45,15 @@ class gdDnsUpdater
     const LOG_PREFIX = "DynDNSGD";
 
     public function __construct(
-        $if4_addr,
+//        $if4_addr,
         $if,
         $verboseLogging,
         $models
     )
     {
-        $this->_if_addr4 = $if4_addr;
+        $this->_useIPv6 = false;
         $this->_if = $if;
+        $this->_if_addr4 = $this->checkIPAddress();
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
         $this->dnsServiceList = dyndnsgd_list();
@@ -66,7 +69,7 @@ class gdDnsUpdater
 
         // Ensure that we were able to lookup the IP
         if (!is_ipaddr($this->_if_addr4)) {
-            $this->log_message( "There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.");
+            $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.");
             unlock($updater_lck);
             return;
         }
@@ -91,7 +94,7 @@ class gdDnsUpdater
                 if ($result['status'] == 'failed') {
                     $this->log_message(" Update operation failed for domain : " . $domain['domain']);
                 } else {
-                    $this->log_message(" Record updated :" . $domain['domain']);
+                    $this->log_message(" Record updated : " . $domain['domain']);
                 }
             } else {
                 if ($this->verboseLogging) {
@@ -164,6 +167,26 @@ class gdDnsUpdater
             $keys = null;
         }
         return $keys;
+    }
+
+    private function checkIPAddress()
+    {
+        $ip_address = get_dyndns_ip($this->_if, $this->_useIPv6 ? 6 : 4);
+        if (!is_ipaddr($ip_address)) {
+            if ($this->verboseLogging) {
+                $this->log_message("({$this->_dnsHost}): IP address could not be extracted");
+            }
+
+            $ip_address = 0;
+        } else {
+            if ($this->verboseLogging) {
+                $this->log_message("({$this->_dnsHost}): {$ip_address} extracted");
+            }
+
+            $this->_dnsIP = $ip_address;
+        }
+
+        return $ip_address;
     }
 
     private function log_message($msg)
