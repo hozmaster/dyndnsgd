@@ -25,9 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-define("FOO", "something");
-
-use OPNsense\DynDNSGD\Worker;
+use OPNsense\DynDNSGD\GDDatabase;
 
 class gdDnsUpdater
 {
@@ -36,16 +34,15 @@ class gdDnsUpdater
     private bool $_useIPv6;
     private array $_accounts = [];
     private array $_domains = [];
-    private array $dnsServiceList = [];
     private string $dnsService = 'gd';
     private $models;
     private $handler;
     private $verboseLogging = false;
+    private $gdDb = null;
 
     const LOG_PREFIX = "DynDNSGD";
 
     public function __construct(
-//        $if4_addr,
         $if,
         $verboseLogging,
         $models
@@ -56,7 +53,9 @@ class gdDnsUpdater
         $this->_if_addr4 = $this->checkIPAddress();
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
-        $this->dnsServiceList = dyndnsgd_list();
+
+        $this->gdDb = new GDDatabase();
+
     }
 
     public function checkAndDoDNSUpdate()
@@ -94,6 +93,7 @@ class gdDnsUpdater
                 if ($result['status'] == 'failed') {
                     $this->log_message(" Update operation failed for domain : " . $domain['domain']);
                 } else {
+                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $this->_if_addr4);
                     $this->log_message(" Record updated : " . $domain['domain']);
                 }
             } else {
