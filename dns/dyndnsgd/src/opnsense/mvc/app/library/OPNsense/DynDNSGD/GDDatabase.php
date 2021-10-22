@@ -43,12 +43,11 @@ class GDDatabase
         }
     }
 
-    public function setCachedIpForDomain($domain_uuid, $ipv4_address, $ipv6_address = "")
+    public function setCachedIpForDomain($uuid, $record_type, $ipv4_address, $ipv6_address = "")
     {
-        $uuid = $this->getUuid();
-        $query = $this->db->prepare('INSERT OR REPLACE into cached_ip (uuid, domain_id, ipv4_address, ipv6_address, active) values (:uuid, :domain_id, :ipv4_address, :ipv6_address, :active)');
+        $query = $this->db->prepare('INSERT OR REPLACE into cached_ip (uuid, ipv4_address, ipv6_address, active) values (:uuid, :record_type, :ipv4_address, :ipv6_address, :active)');
         $query->bindValue(':uuid', $uuid);
-        $query->bindValue(':domain_id', $domain_uuid);
+        $query->bindValue(':record_type', $record_type);
         $query->bindValue(':ipv4_address', $ipv4_address);
         $query->bindValue(':ipv6_address', $ipv6_address);
         $query->bindValue(':active', true);
@@ -64,11 +63,11 @@ class GDDatabase
     {
         if (strlen($domain_id)) {
             // get cached ip for specific domain.
-            $query = $this->db->prepare('SELECT uuid, domain_id, ip4_address FROM cached_ip WHERE uuid = :id;');
+            $query = $this->db->prepare('SELECT uuid, record_type, ipv4_address, ipv6_address FROM cached_ip WHERE uuid = :id;');
             $query->bindValue(':id', $domain_id);
         } else {
             // get cached ip's for all domains.
-            $query = $this->db->prepare('SELECT uuid, domain_id, ip4_address FROM cached_ip');
+            $query = $this->db->prepare('SELECT uuid, record_type, ipv4_address, ipv6_address FROM cached_ip');
         }
 
         $result = $query->execute();

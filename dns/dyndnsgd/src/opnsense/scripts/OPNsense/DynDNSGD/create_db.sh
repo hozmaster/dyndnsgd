@@ -33,8 +33,8 @@ fi
 
 # create a database for cached ip's.
 sqlite3 /var/dyndnsgd/dyndnsgd.db <<EOF
-CREATE TABLE IF NOT EXISTS cached_ip (uuid TEXT NOT NULL PRIMARY KEY, domain_id TEXT, ipv4_address TEXT, ipv6_address TEXT, \
- insert_at TEXT DEFAULT (datetime()), active  BOOLEAN DEFAULT (FALSE) );
+CREATE TABLE IF NOT EXISTS cached_ip (uuid TEXT NOT NULL PRIMARY KEY, record_type TEXT, ipv4_address TEXT, ipv6_address TEXT, \
+ insert_at TEXT DEFAULT (datetime()), active  BOOLEAN DEFAULT (TRUE)) );
 CREATE TABLE IF NOT EXISTS migrations (id INT PRIMARY KEY, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );
 INSERT OR IGNORE INTO migrations (id, description) VALUES (1, "Created a database and default content.");
 EOF
