@@ -55,7 +55,6 @@ class gdDnsUpdater
         $this->models = $models;
 
         $this->gdDb = new GDDatabase();
-
     }
 
     public function checkAndDoDNSUpdate()
@@ -68,7 +67,7 @@ class gdDnsUpdater
 
         // Ensure that we were able to lookup the IP
         if (!is_ipaddr($this->_if_addr4)) {
-            $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.");
+            $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.", true);
             unlock($updater_lck);
             return;
         }
@@ -78,38 +77,28 @@ class gdDnsUpdater
 
         $this->getDataFromModels();
 
-        if ($this->verboseLogging) {
-            $this->log_message(" domain count  : " . count($this->_domains));
-            $this->log_message(" account count : " . count($this->_accounts));
-        }
+        $this->log_message(" domain count  : " . count($this->_domains));
+        $this->log_message(" account count : " . count($this->_accounts));
 
         foreach ($this->_domains as $domain) {
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
-                if ($this->verboseLogging) {
-                    $this->log_message("Updating records for domain : " . $domain['domain']);
-                }
+                $this->log_message("Updating records for domain : " . $domain['domain']);
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
-                if ($result['status'] == 'failed') {
-                    $this->log_message(" Update operation failed for domain : " . $domain['domain']);
+                if ($result['status'] != 'failed') {
+                    $record_name = "@";
+                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $record_name, $this->_if_addr4, "");
+                    $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
                 } else {
-                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $this->_if_addr4);
-                    $this->log_message(" Record updated : " . $domain['domain']);
-                }
-            } else {
-                if ($this->verboseLogging) {
-                    $this->log_message('No account/API keys cant found for domain ' . $domain['domain']);
+                    $this->log_message("[{$domain['domain']}]): Unable to update record", true);
                 }
             }
             unlock($updater_lck);
-            if ($this->verboseLogging) {
-                $this->log_message(" updater lock released. ");
-            }
+            $this->log_message(" updater lock released. ");
         }
     }
 
-
-    public function fetchDomains($defs_domains): bool
+    public function getDomainData($defs_domains): bool
     {
         if (isset($defs_domains['domains'])) {
             foreach ($defs_domains['domains']['domain'] as $domain) {
@@ -173,25 +162,24 @@ class gdDnsUpdater
     {
         $ip_address = get_dyndns_ip($this->_if, $this->_useIPv6 ? 6 : 4);
         if (!is_ipaddr($ip_address)) {
-            if ($this->verboseLogging) {
-                $this->log_message("({$this->_dnsHost}): IP address could not be extracted");
-            }
-
+            $this->log_message("IP address could not be extracted", true);
             $ip_address = 0;
         } else {
-            if ($this->verboseLogging) {
-                $this->log_message("({$this->_dnsHost}): {$ip_address} extracted");
-            }
-
+            $this->log_message("{$ip_address} extracted");
             $this->_dnsIP = $ip_address;
         }
-
         return $ip_address;
     }
 
-    private function log_message($msg)
+    private function log_message($msg, $log_always = false)
     {
-        log_error(self::LOG_PREFIX . ' ' . $msg);
+        $do_log = false;
+        if ($log_always || $this->verboseLogging) {
+            $do_log = true;
+        }
+        if ($do_log) {
+            log_error(self::LOG_PREFIX . ' ' . $msg);
+        }
     }
 
     private function getDataFromModels()
@@ -208,7 +196,7 @@ class gdDnsUpdater
             return;
         }
 
-        if (!$this->fetchDomains($this->models['domains'])) {
+        if (!$this->getDomainData($this->models['domains'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
             syslog(LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
             return;

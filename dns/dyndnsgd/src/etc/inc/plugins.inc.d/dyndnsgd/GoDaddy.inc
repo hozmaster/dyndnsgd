@@ -45,15 +45,15 @@ class GoDaddy extends RequesterBase
         return ['A', 'AAAA', 'MX', 'TXT', 'CNAME'];
     }
 
-    public function updateA1Records($domain, $keys, $if_ip_addr)
+    public function updateA1Records($domain, $keys, $name, $if_ip_addr)
     {
         $this->initCurl();
 
         $payload = array();
 
-        // for now, will be changed later on.
-        $record_type = 'TXT';
-        $record_name = 'dyndnsgd';
+        // for now just IPv4, it might be changed later on.
+        $record_type = 'A';
+        $record_name = $name;
 
         $content = date("Y-m-d H:i:s", strtotime("now"));
         $record_object = (object)[
