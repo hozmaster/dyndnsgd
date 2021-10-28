@@ -25,16 +25,10 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
-if [ $(id -u) -ne 0 ]; then
-   echo "create_db_sh: This script must be run as root"
-   exit;
-fi
-
 # create a database for cached ip's.
 sqlite3 /var/dyndnsgd/dyndnsgd.db <<EOF
-CREATE TABLE IF NOT EXISTS cached_ip (uuid TEXT NOT NULL, domain_id TEXT, ip4_address TEXT, ip6_address TEXT, \
- insert_at TEXT DEFAULT (datetime()), active  BOOLEAN DEFAULT (FALSE) );
+CREATE TABLE IF NOT EXISTS cached_ip (uuid TEXT NOT NULL, record TEXT NOT NULL, ipv4_address TEXT, ipv6_address TEXT, \
+ insert_at TEXT DEFAULT (datetime()), updated_at TEXT DEFAULT (datetime()), active BOOLEAN DEFAULT (TRUE), PRIMARY KEY (uuid, record) );
 CREATE TABLE IF NOT EXISTS migrations (id INT PRIMARY KEY, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );
 INSERT OR IGNORE INTO migrations (id, description) VALUES (1, "Created a database and default content.");
 EOF

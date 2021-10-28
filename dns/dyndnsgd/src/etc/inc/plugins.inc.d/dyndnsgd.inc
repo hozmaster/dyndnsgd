@@ -78,14 +78,19 @@ function dyndnsgd_configure_do($interface = '')
     if (dyndnsgd_enabled()) {
         $models = $config['OPNsense']['DynDNSGD'];
         $verbose = $models['settings']['log_level'] == 'debug';
+        $wan_if = $models['settings']['interface'];
+
+        if (is_null($wan_if)) {
+            $wan_if = "wan";
+        }
 
         $updater = new gdDnsUpdater(
-            $models['settings']['interface'],
+            $wan_if,
             $verbose,
             $models
         );
 
-        // do actual verification and the update process if needed                      <
+        // do actual verification and the update process if needed
         $updater->checkAndDoDNSUpdate();
         sleep(1);
 

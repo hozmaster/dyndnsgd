@@ -7,15 +7,17 @@ All notable changes to this project will be documented in this file.
 This is development version and not yet should use in the production environment.
 
 Targets: 
-- Initial SQLite3 support (IP cache etc)
 - Proper WAN interface detection
 - Dynamic dns Ip update detection
 
 ### KNOWN ISSUES
-
-Not work correctly (interface detection failed)
+- If detection not work correctly (interface detection failed)
+- Domain download code need to improve (logging, response code checks etc), not work anymore ?!
 
 ### Added
+- Initial SQLite3 support (database, tables, columns etc)
+- Setup.sh creates now /var/dyndnsgd folder structure
+- Added file to create a sqlite3 databse for cached_ip's
 
 ### Changed
 
