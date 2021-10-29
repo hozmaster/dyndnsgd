@@ -83,11 +83,12 @@ class gdDnsUpdater
         foreach ($this->_domains as $domain) {
             $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
             if ($keys) {
+                $name = "@";
                 $this->log_message("Updating records for domain : " . $domain['domain']);
-                $result = $this->handler->updateA1Records($domain['domain'], $keys, $this->_if_addr4);
+                $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
                 if ($result['status'] != 'failed') {
-                    $record_name = "@";
-                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $record_name, $this->_if_addr4, "");
+                    $type = 'A';
+                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $type, $name, $this->_if_addr4, "");
                     $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
                 } else {
                     $this->log_message("[{$domain['domain']}]): Unable to update record", true);
