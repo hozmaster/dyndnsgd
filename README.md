@@ -12,7 +12,7 @@ Current functionality of dynamic dns in OPNSense platform is quite limited and w
 
 Status : In progress.
 
-WAN ip address will updates to the service. Records will updated database and it can be fetched from it. There is some limitations still left but overall situtation is quite good. Not production ready but it can used to testing purposes and study.
+Views and dialogs are more and less ready. Still some opens issues still exist but this should work pretty reasonably. WAN ip address will updates to the service. Records will updated database and it can be fetched from it. There is some limitations still left but overall situtation is quite good. Not production ready but it can used to testing purposes and study.
 
 ## GOALS
 
