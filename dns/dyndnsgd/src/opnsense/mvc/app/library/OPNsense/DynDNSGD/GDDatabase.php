@@ -60,7 +60,7 @@ class GDDatabase
         return $op_status;
     }
 
-    public function getCachedIpForDomains($domain_id = ""): array
+    public function getCachedDomainRecords($domain_id = ""): array
     {
         if (strlen($domain_id)) {
             // get cached record for specific domain.

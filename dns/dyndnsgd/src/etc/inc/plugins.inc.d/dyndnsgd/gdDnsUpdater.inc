@@ -55,7 +55,7 @@ class gdDnsUpdater
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
         $this->gdDb = new GDDatabase();
-        $this->cached_records = $this->gdDb->getCachedIpForDomains();
+        $this->cached_records = $this->gdDb->getCachedDomainRecords();
     }
 
     public function checkAndDoDNSUpdate()
@@ -96,7 +96,7 @@ class gdDnsUpdater
                     $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason'], true);
                 }
             } else {
-                $this->log_message("[{$domain['domain']}]: No need to update a ip address to service", true);
+                $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
             }
             unlock($updater_lck);
             $this->log_message(" updater lock released. ");
