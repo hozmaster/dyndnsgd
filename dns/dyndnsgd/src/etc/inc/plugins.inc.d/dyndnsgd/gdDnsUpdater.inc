@@ -54,6 +54,7 @@ class gdDnsUpdater
         $this->verboseLogging = $verboseLogging;
         $this->models = $models;
 
+        $this->log_message(" interface 2 " . $this->_if);
         $this->gdDb = new GDDatabase();
     }
 
@@ -88,10 +89,10 @@ class gdDnsUpdater
                 $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
                 if ($result['status'] != 'failed') {
                     $type = 'A';
-                    $this->gdDb->setCachedIpForDomain($domain['account_uuid'], $type, $name, $this->_if_addr4, "");
+                    $this->gdDb->setCachedIpForDomain($domain['uuid'], $type, $name, $this->_if_addr4, "");
                     $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
                 } else {
-                    $this->log_message("[{$domain['domain']}]): Unable to update record", true);
+                    $this->log_message("[{$domain['domain']}]: Unable to update record", true);
                 }
             }
             unlock($updater_lck);
@@ -105,6 +106,7 @@ class gdDnsUpdater
             foreach ($defs_domains['domains']['domain'] as $domain) {
                 if ($domain['enabled']) {
                     $temp['domain'] = $domain['domain'];
+                    $temp['uuid'] = $domain['@attributes']['uuid'];
                     $temp['account_uuid'] = $domain['account'];
                     $temp['interface'] = $domain['interface'];
                     $temp['at_record'] = $domain['at_record'];
@@ -124,20 +126,15 @@ class gdDnsUpdater
 
     public function fetchAccounts($defs_acc_s): bool
     {
-        if (isset($defs_acc_s['accounts'])) {
-            $accs = $defs_acc_s['accounts'];
-            foreach ($accs as $acc) {
-                if ($acc['enabled']) {
-                    $temp['api.key'] = $acc['api_key'];
-                    $temp['api.secret'] = $acc['api_secret'];
-                    $temp['uuid'] = $acc['@attributes']['uuid'];
-                    $temp['test'] = $acc['staging'];
-                    array_push($this->_accounts, $temp);
-                }
+        $accs = $defs_acc_s['accounts']['account'];
+        foreach ($accs as $acc) {
+            if ($acc['enabled']) {
+                $temp['api.key'] = $acc['api_key'];
+                $temp['api.secret'] = $acc['api_secret'];
+                $temp['uuid'] = $acc['@attributes']['uuid'];
+                $temp['test'] = $acc['staging'];
+                array_push($this->_accounts, $temp);
             }
-        } else {
-            // TODO : No data for dyndnsgd. Exit with false and log error code
-            return false;
         }
         if (!count($this->_accounts)) {
             return false;
@@ -191,7 +188,8 @@ class gdDnsUpdater
             return;
         }
 
-        if (!$this->fetchAccounts($this->models['accounts'])) {
+        $accounts = $this->models['accounts'];
+        if (!$this->fetchAccounts($accounts)) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
             syslog(LOG_NOTICE, "DynDNSGD: No valid accounts.");
             return;
@@ -199,7 +197,7 @@ class gdDnsUpdater
 
         if (!$this->getDomainData($this->models['domains'])) {
             // TODO : No data for dyndnsgd. Exit with error code in the log
-            syslog(LOG_NOTICE, "DynDNSGD: Domains are not yet fetched.");
+            syslog(LOG_NOTICE, "DynDNSGD: Suitable domains for operation not found.");
             return;
         }
     }

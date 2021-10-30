@@ -64,6 +64,7 @@ class GoDaddy extends RequesterBase
         array_push($payload, $record_object);
 
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
+        GdUtils::log($url);
 
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
 
