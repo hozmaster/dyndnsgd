@@ -87,7 +87,6 @@ function dyndnsgd_configure_do($interface = '')
 
         $verbose = $dyndngd['settings']['log_level'] == 'debug';
         $wan_if = $dyndngd['settings']['interface'];
-        syslog(LOG_NOTICE, "DynDNSGD: Interface : " . $dyndngd['settings']['interface']);
 
         if (empty($wan_if)) {
             $wan_if = "wan";

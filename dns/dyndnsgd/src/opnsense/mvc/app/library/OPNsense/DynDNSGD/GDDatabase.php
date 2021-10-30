@@ -63,15 +63,18 @@ class GDDatabase
     public function getCachedIpForDomains($domain_id = ""): array
     {
         if (strlen($domain_id)) {
-            // get cached ip for specific domain.
-            $query = $this->db->prepare('SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = :id;');
-            $query->bindValue(':id', $domain_id);
+            // get cached record for specific domain.
+            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = '" . $domain_id . "' ;";
         } else {
-            // get cached ip's for all domains.
-            $query = $this->db->prepare('SELECT uuid, type, name, ipv4_address, ipv6_address FROM record');
+            // get cached record for all domains.
+            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record";
         }
-        $result = $query->execute();
-        return $result->fetchArray(1);
+        $result = $this->db->query($query);
+        $data = [];
+        while ($row = $result->fetchArray(1)) {
+            array_push($data, $row);
+        }
+        return $data;
     }
 
     private function getUuid(): string
