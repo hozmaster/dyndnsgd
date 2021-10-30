@@ -1,4 +1,3 @@
-
 ## WHAT
 
 GoDaddy specific Dynamic DNS plugin for OPNsense
@@ -11,9 +10,9 @@ Current functionality of dynamic dns in OPNSense platform is quite limited and w
 
 ## STATUS
 
-Status : Tech preview.
+Status : In progress.
 
-Only frontend side is works currently.  User can create and edit and account and domains in their respective views. Data is saved to the internal database whet OPNSense platform offers.
+WAN ip address will updates to the service. Records will updated database and it can be fetched from it. There is some limitations still left but overall situtation is quite good. Not production ready but it can used to testing purposes and study.
 
 ## GOALS
 
