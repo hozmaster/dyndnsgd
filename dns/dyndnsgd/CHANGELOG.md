@@ -3,7 +3,6 @@
 All notable changes to this project will be documented in this file.
 
 ## 0.4.0-dev [Unreleased] - yyyy-mm-dd
-
 This is development version and not yet should use in the production environment.
 
 Targets: 
@@ -11,13 +10,16 @@ Targets:
 - Dynamic dns Ip update detection
 
 ### KNOWN ISSUES
-- If detection not work correctly (interface detection failed)
-- Domain download code need to improve (logging, response code checks etc), not work anymore ?!
+- Interface detection may not work correctly (interface detection fails)
+- Only '@'-record is support at a moment
+- Only Ipv4 addresses is supported currently.
 
 ### Added
 - Initial SQLite3 support (database, tables, columns etc)
 - Setup.sh creates now /var/dyndnsgd folder structure
-- Added file to create a sqlite3 databse for cached_ip's
+- Added shell script to create a sqlite3 database for dyndnsgd-plugin
+- Basic database operation now work (insert and search)
+- Saved record for a domain will be checked before try to update ip address of record to the service. 
 
 ### Changed
 

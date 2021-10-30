@@ -76,18 +76,26 @@ function dyndnsgd_configure_do($interface = '')
 {
     global $config;
     if (dyndnsgd_enabled()) {
-        $models = $config['OPNsense']['DynDNSGD'];
-        $verbose = $models['settings']['log_level'] == 'debug';
-        $wan_if = $models['settings']['interface'];
 
-        if (is_null($wan_if)) {
+        $opnsense = $config['OPNsense'];
+        $dyndngd = $opnsense['DynDNSGD'];
+
+        if (empty($dyndngd)) {
+            syslog(LOG_ERR, "DynDNSGD: Internal model structure can't be found, Quit now.");
+            return -1;
+        }
+
+        $verbose = $dyndngd['settings']['log_level'] == 'debug';
+        $wan_if = $dyndngd['settings']['interface'];
+
+        if (empty($wan_if)) {
             $wan_if = "wan";
         }
 
         $updater = new gdDnsUpdater(
             $wan_if,
             $verbose,
-            $models
+            $dyndngd
         );
 
         // do actual verification and the update process if needed

@@ -59,6 +59,15 @@ class GdUtils
         syslog(LOG_ERR, "DynDNSGD: ${msg}");
     }
 
+    public static function dumpArrayToFile($content, $file)
+    {
+        ob_start();
+        var_dump($content);
+        $dump = ob_get_contents();
+        file_put_contents($file, $dump);
+        ob_end_clean();
+    }
+
     public static function createUUIDv4($data = null)
     {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.

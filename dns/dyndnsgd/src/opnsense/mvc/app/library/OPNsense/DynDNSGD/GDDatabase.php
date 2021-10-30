@@ -43,11 +43,12 @@ class GDDatabase
         }
     }
 
-    public function setCachedIpForDomain($uuid, $record, $ipv4_address, $ipv6_address = "")
+    public function setCachedIpForDomain($uuid, $type, $name, $ipv4_address, $ipv6_address = "")
     {
-        $query = $this->db->prepare('INSERT OR REPLACE into cached_ip (uuid, record, ipv4_address, ipv6_address, active) values (:uuid, :record, :ipv4_address, :ipv6_address, :active)');
+        $query = $this->db->prepare('INSERT OR REPLACE into record (uuid, type, name, ipv4_address, ipv6_address, active) values (:uuid, :type, :name, :ipv4_address, :ipv6_address, :active)');
         $query->bindValue(':uuid', $uuid);
-        $query->bindValue(':record', $record);
+        $query->bindValue(':type', $type);
+        $query->bindValue(':name', $name);
         $query->bindValue(':ipv4_address', $ipv4_address);
         $query->bindValue(':ipv6_address', $ipv6_address);
         $query->bindValue(':active', true);
@@ -59,20 +60,21 @@ class GDDatabase
         return $op_status;
     }
 
-    public function getCachedIpForDomains($domain_id = ""): array
+    public function getCachedDomainRecords($domain_id = ""): array
     {
         if (strlen($domain_id)) {
-            // get cached ip for specific domain.
-            $query = $this->db->prepare('SELECT uuid, record, ipv4_address, ipv6_address FROM cached_ip WHERE uuid = :id;');
-            $query->bindValue(':id', $domain_id);
+            // get cached record for specific domain.
+            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = '" . $domain_id . "' ;";
         } else {
-            // get cached ip's for all domains.
-            $query = $this->db->prepare('SELECT uuid, record, ipv4_address, ipv6_address FROM cached_ip');
+            // get cached record for all domains.
+            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record";
         }
-
-        $result = $query->execute();
-        // get assoc array
-        return $result->fetchArray(1);
+        $result = $this->db->query($query);
+        $data = [];
+        while ($row = $result->fetchArray(1)) {
+            array_push($data, $row);
+        }
+        return $data;
     }
 
     private function getUuid(): string
