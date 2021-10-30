@@ -55,16 +55,14 @@ class GoDaddy extends RequesterBase
         $record_type = 'A';
         $record_name = $name;
 
-        $content = date("Y-m-d H:i:s", strtotime("now"));
         $record_object = (object)[
-            'data' => $content,
+            'data' => $if_ip_addr,
             'ttl' => $this->ttl,
         ];
 
         array_push($payload, $record_object);
 
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
-
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
@@ -72,17 +70,22 @@ class GoDaddy extends RequesterBase
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
         $result = curl_exec($this->ch);
-        $responseInfo = curl_getinfo($this->ch);
-        if ($responseInfo["http_code"] != 200 && $responseInfo["http_code"] != 201) {
-            $result = '{ "status" : "failed", "code" : ' . $responseInfo["http_code"] . ' }';
-            GdUtils::log($result);
+        $info = curl_getinfo($this->ch);
+        $response = [];
+        $code = $info['http_code'];
+        if ($code != 200 && $code != 201) {
+            $data = json_decode($result, true);
+            $response['status'] = 'failed';
+            $response['code'] = $code;
+            $response['reason'] = $data['message'];
+        } else {
+            $response['status'] = 'ok';
+            $response['code'] = $code;
+            $response['reason'] = "";
         }
 
-        if (empty($result)) {
-            $result = '{ "status" : "ok, "code" : 200 "}';
-        }
         curl_close($this->ch);
-        return json_decode($result, true);
+        return $response;
 
     }
 

@@ -31,6 +31,7 @@ namespace OPNsense\DynDnsGD\Api;
 use OPNsense\Base\ApiMutableModelControllerBase;
 use OPNsense\Core\Backend;
 use OPNsense\DynDNSGD\Accounts;
+use OPNsense\DynDNSGD\GdUtils;
 
 class AccountsController extends ApiMutableModelControllerBase
 {
@@ -84,6 +85,7 @@ class AccountsController extends ApiMutableModelControllerBase
 
     private function parseResponse($response): array
     {
+        GdUtils::log('Domain fetching results: ' . $response);
         $target = explode(' ', trim($response));
         if ($target[0] == 'Error') {
             $target[1] = str_replace(array('(', ')'), '', $target[1]);
