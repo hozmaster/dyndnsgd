@@ -26,12 +26,6 @@
         <help>Set a outgoing interface to listen on.</help>
     </field>
     <field>
-        <id>domain.cachedip4address</id>
-        <label>Cached address</label>
-        <type>info</type>
-        <help>Cached IP4 address.</help>
-    </field>
-    <field>
         <id>domain.description</id>
         <label>Description</label>
         <type>text</type>

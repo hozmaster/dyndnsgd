@@ -60,15 +60,20 @@ class GDDatabase
         return $op_status;
     }
 
-    public function getCachedDomainRecords($domain_id = ""): array
+    public function getsSingleDomainRecord ($d_uuid)
     {
-        if (strlen($domain_id)) {
-            // get cached record for specific domain.
-            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = '" . $domain_id . "' ;";
-        } else {
-            // get cached record for all domains.
-            $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record";
-        }
+        // get cached record for specific domain.
+        $query = $this->db->prepare('SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = :id;');
+        $query->bindValue(':id', $d_uuid);
+        $result = $query->execute();
+        // get assoc array
+        return $result->fetchArray(1);
+    }
+
+    public function getCachedDomainRecords(): array
+    {
+        // get cached record for all domains.
+        $query = "SELECT uuid, type, name, ipv4_address, ipv6_address FROM record";
         $result = $this->db->query($query);
         $data = [];
         while ($row = $result->fetchArray(1)) {

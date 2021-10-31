@@ -211,7 +211,9 @@
         <thead>
             <tr>
                 <th data-column-id="enabled" data-width="4em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
-                <th data-column-id="domain" data-width="8em" data-type="string">{{ lang._('Domain') }}</th>
+                <th data-column-id="domain" data-width="7em" data-type="string">{{ lang._('Domain') }}</th>
+                <th data-column-id="ipv4_address" data-width="4em" data-sortable="yes" data-visible="true">{{ lang._('Ipv4 address') }}</th>
+                <th data-column-id="ipv6_address" data-width="6em" data-sortable="yes" data-visible="false">{{ lang._('Ipv6 address') }}</th>
                 <th data-column-id="account" data-width="7em" data-sortable="yes" data-visible="true">{{ lang._('Account') }}</th>
                 <th data-column-id="description" data-width="7em" data-sortable="yes">{{ lang._('Description') }}</th>
                 <th data-column-id="interface" data-width="4em" data-sortable="yes">{{ lang._('Interface') }}</th>

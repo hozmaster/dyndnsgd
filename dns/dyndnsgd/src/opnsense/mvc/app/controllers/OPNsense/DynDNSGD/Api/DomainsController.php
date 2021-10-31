@@ -29,6 +29,8 @@
 namespace OPNsense\DynDnsGD\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
+use OPNsense\DynDNSGD\GDDatabase;
+use OPNsense\DynDNSGD\GdUtils;
 
 
 class DomainsController extends ApiMutableModelControllerBase
@@ -59,8 +61,19 @@ class DomainsController extends ApiMutableModelControllerBase
 
     public function searchAction()
     {
-        return $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
+        $domains = $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
             'cachedip4address', 'description', 'domain_id'), 'domain');
+        $theDb = new GDDatabase();
+        foreach ($domains['rows'] as &$row) {
+            $uuid = $row['uuid'];
+            $record = $theDb->getsSingleDomainRecord($uuid);
+            if ($record) {
+                $row['ipv4_address'] = $record['ipv4_address'];
+                $row['ipv6_address'] = $record['ipv6_address'];
+            }
+        }
+
+        return $domains;
     }
 
 }

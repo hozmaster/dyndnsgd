@@ -19,9 +19,12 @@ Targets:
 - Setup.sh creates now /var/dyndnsgd folder structure
 - Added shell script to create a sqlite3 database for dyndnsgd-plugin
 - Basic database operation now work (insert and search)
-- Saved record for a domain will be checked before try to update ip address of record to the service. 
+- Saved record for a domain will be checked before try to update ip address of record to the service.
+- Show cached ipv4 address in the Domains view.
 
 ### Changed
+- Domains model patched to 0.3.1.
+- Removed the ip4 address-row from the Domain details dialog. 
 
 ### Fixed
 
