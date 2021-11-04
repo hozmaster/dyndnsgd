@@ -54,7 +54,8 @@ function dyndnsgd_services()
         $services[] = array(
             'description' => gettext('GoDaddy specific Dynamic DNS updater'),
             'configd' => array(
-                'restart' => array('dyndns_gd reload'),
+                'restart' => array('dyndnsgd reload'),
+                'start' => array('dyndnsgd start')
             ),
             'nocheck' => true,
             'name' => 'dyndnsgd',
@@ -105,5 +106,4 @@ function dyndnsgd_configure_do($interface = '')
     } else {
         syslog(LOG_NOTICE, "DynDNSGD: plugin is disabled");
     }
-
 }
