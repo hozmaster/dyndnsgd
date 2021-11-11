@@ -129,6 +129,9 @@ class gdDnsUpdater
 
     private function fetchAccounts($defs_acc_s): bool
     {
+        if (!isset($defs_acc_s['accounts']['account'])) {
+            return false;
+        }
         $accs = $defs_acc_s['accounts']['account'];
         foreach ($accs as $acc) {
             if ($acc['enabled']) {
