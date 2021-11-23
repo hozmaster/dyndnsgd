@@ -1,7 +1,7 @@
 <menu>
     <!-- Plugin Dyndns GD menu -->
     <Services>
-        <DynDNSGD cssClass="fa fa-tags">
+        <DynDNSGD VisibleName="Dynamic DNS for GoDaddy"  cssClass="fa fa-tags">
             <Settings url="/ui/dyndnsgd/settings/index" order="10"/>
             <Accounts url="/ui/dyndnsgd/accounts/index" order="20"/>
             <Domains url="/ui/dyndnsgd/domains/index" order="30"/>
