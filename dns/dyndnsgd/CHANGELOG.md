@@ -2,12 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.4.0-dev [Unreleased] - yyyy-mm-dd
-This is development version and not yet should use in the production environment.
+## 0.5.0 Released - 2021-11-25
 
-Targets: 
-- Proper WAN interface detection
-- Dynamic dns Ip update detection
+Key features 
+- Dynamic DNS IP update detection, cached ip's to database 
 
 ### KNOWN ISSUES
 - Interface detection may not work correctly (interface detection fails)
@@ -27,6 +25,9 @@ Targets:
 - Removed the ip4 address-row from the Domain details dialog. 
 
 ### Fixed
+
+- After plugin has been installed, installer will create required folders and files to system
+
 
 ## 0.3.8 - 2021-09-27
 

@@ -30,7 +30,7 @@ require_once("interfaces.inc");
 require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 
 
-function dyndnsgd_configure()
+function dyndnsgd_configure(): array
 {
     syslog(LOG_NOTICE, "DynDNSGD: dyndnsgd_configure()");
     return array(
