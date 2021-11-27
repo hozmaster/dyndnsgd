@@ -32,7 +32,6 @@ require_once('plugins.inc.d/dyndnsgd/gdDnsUpdater.inc');
 
 function dyndnsgd_configure(): array
 {
-    syslog(LOG_NOTICE, "DynDNSGD: dyndnsgd_configure()");
     return array(
         'bootup' => array('dyndnsgd_configure_do'),
         'local' => array('dyndnsgd_configure_do'),
@@ -73,9 +72,13 @@ function dyndnsgd_list()
     );
 }
 
-function dyndnsgd_configure_do($interface = '')
+function dyndnsgd_configure_do($verbose = true, $param = '')
 {
     global $config;
+
+    syslog(LOG_NOTICE, "DynDNSGD: verbose : " . $verbose);
+    syslog(LOG_NOTICE, "DynDNSGD: parameter count : " . $param);
+
     if (dyndnsgd_enabled()) {
 
         $opnsense = $config['OPNsense'];
@@ -92,6 +95,9 @@ function dyndnsgd_configure_do($interface = '')
         if (empty($wan_if)) {
             $wan_if = "wan";
         }
+
+        $gwgroups = return_gateway_groups_array();
+
 
         $updater = new gdDnsUpdater(
             $wan_if,
