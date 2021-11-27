@@ -76,9 +76,6 @@ function dyndnsgd_configure_do($verbose = true, $param = '')
 {
     global $config;
 
-    syslog(LOG_NOTICE, "DynDNSGD: verbose : " . $verbose);
-    syslog(LOG_NOTICE, "DynDNSGD: parameter count : " . $param);
-
     if (dyndnsgd_enabled()) {
 
         $opnsense = $config['OPNsense'];
@@ -91,23 +88,22 @@ function dyndnsgd_configure_do($verbose = true, $param = '')
 
         $verbose = $dyndngd['settings']['log_level'] == 'debug';
         $wan_if = $dyndngd['settings']['interface'];
-
         if (empty($wan_if)) {
             $wan_if = "wan";
         }
 
-        $gwgroups = return_gateway_groups_array();
+        $gw_groups = return_gateway_groups_array();
+        if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
+            $updater = new gdDnsUpdater(
+                $wan_if,
+                $verbose,
+                $dyndngd
+            );
 
-
-        $updater = new gdDnsUpdater(
-            $wan_if,
-            $verbose,
-            $dyndngd
-        );
-
-        // do actual verification and the update process if needed
-        $updater->checkAndDoDNSUpdate();
-        sleep(1);
+            // do actual verification and the update process if needed
+            $updater->checkAndDoDNSUpdate();
+            sleep(1);
+        }
 
     } else {
         syslog(LOG_NOTICE, "DynDNSGD: plugin is disabled");

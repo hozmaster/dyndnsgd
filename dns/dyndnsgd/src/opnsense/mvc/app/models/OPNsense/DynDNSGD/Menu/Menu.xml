@@ -8,6 +8,7 @@
             <Logs VisibleName="Log Files" order="30" url="/ui/dyndnsgd/logs">
                 <SystemLog VisibleName="System Log" order="30" url="/ui/dyndnsgd/logs"/>
             </Logs>
+            <QueryLog VisibleName="Log extra" order="40"  url="/ui/diagnostics/log/dyndnsgd/extra"/>
         </DynDNSGD>
     </Services>
 </menu>
