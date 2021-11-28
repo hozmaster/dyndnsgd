@@ -3,7 +3,7 @@
     <description>
         the OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <items>
         <enabled type="BooleanField">
             <default>1</default>
@@ -21,6 +21,13 @@
             <default>1</default>
             <Required>Y</Required>
         </atrecord>
+        <logsize type="IntegerField">
+            <default>5</default>
+            <Required>Y</Required>
+            <MinimumValue>1</MinimumValue>
+            <MaximumValue>100</MaximumValue>
+            <ValidationMessage>Choose a value between 1 and 100.</ValidationMessage>
+        </logsize>
         <log_level type="OptionField">
             <Required>Y</Required>
             <default>normal</default>

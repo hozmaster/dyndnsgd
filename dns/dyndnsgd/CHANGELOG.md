@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.5.1 [Unreleased] - 202x-xx-xx
+
+Key features:
+- Log support improvements
+- Model changes (change all occurrences of 'DynDNSGD' lower case)
+- Move all curl actions to the library
+- Some UI changes ?
+
+### Added
+TBD
+
+### Changed
+TBD
+
+### Fixed
+TBD
+
 ## 0.5.0 Released - 2021-11-25
 
 Key features 
@@ -25,7 +42,6 @@ Key features
 - Removed the ip4 address-row from the Domain details dialog. 
 
 ### Fixed
-
 - After plugin has been installed, installer will create required folders and files to system
 
 
