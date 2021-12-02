@@ -1,9 +1,9 @@
 <model>
-    <mount>//OPNsense/DynDNSGD/domains</mount>
+    <mount>//OPNsense/dyndnsgd/domains</mount>
     <description>
         the OPNsense DynamicDNS mount and model for the domains-view.
     </description>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <items>
         <domains>
             <domain type="ArrayField">

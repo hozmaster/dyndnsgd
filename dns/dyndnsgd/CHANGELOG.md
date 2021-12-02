@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## 0.5.1 [Unreleased] - 202x-xx-xx
 
+Development version. Do not install to production system. 
+
 Key features:
 - Log support improvements
 - Model changes (change all occurrences of 'DynDNSGD' lower case)

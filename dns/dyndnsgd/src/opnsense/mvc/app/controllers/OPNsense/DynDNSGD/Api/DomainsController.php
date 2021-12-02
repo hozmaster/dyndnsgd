@@ -36,7 +36,7 @@ use OPNsense\DynDNSGD\GdUtils;
 class DomainsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Domains';
+    protected static $internalModelClass = '\OPNsense\dyndnsgd\Domains';
 
     public function getAction($uuid = null)
     {

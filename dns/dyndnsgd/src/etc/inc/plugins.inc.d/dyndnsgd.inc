@@ -42,8 +42,8 @@ function dyndnsgd_configure(): array
 function dyndnsgd_enabled(): bool
 {
     global $config;
-    return isset($config['OPNsense']['DynDNSGD']['settings']['enabled']) &&
-        $config['OPNsense']['DynDNSGD']['settings']['enabled'] == 1;
+    return isset($config['OPNsense']['dyndnsgd']['settings']['enabled']) &&
+        $config['OPNsense']['dyndnsgd']['settings']['enabled'] == 1;
 }
 
 function dyndnsgd_services()
@@ -79,7 +79,7 @@ function dyndnsgd_configure_do($verbose = true, $param = '')
     if (dyndnsgd_enabled()) {
 
         $opnsense = $config['OPNsense'];
-        $dyndngd = $opnsense['DynDNSGD'];
+        $dyndngd = $opnsense['dyndnsgd'];
 
         if (empty($dyndngd)) {
             syslog(LOG_ERR, "DynDNSGD: Internal model structure can't be found, Quit now.");

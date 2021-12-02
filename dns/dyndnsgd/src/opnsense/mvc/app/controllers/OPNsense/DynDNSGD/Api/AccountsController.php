@@ -36,7 +36,7 @@ use OPNsense\DynDNSGD\GdUtils;
 class AccountsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\DynDNSGD\Accounts';
+    protected static $internalModelClass = '\OPNsense\dyndnsgd\Accounts';
 
     public function getAction($uuid = null)
     {
