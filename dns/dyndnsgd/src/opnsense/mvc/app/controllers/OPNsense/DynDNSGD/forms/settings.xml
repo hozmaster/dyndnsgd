@@ -46,6 +46,12 @@
         <help>Should domains support at records by default.</help>
     </field>
     <field>
+        <id>settings.logsize</id>
+        <label>Logsize in MB</label>
+        <type>text</type>
+        <help>Set the amount how big a logfile can growth.</help>
+    </field>
+    <field>
         <id>settings.log_level</id>
         <label>log level: </label>
         <type>dropdown</type>

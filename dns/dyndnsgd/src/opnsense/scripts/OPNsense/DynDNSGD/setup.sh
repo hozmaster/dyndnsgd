@@ -32,3 +32,6 @@ chmod 755 /var/run/dyndnsgd
 mkdir -p /var/dyndnsgd
 chown -R root:wheel /var/dyndnsgd
 chmod 755 /var/dyndnsgd
+
+mkdir -p /var/log/dyndnsgd
+chmod 755 /var/log/dyndnsgd
