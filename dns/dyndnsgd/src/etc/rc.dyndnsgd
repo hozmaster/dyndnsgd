@@ -40,11 +40,13 @@ if (isset($argv[1])) {
 }
 
 if (empty($argument)) {
-    dyndnsgd_configure_do();
+    dyndnsgd_configure_do(true);
 } else {
+    syslog(LOG_NOTICE, "DynDNSGD: argument count : " . $argc);
     $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
     if (empty($interface)) {
         $interface = $argument;
     }
-    dyndnsgd_configure_do($interface);
+
+    dyndnsgd_configure_do(true, $interface);
 }
