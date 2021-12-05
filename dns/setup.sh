@@ -85,20 +85,20 @@ cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/Api/* $TARGET_BASE_PATH/cont
 cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/
 
 ## script
-cp -vf dyndnsgd/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
+cp -vf goddy/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
 chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/*.php
 
 ## service
-cp -vf dyndnsgd/src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
+cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
 
 ## legacy plugins support
-cp -vf dyndnsgd/src/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
+cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
 
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd.inc
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/goddy/GoDaddy.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/goddy/RequesterBase.inc
 
-if [ ! -d /usr/local/etc/inc/plugins.inc.d/dyndnsgd ]; then
-  mkdir /usr/local/etc/inc/plugins.inc.d/dyndnsgd
+if [ ! -d /usr/local/etc/inc/plugins.inc.d/goddy ]; then
+  mkdir /usr/local/etc/inc/plugins.inc.d/goddy
 fi
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/gdDnsUpdater.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/gdDnsUpdater.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc /usr/local/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc
