@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd;
+namespace OPNsense\Goddy;
 
 use OPNsense\Base\BaseModel;
 
