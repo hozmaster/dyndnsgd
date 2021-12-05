@@ -1,14 +1,14 @@
 <menu>
     <!-- Plugin Dyndns GD menu -->
     <Services>
-        <DynDNSGD VisibleName="Dynamic DNS for GoDaddy"  cssClass="fa fa-tags">
-            <Settings url="/ui/dyndnsgd/settings/index" order="10"/>
-            <Accounts url="/ui/dyndnsgd/accounts/index" order="20"/>
-            <Domains url="/ui/dyndnsgd/domains/index" order="30"/>
-            <Logs VisibleName="Log Files" order="30" url="/ui/dyndnsgd/logs">
-                <SystemLog VisibleName="System Log" order="30" url="/ui/dyndnsgd/logs"/>
+        <Goddy VisibleName="Dynamic DNS for GoDaddy"  cssClass="fa fa-tags">
+            <Settings url="/ui/goddy/settings/index" order="10"/>
+            <Accounts url="/ui/goddy/accounts/index" order="20"/>
+            <Domains url="/ui/goddy/domains/index" order="30"/>
+            <Logs VisibleName="Log Files" order="30" url="/ui/goddy/logs">
+                <SystemLog VisibleName="System Log" order="30" url="/ui/goddy/logs"/>
             </Logs>
-            <GeneralLog VisibleName="Log" order="40"  url="/ui/diagnostics/log/dyndnsgd/general"/>
-        </DynDNSGD>
+            <GeneralLog VisibleName="Log" order="40"  url="/ui/diagnostics/log/goddy/general"/>
+        </Goddy>
     </Services>
 </menu>

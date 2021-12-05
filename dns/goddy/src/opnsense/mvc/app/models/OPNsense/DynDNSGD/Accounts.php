@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd;
+namespace OPNsense\Goddy;
 
 use OPNsense\Base\BaseModel;
 

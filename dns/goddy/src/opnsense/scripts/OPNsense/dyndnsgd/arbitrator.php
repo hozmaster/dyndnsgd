@@ -31,7 +31,7 @@ include_once('config.inc');
 include_once('certs.inc');
 include_once('util.inc');
 
-use OPNsense\dyndnsgd\Worker;
+use OPNsense\Goddy\Worker;
 
 // Summary that will be displayed in usage information.
 const ABOUT = <<<TXT
@@ -112,7 +112,7 @@ function main()
 
 function log_notice($msg)
 {
-    syslog(LOG_NOTICE, "DynDNSGD: " . $msg);
+    syslog(LOG_NOTICE, "Goddy: " . $msg);
 }
 
 // Run!

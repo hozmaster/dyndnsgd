@@ -32,7 +32,7 @@ use \SQLite3;
 
 class GDDatabase
 {
-    private $db_name = "/var/dyndnsgd/dyndnsgd.db";
+    private $db_name = "/var/goddy/goddy.db";
     private $db = null;
 
     public function __construct()

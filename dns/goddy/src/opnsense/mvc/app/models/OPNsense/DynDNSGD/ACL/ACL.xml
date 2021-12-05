@@ -1,10 +1,10 @@
 <acl>
-    <page-services-dyndnsgd>
-        <name>Services: Dyndnsgd</name>
+    <page-services-goddy>
+        <name>Services: Goddy</name>
         <patterns>
-            <pattern>ui/dyndnsgd/*</pattern>
-            <pattern>api/dyndnsgd/*</pattern>
-            <pattern>diag_logs_dyndnsgd.php</pattern>
+            <pattern>ui/goddy/*</pattern>
+            <pattern>api/goddy/*</pattern>
+            <pattern>diag_logs_goddy.php</pattern>
         </patterns>
-    </page-services-dyndnsgd>
+    </page-services-goddy>
 </acl>

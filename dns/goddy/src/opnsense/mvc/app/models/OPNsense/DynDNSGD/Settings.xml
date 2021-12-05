@@ -1,5 +1,5 @@
 <model>
-    <mount>//OPNsense/dyndnsgd/settings</mount>
+    <mount>//OPNsense/Goddy/settings</mount>
     <description>
         the OPNsense DynamicDNS mount and model for the Settings-view.
     </description>

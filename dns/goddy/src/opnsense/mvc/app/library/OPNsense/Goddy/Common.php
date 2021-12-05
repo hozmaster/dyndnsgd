@@ -1,6 +1,6 @@
 <?php
 
-namespace OPNsense\DynDNSGD;
+namespace OPNsense\Goddy;
 
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
@@ -28,7 +28,7 @@ namespace OPNsense\DynDNSGD;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-use OPNsense\dyndnsgd\Accounts;
+use OPNsense\Goddy\Accounts;
 
 abstract class Common
 {

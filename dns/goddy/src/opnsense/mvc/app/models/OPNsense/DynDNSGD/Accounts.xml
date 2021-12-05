@@ -1,5 +1,5 @@
 <model>
-    <mount>//OPNsense/dyndnsgd/accounts</mount>
+    <mount>//OPNsense/Goddy/accounts</mount>
     <description>
         the OPNsense DynamicDNS mount and model for the accounts-view
     </description>
