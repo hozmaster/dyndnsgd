@@ -25,13 +25,13 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-mkdir -p /var/run/dyndnsgd
-chown -R root:wheel /var/run/dyndnsgd
+mkdir -p /var/run/goddy
+chown -R root:wheel /var/run/goddy
 chmod 755 /var/run/dyndnsgd
 
-mkdir -p /var/dyndnsgd
-chown -R root:wheel /var/dyndnsgd
-chmod 755 /var/dyndnsgd
+mkdir -p /var/goddy
+chown -R root:wheel /var/goddy
+chmod 755 /var/goddy
 
-mkdir -p /var/log/dyndnsgd
-chmod 755 /var/log/dyndnsgd
+mkdir -p /var/log/goddy
+chmod 755 /var/log/goddy
