@@ -34,6 +34,6 @@ class AccountsController extends \OPNsense\Base\IndexController
     {
         $this->view->formDialogEditServiceAccount = $this->getForm("dlgeditserviceaccount");
         // pick the template to serve to our users.
-        $this->view->pick('OPNsense/DynDNSGD/accounts');
+        $this->view->pick('OPNsense/Goddy/accounts');
     }
 }

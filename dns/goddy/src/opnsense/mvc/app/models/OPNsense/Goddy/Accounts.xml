@@ -3,7 +3,7 @@
     <description>
         the OPNsense DynamicDNS mount and model for the accounts-view
     </description>
-    <version>0.3.0</version>
+    <version>0.3.9</version>
     <items>
         <accounts>
             <account type="ArrayField">

@@ -34,6 +34,6 @@ class SettingsController extends \OPNsense\Base\IndexController
     {
         $this->view->formViewSettings = $this->getForm("settings");
         // pick the template to serve to our users.
-        $this->view->pick('OPNsense/DynDNSGD/settings');
+        $this->view->pick('OPNsense/Goddy/settings');
     }
 }

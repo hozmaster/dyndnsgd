@@ -37,6 +37,6 @@ class LogsController extends \OPNsense\Base\IndexController
     public function indexAction()
     {
         // choose template
-        $this->view->pick('OPNsense/DynDNSGD/logs');
+        $this->view->pick('OPNsense/Goddy/logs');
     }
 }
