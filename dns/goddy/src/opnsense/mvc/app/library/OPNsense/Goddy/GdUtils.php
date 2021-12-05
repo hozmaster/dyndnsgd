@@ -1,6 +1,6 @@
 <?php
 
-namespace OPNsense\DynDNSGD;
+namespace OPNsense\Goddy;
 
 /*
  * Copyright (C) 2021 Olli-Pekka Wallin

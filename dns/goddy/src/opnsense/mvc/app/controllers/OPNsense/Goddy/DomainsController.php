@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd;
+namespace OPNsense\Goddy;
 
 class DomainsController extends \OPNsense\Base\IndexController
 {
