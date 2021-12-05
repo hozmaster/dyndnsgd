@@ -29,13 +29,13 @@
     $( document ).ready(function() {
 
         var gridParams = {
-            search:'/api/dyndnsgd/accounts/search',
-            get:'/api/dyndnsgd/accounts/get/',
-            set:'/api/dyndnsgd/accounts/update/',
-            add:'/api/dyndnsgd/accounts/add/',
-            del:'/api/dyndnsgd/accounts/del/',
-            toggle:'/api/dyndnsgd/accounts/toggle/',
-            fetch:'/api/dyndnsgd/accounts/fetch/',
+            search:'/api/goddy/accounts/search',
+            get:'/api/goddy/accounts/get/',
+            set:'/api/goddy/accounts/update/',
+            add:'/api/goddy/accounts/add/',
+            del:'/api/goddy/accounts/del/',
+            toggle:'/api/goddy/accounts/toggle/',
+            fetch:'/api/goddy/accounts/fetch/',
         };
 
         var gridopt = {
@@ -43,7 +43,7 @@
             selection: true,
             multiSelect: true,
             rowCount:[10,25,50,100,500,1000],
-            url: '/api/dyndnsgd/accounts/search',
+            url: '/api/goddy/accounts/search',
             formatters: {
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +

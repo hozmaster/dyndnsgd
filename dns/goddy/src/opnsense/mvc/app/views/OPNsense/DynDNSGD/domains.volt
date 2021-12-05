@@ -29,11 +29,11 @@
     $( document ).ready(function() {
 
         var gridParams = {
-            search:'/api/dyndnsgd/domains/search',
-            get:'/api/dyndnsgd/domains/get/',
-            set:'/api/dyndnsgd/domains/update/',
-            del:'/api/dyndnsgd/domains/del/',
-            toggle:'/api/dyndnsgd/domains/toggle/',
+            search:'/api/goddy/domains/search',
+            get:'/api/goddy/domains/get/',
+            set:'/api/goddy/domains/update/',
+            del:'/api/goddy/domains/del/',
+            toggle:'/api/goddy/domains/toggle/',
         };
 
         var gridopt = {
@@ -41,7 +41,7 @@
             selection: true,
             multiSelect: true,
             rowCount:[10,25,50,100,500,1000],
-            url: '/api/dyndnsgd/domains/search',
+            url: '/api/goddy/domains/search',
             formatters: {
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +

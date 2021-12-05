@@ -30,14 +30,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
     $( document ).ready(function() {
 
-        var data_get_map = {'frm_settings':"/api/dyndnsgd/settings/get"};
+        var data_get_map = {'frm_settings':"/api/goddy/settings/get"};
         mapDataToFormUI(data_get_map).done(function(data){
             formatTokenizersUI();
             $('.selectpicker').selectpicker('refresh');
         });
 
         $("#saveAct").click(function(){
-            saveFormToEndpoint(url="/api/dyndnsgd/settings/set", formid='frm_settings',callback_ok=function(){
+            saveFormToEndpoint(url="/api/goddy/settings/set", formid='frm_settings',callback_ok=function(){
             $('.selectpicker').selectpicker('refresh');
                 // TODO: Check this one
                 //             $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");

@@ -27,7 +27,7 @@
  <script>
      $( document ).ready(function() {
 
-       // get entries from dyndnsgd.log
+       // get entries from goddy.log
        let grid_systemlog = $("#grid-systemlog").UIBootgrid({
           options:{
               // Hide nonfunctional search field
@@ -37,8 +37,8 @@
               selection: false,
               rowCount:[20,50,100,200,500,1000,-1],
               requestHandler: function(request){
-                    // Show only log entries that match 'DynDNSGD'
-                    request['searchPhrase'] = 'DynDNSGD:';
+                    // Show only log entries that match 'Goddy'
+                    request['searchPhrase'] = 'Goddy:';
                     return request;
               },
            },
