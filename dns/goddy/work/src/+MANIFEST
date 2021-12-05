@@ -1,0 +1,14 @@
+name: os-goddy-devel
+version: "0.5.1_4"
+origin: opnsense/os-goddy-devel
+comment: "Dynamic DNS Support for GoDaddy service"
+maintainer: "opwallin@gmail.com"
+categories: [ "dns" ]
+www: "https://opnsense.org/"
+prefix: "/usr/local"
+licenselogic: "single"
+licenses: [ "BSD2CLAUSE" ]
+deps: {
+  sqlite3: { version: "3.35.5_4,1", origin: "databases/sqlite3" }
+  php74-sqlite3: { version: "7.4.25", origin: "databases/php74-sqlite3" }
+}
