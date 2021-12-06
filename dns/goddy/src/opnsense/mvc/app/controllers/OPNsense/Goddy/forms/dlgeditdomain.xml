@@ -23,7 +23,7 @@
         <label>Interface to monitor:</label>
         <type>dropdown</type>
         <allownew>false</allownew>
-        <help>Set a outgoing interface to listen on.</help>
+        <help>Set an outgoing interface to listen on.</help>
     </field>
     <field>
         <id>domain.description</id>

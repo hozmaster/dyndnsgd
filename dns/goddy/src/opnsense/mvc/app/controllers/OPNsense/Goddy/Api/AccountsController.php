@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd\Api;
+namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
 use OPNsense\Core\Backend;
@@ -35,8 +35,8 @@ use OPNsense\DynDNSGD\GdUtils;
 
 class AccountsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\dyndnsgd\Accounts';
+    protected static $internalModelClass = '\OPNsense\Goddy\Accounts';
+    protected static $internalModelName = 'accounts';
 
     public function getAction($uuid = null)
     {

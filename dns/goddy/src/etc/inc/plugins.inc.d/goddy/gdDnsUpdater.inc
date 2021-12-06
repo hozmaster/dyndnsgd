@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-use OPNsense\goddy\GDDatabase;
+use OPNsense\Goddy\GDDatabase;
 
 class gdDnsUpdater
 {

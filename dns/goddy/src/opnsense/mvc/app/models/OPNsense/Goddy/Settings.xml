@@ -1,9 +1,9 @@
 <model>
     <mount>//OPNsense/Goddy/settings</mount>
     <description>
-        the OPNsense DynamicDNS mount and model for the Settings-view.
+        The OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <items>
         <enabled type="BooleanField">
             <default>1</default>

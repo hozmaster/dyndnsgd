@@ -26,17 +26,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd\Api;
+namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
-use OPNsense\DynDNSGD\GDDatabase;
-use OPNsense\DynDNSGD\GdUtils;
+use OPNsense\Goddy\GDDatabase;
 
 
 class DomainsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelName = 'dyndnsgd';
-    protected static $internalModelClass = '\OPNsense\dyndnsgd\Domains';
+    protected static $internalModelClass = '\OPNsense\Goddy\Domains';
+    protected static $internalModelName = 'domains';
 
     public function getAction($uuid = null)
     {

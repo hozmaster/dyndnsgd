@@ -29,7 +29,7 @@
         <id>settings.enabled</id>
         <label>Enable: </label>
         <type>checkbox</type>
-        <help>Enable or disable DyndnsGD-service</help>
+        <help>Enable or disable Goddy-service</help>
     </field>
     <field>
         <id>settings.interface</id>

@@ -27,7 +27,7 @@
 
 mkdir -p /var/run/goddy
 chown -R root:wheel /var/run/goddy
-chmod 755 /var/run/dyndnsgd
+chmod 755 /var/run/goddy
 
 mkdir -p /var/goddy
 chown -R root:wheel /var/goddy

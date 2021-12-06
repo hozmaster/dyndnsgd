@@ -3,7 +3,7 @@
     <description>
         the OPNsense DynamicDNS mount and model for the domains-view.
     </description>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
     <items>
         <domains>
             <domain type="ArrayField">
@@ -21,7 +21,7 @@
                 <account type="ModelRelationField">
                     <Model>
                         <accounts>
-                            <source>OPNsense.DynDNSGD.Accounts</source>
+                            <source>OPNsense.Goddy.Accounts</source>
                             <items>accounts.account</items>
                             <display>name</display>
                             <filters>

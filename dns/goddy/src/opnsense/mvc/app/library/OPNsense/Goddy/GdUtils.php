@@ -38,7 +38,7 @@ class GdUtils
      */
     public static function log($msg)
     {
-        syslog(LOG_NOTICE, "DynDNSGD: ${msg}");
+        syslog(LOG_NOTICE, "Goddy: ${msg}");
     }
 
     /**
@@ -47,7 +47,7 @@ class GdUtils
     public static function log_debug($msg, bool $debug = false)
     {
         if ($debug) {
-            syslog(LOG_NOTICE, "DynDNSGD: ${msg}");
+            syslog(LOG_NOTICE, "Goddy: ${msg}");
         }
     }
 
@@ -56,7 +56,7 @@ class GdUtils
      */
     public static function log_error($msg)
     {
-        syslog(LOG_ERR, "DynDNSGD: ${msg}");
+        syslog(LOG_ERR, "Goddy: ${msg}");
     }
 
     public static function dumpArrayToFile($content, $file)

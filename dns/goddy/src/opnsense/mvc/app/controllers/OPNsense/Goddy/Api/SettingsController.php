@@ -26,14 +26,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\dyndnsgd\Api;
+namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
 
 
 class SettingsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelClass = '\OPNsense\dyndnsgd\Settings';
+    protected static $internalModelClass = '\OPNsense\Goddy\Settings';
     protected static $internalModelName = 'settings';
 
 }
