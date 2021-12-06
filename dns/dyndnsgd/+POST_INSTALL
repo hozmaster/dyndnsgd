@@ -1,9 +1,0 @@
-
-# create plugin runtime folders and files.
-/usr/local/opnsense/scripts/OPNsense/DynDNSGD/setup.sh
-
-/usr/local/opnsense/scripts/OPNsense/DynDNSGD/create_db.sh
-
-if /usr/local/etc/rc.d/configd status > /dev/null; then
-        /usr/local/etc/rc.d/configd restart
-fi

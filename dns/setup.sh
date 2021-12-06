@@ -29,76 +29,76 @@
 # This script is for help development work.
 
 TARGET_BASE_PATH=/usr/local/opnsense/mvc/app
-SOURCE_BASE_PATH=dyndnsgd/src/opnsense/mvc/app
+SOURCE_BASE_PATH=goddy/src/opnsense/mvc/app
 
-rm -r $TARGET_BASE_PATH/models/OPNsense/DynDNSGD
-rm -r $TARGET_BASE_PATH/views/OPNsense/DynDNSGD
-rm -r $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD
-rm -r $TARGET_BASE_PATH/library/OPNsense/DynDNSGD
-rm -r /usr/local/opnsense/scripts/OPNsense/DynDNSGD
+rm -r $TARGET_BASE_PATH/models/OPNsense/Goddy
+rm -r $TARGET_BASE_PATH/views/OPNsense/Goddy
+rm -r $TARGET_BASE_PATH/controllers/OPNsense/Goddy
+rm -r $TARGET_BASE_PATH/library/OPNsense/Goddy
+rm -r /usr/local/opnsense/scripts/OPNsense/Goddy
 
 #
-if [ ! -d $TARGET_BASE_PATH/models/OPNsense/DynDNSGD ]; then
-  mkdir $TARGET_BASE_PATH/models/OPNsense/DynDNSGD
-  mkdir $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/ACL
-  mkdir $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/Menu
+if [ ! -d $TARGET_BASE_PATH/models/OPNsense/Goddy ]; then
+  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy
+  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
+  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
 fi
 
 # views
-if [ ! -d $TARGET_BASE_PATH/views/OPNsense/DynDNSGD ]; then
-  mkdir $TARGET_BASE_PATH/views/OPNsense/DynDNSGD
+if [ ! -d $TARGET_BASE_PATH/views/OPNsense/Goddy ]; then
+  mkdir $TARGET_BASE_PATH/views/OPNsense/Goddy
 fi
 
 # controller
-if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD ]; then
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/forms
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
+if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/Goddy ]; then
+  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy
+  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
+  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
 fi
 
 # scripts
-if [ ! -d /usr/local/opnsense/scripts/OPNsense/DynDNSGD ]; then
-  mkdir /usr/local/opnsense/scripts/OPNsense/DynDNSGD
+if [ ! -d /usr/local/opnsense/scripts/OPNsense/Goddy ]; then
+  mkdir /usr/local/opnsense/scripts/OPNsense/Goddy
 fi
 
 # library
-if [ ! -d $TARGET_BASE_PATH/library/OPNsense/DynDNSGD ]; then
-  mkdir $TARGET_BASE_PATH/library/OPNsense/DynDNSGD
+if [ ! -d $TARGET_BASE_PATH/library/OPNsense/Goddy ]; then
+  mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy
 fi
 
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/ACL/* $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/ACL
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/Menu/* $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/Menu
+cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/ACL/* $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
+cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/Menu/* $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
 
 ## model
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/*.xml $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/models/OPNsense/DynDNSGD/
+cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.xml $TARGET_BASE_PATH/models/OPNsense/Goddy/
+cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.php $TARGET_BASE_PATH/models/OPNsense/Goddy/
 #
 ## views
-cp -vf $SOURCE_BASE_PATH/views/OPNsense/DynDNSGD/*.volt $TARGET_BASE_PATH/views/OPNsense/DynDNSGD/
+cp -vf $SOURCE_BASE_PATH/views/OPNsense/Goddy/*.volt $TARGET_BASE_PATH/views/OPNsense/Goddy/
 #
 ## controllers
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/forms/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/forms
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/DynDNSGD/Api/* $TARGET_BASE_PATH/controllers/OPNsense/DynDNSGD/Api
+cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/*.php $TARGET_BASE_PATH/controllers/OPNsense/Goddy/
+cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/forms/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
+cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/Api/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
 
 ## library
-cp -vf $SOURCE_BASE_PATH/library/OPNsense/DynDNSGD/*.php $TARGET_BASE_PATH/library/OPNsense/DynDNSGD/
+cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/
 
 ## script
-cp -vf dyndnsgd/src/opnsense/scripts/OPNsense/DynDNSGD/* /usr/local/opnsense/scripts/OPNsense/DynDNSGD
-chmod a+x /usr/local/opnsense/scripts/OPNsense/DynDNSGD/*.php
+cp -vf goddy/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
+chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/*.php
 
 ## service
-cp -vf dyndnsgd/src/opnsense/service/conf/actions.d/actions_dyndnsgd.conf /usr/local/opnsense/service/conf/actions.d/actions_dyndnsgd.conf
+cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
 
 ## legacy plugins support
-cp -vf dyndnsgd/src/etc/rc.dyndnsgd /usr/local/etc/rc.dyndnsgd
+cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
 
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd.inc
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/GoDaddy.inc
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/RequesterBase.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/goddy/GoDaddy.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/goddy/RequesterBase.inc
 
-if [ ! -d /usr/local/etc/inc/plugins.inc.d/dyndnsgd ]; then
-  mkdir /usr/local/etc/inc/plugins.inc.d/dyndnsgd
+if [ ! -d /usr/local/etc/inc/plugins.inc.d/goddy ]; then
+  mkdir /usr/local/etc/inc/plugins.inc.d/goddy
 fi
-cp -vf dyndnsgd/src/etc/inc/plugins.inc.d/dyndnsgd/gdDnsUpdater.inc /usr/local/etc/inc/plugins.inc.d/dyndnsgd/gdDnsUpdater.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc /usr/local/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc
