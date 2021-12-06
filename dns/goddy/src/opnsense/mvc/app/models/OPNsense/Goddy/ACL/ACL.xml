@@ -1,0 +1,10 @@
+<acl>
+    <page-services-goddy>
+        <name>Services: Goddy</name>
+        <patterns>
+            <pattern>ui/goddy/*</pattern>
+            <pattern>api/goddy/*</pattern>
+            <pattern>diag_logs_goddy.php</pattern>
+        </patterns>
+    </page-services-goddy>
+</acl>
