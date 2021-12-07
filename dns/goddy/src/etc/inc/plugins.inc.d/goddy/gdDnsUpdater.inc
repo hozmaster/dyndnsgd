@@ -106,14 +106,14 @@ class gdDnsUpdater
     private function getDomainData($defs_domains): bool
     {
         if (isset($defs_domains['domains'])) {
-            foreach ($defs_domains['domains']['domain'] as $domain) {
+            foreach ($defs_domains['domains'] as $domain) {
                 if ($domain['enabled']) {
                     $temp['domain'] = $domain['domain'];
                     $temp['uuid'] = $domain['@attributes']['uuid'];
                     $temp['account_uuid'] = $domain['account'];
                     $temp['interface'] = $domain['interface'];
                     $temp['at_record'] = $domain['at_record'];
-                    array_push($this->_domains, $temp);
+                    $this->_domains[] = $temp;
                 }
             }
         } else {
@@ -129,17 +129,16 @@ class gdDnsUpdater
 
     private function fetchAccounts($defs_acc_s): bool
     {
-        if (!isset($defs_acc_s['accounts']['account'])) {
-            return false;
-        }
-        $accs = $defs_acc_s['accounts']['account'];
-        foreach ($accs as $acc) {
-            if ($acc['enabled']) {
-                $temp['api.key'] = $acc['api_key'];
-                $temp['api.secret'] = $acc['api_secret'];
-                $temp['uuid'] = $acc['@attributes']['uuid'];
-                $temp['test'] = $acc['staging'];
-                array_push($this->_accounts, $temp);
+        if (!isset($defs_acc_s['accounts'])) {
+            $accs = $defs_acc_s['accounts'];
+            foreach ($accs as $acc) {
+                if ($acc['enabled']) {
+                    $temp['api.key'] = $acc['api_key'];
+                    $temp['api.secret'] = $acc['api_secret'];
+                    $temp['uuid'] = $acc['@attributes']['uuid'];
+                    $temp['test'] = $acc['staging'];
+                    $this->_accounts[] = $temp;
+                }
             }
         }
         if (!count($this->_accounts)) {

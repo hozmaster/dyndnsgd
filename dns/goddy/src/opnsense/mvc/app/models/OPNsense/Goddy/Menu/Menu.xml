@@ -8,7 +8,7 @@
             <Logs VisibleName="Log Files" order="30" url="/ui/goddy/logs">
                 <SystemLog VisibleName="System Log" order="30" url="/ui/goddy/logs"/>
             </Logs>
-            <GeneralLog VisibleName="Log" order="40"  url="/ui/diagnostics/log/goddy/general"/>
+            <GeneralLog VisibleName="Log / General" order="40"  url="/ui/diagnostics/log/goddy/general"/>
         </Goddy>
     </Services>
 </menu>

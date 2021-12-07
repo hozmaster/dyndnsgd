@@ -85,10 +85,6 @@ function goddy_configure_do($verbose = true, $param = '')
         }
 
         $verbose = $goddy['settings']['log_level'] == 'debug';
-
-        syslog(LOG_ERR, "Goddy: debug level: " . $verbose);
-        syslog(LOG_ERR, "Goddy: logsize: " . $goddy['settings']['logsize']);
-
         $wan_if = $goddy['settings']['interface'];
         if (empty($wan_if)) {
             $wan_if = "wan";
