@@ -203,24 +203,27 @@ class gdDnsUpdater
 
     private function getDataFromModels()
     {
+       $temp = $this->models;
         if (!count($this->models)) {
             // TODO : No data for goddy. Exit with error code in the log
             syslog(LOG_NOTICE, "Goddy: Internal model problems");
             return;
         }
 
-        $accounts = $this->models['accounts'];
+        $accounts = array_pop($temp["accounts"]);
         if (!$this->fetchAccounts($accounts)) {
             // TODO : No data for goddy. Exit with error code in the log
             syslog(LOG_NOTICE, "Goddy: No valid accounts.");
             return;
         }
 
-        if (!$this->getDomainData($this->models['domains'])) {
+        $domains = array_pop($temp["domains"]);
+        if (!$this->getDomainData($domains) {
             // TODO : No data for goddy. Exit with error code in the log
             syslog(LOG_NOTICE, "Goddy: Suitable domains not found.");
             return;
         }
+        
     }
 
 
