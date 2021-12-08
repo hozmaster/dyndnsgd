@@ -129,6 +129,12 @@ class gdDnsUpdater
 
     private function fetchAccounts($defs_acc_s): bool
     {
+        ob_start();
+        var_dump($this->models);
+        $dump = ob_get_contents();
+        file_put_contents("/tmp/goddy_accounts_dump", $dump);
+        ob_end_clean();
+
         if (!isset($defs_acc_s['accounts'])) {
             $accs = $defs_acc_s['accounts'];
             foreach ($accs as $acc) {
@@ -140,9 +146,6 @@ class gdDnsUpdater
                     $this->_accounts[] = $temp;
                 }
             }
-        }
-        if (!count($this->_accounts)) {
-            return false;
         }
         return true;
     }
@@ -219,4 +222,6 @@ class gdDnsUpdater
             return;
         }
     }
+
+
 }
