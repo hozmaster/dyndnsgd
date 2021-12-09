@@ -96,12 +96,16 @@ function goddy_configure_do($verbose = true, $param = '')
             $wan_if = "wan";
         }
 
+        $accounts = array_pop($goddy['accounts']);
+        $domains = array_pop($goddy['domains']);
         $gw_groups = return_gateway_groups_array();
         if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
             $updater = new gdDnsUpdater(
                 $wan_if,
                 $verbose,
-                $goddy
+                $goddy,
+                $accounts,
+                $domains
             );
 
             // do actual verification and the update process if needed

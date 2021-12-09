@@ -33,7 +33,6 @@ class gdDnsUpdater
     private string $_if_addr4;
     private bool $_useIPv6;
     private array $_accounts = [];
-    private array $cached_records = [];
     private array $_domains = [];
     private string $dnsService = 'gd';
     private $models;
@@ -46,16 +45,19 @@ class gdDnsUpdater
     public function __construct(
         $if,
         $verboseLogging,
-        $models
+        $models,
+        $accounts,
+        $domains
     )
     {
         $this->_useIPv6 = false;
         $this->_if = $if;
         $this->_if_addr4 = $this->checkIPAddress();
         $this->verboseLogging = $verboseLogging;
+        // to be removed
         $this->models = $models;
-        $this->gdDb = new GDDatabase();
-        $this->cached_records = $this->gdDb->getCachedDomainRecords();
+        $this->_accounts = $accounts;
+        $this->_domains = $domains;
     }
 
     public function checkAndDoDNSUpdate()
@@ -66,7 +68,8 @@ class gdDnsUpdater
             $this->log_message(" wan address : " . $this->_if_addr4);
         }
 
-        // Ensure that we were able to lookup the IP
+        $this->gdDb = new GDDatabase();
+        // Ensure that we were able to look up the IP
         if (!is_ipaddr($this->_if_addr4)) {
             $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.", true);
             unlock($updater_lck);
@@ -76,78 +79,33 @@ class gdDnsUpdater
         include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
         $this->handler = new GoDaddy();
 
-        $this->getDataFromModels();
-
-        $this->log_message(" domain count  : " . count($this->_domains));
-        $this->log_message(" account count : " . count($this->_accounts));
+        $this->log_message(" Count of domains  : " . count($this->_domains));
+        $this->log_message(" Count of accounts : " . count($this->_accounts));
 
         foreach ($this->_domains as $domain) {
-            $keys = $this->getAccountKeysForDomain($domain['account_uuid']);
-            $cached_record= $this->getCurrentIPAddress($domain['uuid']);
-            if ($keys && $cached_record['ipv4_address'] != $this->_if_addr4) {
-                $name = "@";
-                $this->log_message("Updating records for domain : " . $domain['domain']);
-                $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
-                if ($result['status'] != 'failed') {
-                    $type = 'A';
-                    $this->gdDb->setCachedIpForDomain($domain['uuid'], $type, $name, $this->_if_addr4, "");
-                    $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
-                } else {
-                    $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason'], true);
+            // If enabled, contineu t 
+            if ($domain['enabled']) {
+                $keys = $this->getAccountKeysForDomain($domain['@attributes']['uuid']);
+                $cached_record = $this->getCurrentIPAddress($domain['uuid']);
+                if ($keys && $cached_record['ipv4_address'] != $this->_if_addr4) {
+                    $name = "@";
+                    $this->log_message("Updating records for domain : " . $domain['domain']);
+                    $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
+                    if ($result['status'] != 'failed') {
+                        $type = 'A';
+                        $this->gdDb->setCachedIpForDomain($domain['uuid'], $type, $name, $this->_if_addr4, "");
+                        $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
+                    } else {
+                        $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason'], true);
+                    }
                 }
-            } else {
-                $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
+                else {
+                    $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
+                }
             }
             unlock($updater_lck);
             $this->log_message(" updater lock released. ");
         }
-    }
-
-    private function getDomainData($defs_domains): bool
-    {
-        if (isset($defs_domains['domains'])) {
-            foreach ($defs_domains['domains'] as $domain) {
-                if ($domain['enabled']) {
-                    $temp['domain'] = $domain['domain'];
-                    $temp['uuid'] = $domain['@attributes']['uuid'];
-                    $temp['account_uuid'] = $domain['account'];
-                    $temp['interface'] = $domain['interface'];
-                    $temp['at_record'] = $domain['at_record'];
-                    $this->_domains[] = $temp;
-                }
-            }
-        } else {
-            // TODO : No data for goddy. Exit with false and log error code.
-            return false;
-        }
-        if (!count($this->_domains)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function fetchAccounts($defs_acc_s): bool
-    {
-        ob_start();
-        var_dump($this->models);
-        $dump = ob_get_contents();
-        file_put_contents("/tmp/goddy_accounts_dump", $dump);
-        ob_end_clean();
-
-        if (!isset($defs_acc_s['accounts'])) {
-            $accs = $defs_acc_s['accounts'];
-            foreach ($accs as $acc) {
-                if ($acc['enabled']) {
-                    $temp['api.key'] = $acc['api_key'];
-                    $temp['api.secret'] = $acc['api_secret'];
-                    $temp['uuid'] = $acc['@attributes']['uuid'];
-                    $temp['test'] = $acc['staging'];
-                    $this->_accounts[] = $temp;
-                }
-            }
-        }
-        return true;
     }
 
     private function getCurrentIPAddress($d_uuid): array
@@ -200,31 +158,5 @@ class gdDnsUpdater
             log_error(self::LOG_PREFIX . ' ' . $msg);
         }
     }
-
-    private function getDataFromModels()
-    {
-       $temp = $this->models;
-        if (!count($this->models)) {
-            // TODO : No data for goddy. Exit with error code in the log
-            syslog(LOG_NOTICE, "Goddy: Internal model problems");
-            return;
-        }
-
-        $accounts = array_pop($temp["accounts"]);
-        if (!$this->fetchAccounts($accounts)) {
-            // TODO : No data for goddy. Exit with error code in the log
-            syslog(LOG_NOTICE, "Goddy: No valid accounts.");
-            return;
-        }
-
-        $domains = array_pop($temp["domains"]);
-        if (!$this->getDomainData($domains) {
-            // TODO : No data for goddy. Exit with error code in the log
-            syslog(LOG_NOTICE, "Goddy: Suitable domains not found.");
-            return;
-        }
-        
-    }
-
 
 }
