@@ -84,12 +84,6 @@ function goddy_configure_do($verbose = true, $param = '')
             return -1;
         }
 
-        ob_start();
-        var_dump($goddy);
-        $dump = ob_get_contents();
-        file_put_contents("/tmp/goddy_full_models_dump", $dump);
-        ob_end_clean();
-
         $verbose = $goddy['settings']['log_level'] == 'debug';
         $wan_if = $goddy['settings']['interface'];
         if (empty($wan_if)) {
@@ -97,13 +91,13 @@ function goddy_configure_do($verbose = true, $param = '')
         }
 
         $accounts = array_pop($goddy['accounts']);
-        $domains = array_pop($goddy['domains']);
+        $domains = array_pop($goddy['domains']['domains']);
+
         $gw_groups = return_gateway_groups_array();
         if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
             $updater = new gdDnsUpdater(
                 $wan_if,
                 $verbose,
-                $goddy,
                 $accounts,
                 $domains
             );

@@ -54,10 +54,11 @@ class gdDnsUpdater
         $this->_if = $if;
         $this->_if_addr4 = $this->checkIPAddress();
         $this->verboseLogging = $verboseLogging;
-        // to be removed
-        $this->models = $models;
         $this->_accounts = $accounts;
         $this->_domains = $domains;
+
+        $this->gdDb = new GDDatabase();
+
     }
 
     public function checkAndDoDNSUpdate()
@@ -68,7 +69,6 @@ class gdDnsUpdater
             $this->log_message(" wan address : " . $this->_if_addr4);
         }
 
-        $this->gdDb = new GDDatabase();
         // Ensure that we were able to look up the IP
         if (!is_ipaddr($this->_if_addr4)) {
             $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.", true);
@@ -83,7 +83,6 @@ class gdDnsUpdater
         $this->log_message(" Count of accounts : " . count($this->_accounts));
 
         foreach ($this->_domains as $domain) {
-            // If enabled, contineu t 
             if ($domain['enabled']) {
                 $keys = $this->getAccountKeysForDomain($domain['@attributes']['uuid']);
                 $cached_record = $this->getCurrentIPAddress($domain['uuid']);
