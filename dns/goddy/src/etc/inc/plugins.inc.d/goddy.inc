@@ -95,6 +95,7 @@ function goddy_configure_do($verbose = true, $param = '')
 
         $gw_groups = return_gateway_groups_array();
         if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
+
             $updater = new gdDnsUpdater(
                 $wan_if,
                 $verbose,
@@ -105,6 +106,9 @@ function goddy_configure_do($verbose = true, $param = '')
             // do actual verification and the update process if needed
             $updater->checkAndDoDNSUpdate();
             sleep(1);
+        } else {
+            $str = "Goddy: " . $param . " " . $wan_if;
+            syslog(LOG_ERR, $str );
         }
 
     } else {

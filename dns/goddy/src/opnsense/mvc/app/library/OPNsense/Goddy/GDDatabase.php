@@ -60,11 +60,13 @@ class GDDatabase
         return $op_status;
     }
 
-    public function getsSingleDomainRecord ($d_uuid)
+    public function getsSingleDomainRecord ($d_uuid, $type='A', $name='@')
     {
         // get cached record for specific domain.
-        $query = $this->db->prepare('SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = :id;');
+        $query = $this->db->prepare('SELECT uuid, type, name, ipv4_address, ipv6_address FROM record WHERE uuid = :id and type = :type and name = :name;');
         $query->bindValue(':id', $d_uuid);
+        $query->bindValue(':type', $type);
+        $query->bindValue(':name', $name);
         $result = $query->execute();
         // get assoc array
         return $result->fetchArray(1);
@@ -77,7 +79,7 @@ class GDDatabase
         $result = $this->db->query($query);
         $data = [];
         while ($row = $result->fetchArray(1)) {
-            array_push($data, $row);
+            $data[] = $row;
         }
         return $data;
     }

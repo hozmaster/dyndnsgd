@@ -34,10 +34,9 @@ class gdDnsUpdater
     private bool $_useIPv6;
     private array $_accounts = [];
     private array $_domains = [];
-    private string $dnsService = 'gd';
-    private $models;
     private $handler;
-    private $verboseLogging = false;
+    private bool $verboseLogging = false;
+    private array $cachedRecords = [];
     private $gdDb = null;
 
     const LOG_PREFIX = "Goddy";
@@ -45,15 +44,15 @@ class gdDnsUpdater
     public function __construct(
         $if,
         $verboseLogging,
-        $models,
         $accounts,
         $domains
     )
     {
+        $this->verboseLogging = $verboseLogging;
+
         $this->_useIPv6 = false;
         $this->_if = $if;
         $this->_if_addr4 = $this->checkIPAddress();
-        $this->verboseLogging = $verboseLogging;
         $this->_accounts = $accounts;
         $this->_domains = $domains;
 
@@ -64,10 +63,9 @@ class gdDnsUpdater
     public function checkAndDoDNSUpdate()
     {
         $updater_lck = lock("goddy_" . LOCK_EX);
-        if ($this->verboseLogging) {
-            $this->log_message(" updater lock set ");
-            $this->log_message(" wan address : " . $this->_if_addr4);
-        }
+
+        $this->log_message(" updater lock set ");
+        $this->log_message(" wan address : " . $this->_if_addr4);
 
         // Ensure that we were able to look up the IP
         if (!is_ipaddr($this->_if_addr4)) {
@@ -82,39 +80,44 @@ class gdDnsUpdater
         $this->log_message(" Count of domains  : " . count($this->_domains));
         $this->log_message(" Count of accounts : " . count($this->_accounts));
 
+        $this->cachedRecords = $this->gdDb->getCachedDomainRecords();
+
         foreach ($this->_domains as $domain) {
             if ($domain['enabled']) {
-                $keys = $this->getAccountKeysForDomain($domain['@attributes']['uuid']);
-                $cached_record = $this->getCurrentIPAddress($domain['uuid']);
-                if ($keys && $cached_record['ipv4_address'] != $this->_if_addr4) {
+                // key property uuid of used account
+                $keys = $this->getAccountKeysForDomain($domain['account']);
+                $cachedRecord = $this->getCurrentIPAddress($domain['uuid']);
+                if (!$cachedRecord || $cachedRecord['ipv4_address'] != $this->_if_addr4) {
                     $name = "@";
+                    $type = 'A';
                     $this->log_message("Updating records for domain : " . $domain['domain']);
                     $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
                     if ($result['status'] != 'failed') {
-                        $type = 'A';
                         $this->gdDb->setCachedIpForDomain($domain['uuid'], $type, $name, $this->_if_addr4, "");
                         $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
                     } else {
-                        $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason'], true);
+                        $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason']);
                     }
+
                 }
                 else {
                     $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
                 }
             }
-            unlock($updater_lck);
-            $this->log_message(" updater lock released. ");
         }
+
+        unlock($updater_lck);
+        $this->log_message(" updater lock released. ");
     }
 
     private function getCurrentIPAddress($d_uuid): array
     {
         $data = [];
-        $result = array_search($d_uuid, array_column($this->cached_records, 'uuid'), true);
+        $result = array_search($d_uuid, array_column($this->cachedRecords, 'uuid'), true);
         if ($result !== false) {
             $data = [
-                'ipv4_address' => $this->cached_records[$result]['ipv4_address'],
-                'ipv6_address' => $this->cached_records[$result]['ipv6_address'],
+                'ipv4_address' => $this->cachedRecords[$result]['ipv4_address'],
+                'ipv6_address' => $this->cachedRecords[$result]['ipv6_address'],
             ];
         }
         return $data;
