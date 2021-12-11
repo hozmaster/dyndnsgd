@@ -86,22 +86,26 @@ class gdDnsUpdater
             if ($domain['enabled']) {
                 // key property uuid of used account
                 $keys = $this->getAccountKeysForDomain($domain['account']);
-                $cachedRecord = $this->getCurrentIPAddress($domain['uuid']);
-                if (!$cachedRecord || $cachedRecord['ipv4_address'] != $this->_if_addr4) {
-                    $name = "@";
-                    $type = 'A';
-                    $this->log_message("Updating records for domain : " . $domain['domain']);
-                    $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
-                    if ($result['status'] != 'failed') {
-                        $this->gdDb->setCachedIpForDomain($domain['uuid'], $type, $name, $this->_if_addr4, "");
-                        $this->log_message("[{$domain['domain']}]: '@'-Record updated ", true);
-                    } else {
-                        $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason']);
-                    }
+                $domainUuid = $domain['@attributes']['uuid'];
+                if ($keys) {
+                    $cachedRecord = $this->getCurrentIPAddress($domainUuid);
+                    if (!$cachedRecord || $cachedRecord['ipv4_address'] != $this->_if_addr4) {
+                        $name = "@";
+                        $type = 'A';
+                        $this->log_message("Updating records for domain : " . $domain['domain']);
+                        $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
+                        if ($result['status'] != 'failed') {
+                            $db_result = $this->gdDb->setCachedIpForDomain($domainUuid, $type, $name, $this->_if_addr4, "");
+                            $this->log_message("[{$domain['domain']}]: '@'-Record updated, db: {$db_result} ", true);
+                        } else {
+                            $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason']);
+                        }
 
-                }
-                else {
-                    $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
+                    } else {
+                        $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
+                    }
+                } else {
+                    $this->log_message("No keys can't be from used account. Skip domain.");
                 }
             }
         }
@@ -125,14 +129,16 @@ class gdDnsUpdater
 
     private function getAccountKeysForDomain($uuid): ?array
     {
-        $result = array_search($uuid, array_column($this->_accounts, 'uuid'), true);
-        if ($result !== false) {
-            $keys = [
-                'api.key' => $this->_accounts[$result]['api.key'],
-                'api.secret' => $this->_accounts[$result]['api.secret']
-            ];
-        } else {
-            $keys = null;
+        $keys = null;
+        foreach ($this->_accounts as $account) {
+            $is_match = $account['@attributes']['uuid'] == $uuid;
+            if ($is_match) {
+                $keys = [
+                    'api.key' => $account['api_key'],
+                    'api.secret' => $account['api_secret']
+                ];
+                break;
+            }
         }
         return $keys;
     }
