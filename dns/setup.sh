@@ -66,6 +66,11 @@ if [ ! -d $TARGET_BASE_PATH/library/OPNsense/Goddy ]; then
   mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy
 fi
 
+# template
+if [ ! -d /usr/local/opnsense/service/templates/OPNsense/Goddy ]; then
+  mkdir /usr/local/opnsense/service/templates/OPNsense/Goddy
+fi
+
 cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/ACL/* $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
 cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/Menu/* $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
 
@@ -90,6 +95,9 @@ chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/*.php
 
 ## service
 cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
+
+## templates
+cp -vf  goddy/src/opnsense/service/templates/OPNsense/Goddy/* /usr/local/opnsense/service/templates/OPNsense/Goddy
 
 ## legacy plugins support
 cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
