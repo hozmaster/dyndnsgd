@@ -2,16 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.5.1 [Unreleased] - 202x-xx-xx
+## 0.5.3 [Released] - 2021-12-11
 
-Development version. Do not install to production system.
-
-Key features:
-- Plugin renamed to Goddy (goddy)
-- Log support improvements
-- Model changes (change all occurrences of 'DynDNSGD' lower case)
-- Move all curl actions to the library
-- Some UI changes ?
+- PLug in renamed to Goddy
+- Ip change and update functionality improved and simplified.
+- Ui Models changed 
 
 ### Added
 TBD
