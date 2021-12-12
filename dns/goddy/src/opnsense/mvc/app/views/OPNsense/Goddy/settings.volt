@@ -37,17 +37,15 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         $("#saveAct").click(function(){
-            saveFormToEndpoint(url="/api/goddy/settings/set", formid='frm_settings',callback_ok=function(){
+            saveFormToEndpoint(url="/api/goddy/settings/set", formid='frm_settings',callback_ok=function() {
             $('.selectpicker').selectpicker('refresh');
-                // TODO: Check this one
-                //             $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
-                //                 ajaxCall(url="/api/goddy/service/reconfigure", sendData={}, callback=function(data,status) {
-                //                     updateServiceControlUI('goddy');
-                //                     $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
-                //                 });
+                $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
+                     ajaxCall(url="/api/goddy/service/reconfigure", sendData={}, callback=function(data,status) {
+                         updateServiceControlUI('goddy');
+                         $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
                 });
+            });
         });
-
     });
 
 </script>

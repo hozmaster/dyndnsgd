@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.5.4 [Unreleased] - 202x-xx-xx
+
+Goals : 
+- Ui improvements
+
+### Added
+TBD
+
+### Changed
+Name of the plugin
+
+### Fixed
+TBD
+
 ## 0.5.3 [Released] - 2021-12-11
 
 - PLug in renamed to Goddy
