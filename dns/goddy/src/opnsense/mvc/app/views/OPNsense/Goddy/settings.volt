@@ -41,8 +41,8 @@ POSSIBILITY OF SUCH DAMAGE.
             $('.selectpicker').selectpicker('refresh');
                 // TODO: Check this one
                 //             $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
-                //                 ajaxCall(url="/api/dyndnsgd/service/reconfigure", sendData={}, callback=function(data,status) {
-                //                     updateServiceControlUI('dyndnsgd');
+                //                 ajaxCall(url="/api/goddy/service/reconfigure", sendData={}, callback=function(data,status) {
+                //                     updateServiceControlUI('goddy');
                 //                     $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
                 //                 });
                 });
