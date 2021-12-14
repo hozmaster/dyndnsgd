@@ -8,7 +8,7 @@ Goals :
 - Ui improvements
 
 ### Added
-TBD
+Add animation when save changes from the Settings-view
 
 ### Changed
 Name of the plugin

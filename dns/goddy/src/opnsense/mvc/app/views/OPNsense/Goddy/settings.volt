@@ -41,8 +41,9 @@ POSSIBILITY OF SUCH DAMAGE.
             $('.selectpicker').selectpicker('refresh');
                 $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
                      ajaxCall(url="/api/goddy/service/reconfigure", sendData={}, callback=function(data,status) {
-                         updateServiceControlUI('goddy');
-                         $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+                         setTimeout(function () {
+                             $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+                         }, 500);
                 });
             });
         });
