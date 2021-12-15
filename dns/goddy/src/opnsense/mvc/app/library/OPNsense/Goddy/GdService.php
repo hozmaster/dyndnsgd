@@ -46,7 +46,7 @@ class GdService
         }
     }
 
-    public function get_base_url($is_test_url = false)
+    public function get_base_url($is_test_url = false): string
     {
         $is_test_url == false ? $url = "https://$this->production_url" : $url = "https://$this->staging_url";
         return $url;
@@ -61,7 +61,7 @@ class GdService
         );
     }
 
-    public function gd_parse_response_info($code)
+    public function parseResponseInfo($code): string
     {
         switch ($code) {
             case 200:
@@ -101,7 +101,7 @@ class GdService
         return $this->response_code;
     }
 
-    public function do_godaddy_get_request($url, $header)
+    public function doGetRequest($url, $header)
     {
         //open connection
         $ch = curl_init();

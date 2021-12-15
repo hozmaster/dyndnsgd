@@ -30,7 +30,7 @@ namespace OPNsense\Goddy;
 
 use OPNsense\Core\Config;
 
-class Worker extends Common
+class Worker extends GdAccountModel
 {
     public function __construct($uuid)
     {
@@ -57,7 +57,7 @@ class Worker extends Common
         $url = "$base_url/v1/domains?statuses=$status";
         $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
 
-        $response_code = $this->gd_service->do_godaddy_get_request($url, $header);
+        $response_code = $this->gd_service->doGetRequest($url, $header);
         GdUtils::log("Fetching domains, response : " . $response_code);
 
         if ($response_code == GdService::REQUEST_OK) {
@@ -75,7 +75,7 @@ class Worker extends Common
             GdUtils::log("Count of added domains:" . $save_count);
         } else {
             GdUtils::log('Request failed with code ' . $response_code . ', ' .
-                $this->gd_service->gd_parse_response_info($response_code));
+                $this->gd_service->parseResponseInfo($response_code));
 
         }
         return true;

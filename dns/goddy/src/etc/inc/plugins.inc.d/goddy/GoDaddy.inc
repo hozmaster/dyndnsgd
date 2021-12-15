@@ -45,7 +45,7 @@ class GoDaddy extends RequesterBase
         return ['A', 'AAAA', 'MX', 'TXT', 'CNAME'];
     }
 
-    public function updateA1Records($domain, $keys, $name, $if_ip_addr)
+    public function updateA1Records($domain, $keys, $name, $if_ip_addr): array
     {
         $this->initCurl();
 
@@ -60,7 +60,7 @@ class GoDaddy extends RequesterBase
             'ttl' => $this->ttl,
         ];
 
-        array_push($payload, $record_object);
+        $payload[] = $record_object;
 
         $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$record_type/$record_name";
         $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
