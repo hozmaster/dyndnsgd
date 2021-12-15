@@ -26,17 +26,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\Goddy;
+namespace OPNsense\Goddy\Service;
 
-
-class GdService
+class GdService extends \RequesterBase
 {
     const REQUEST_OK = 200;
 
     private $response_code;
     private $data;
-    private $production_url = "api.godaddy.com";
-    private $staging_url = 'api.ote-godaddy.com';
+    private string $production_url = "api.godaddy.com";
+    private string $staging_url = 'api.ote-godaddy.com';
+    private string $ttl = '500';
 
     public function parse_error_response($rsp)
     {
@@ -61,36 +61,6 @@ class GdService
         );
     }
 
-    public function parseResponseInfo($code): string
-    {
-        switch ($code) {
-            case 200:
-                $status = 'Ok';
-                break;
-            case 400:
-                $status = 'Request was malformed';
-                break;
-            case 401:
-                $status = 'Authentication info not sent or invalid';
-                break;
-            case 403:
-                $status = "Authenticated user is not allowed access";
-                break;
-            case 422:
-                $status = "Limit must have a value no greater than 1000";
-                break;
-            case 429:
-                $status = "Too many requests received within interval";
-                break;
-            case 500:
-                $status = "Internal server error";
-                break;
-            default:
-                $status = "Undefined error occur.";
-        }
-        return $status;
-    }
-
     public function get_data()
     {
         return $this->data;
@@ -99,6 +69,46 @@ class GdService
     public function get_response_code()
     {
         return $this->response_code;
+    }
+
+    public function doUpdateRecord($keys, $domain, $recordName, $ipv4Addr, $recordType='A' )
+    {
+
+        $this->initCurl();
+        $payload = array();
+
+        // for now just IPv4, it might be changed later on.
+        $record_object = (object)[
+            'data' => $ipv4Addr,
+            'ttl' => $this->ttl,
+        ];
+
+        $payload[] = $record_object;
+
+        $url = $this->getBaseUrl() . "/v1/domains/$domain/records/$recordType/$recordName";
+        $headers = $this->getHeader($keys['api.key'], $keys['api.secret']);
+
+        curl_setopt($this->ch, CURLOPT_URL, $url);
+        curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        $result = curl_exec($this->ch);
+        $info = curl_getinfo($this->ch);
+        $response = [];
+        $code = $info['http_code'];
+        if ($code != 200 && $code != 201) {
+            $data = json_decode($result, true);
+            $response['status'] = 'failed';
+            $response['code'] = $code;
+            $response['reason'] = $data['message'];
+        } else {
+            $response['status'] = 'ok';
+            $response['code'] = $code;
+            $response['reason'] = "";
+        }
+
+        curl_close($this->ch);
+        return $response;
     }
 
     public function doGetRequest($url, $header)

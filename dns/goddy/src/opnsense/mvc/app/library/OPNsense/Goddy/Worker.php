@@ -29,6 +29,7 @@ namespace OPNsense\Goddy;
  */
 
 use OPNsense\Core\Config;
+use OPNsense\Goddy\Service\GdService;
 
 class Worker extends GdAccountModel
 {
