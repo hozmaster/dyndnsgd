@@ -27,8 +27,8 @@
 
 class RequesterBase
 {
-    protected string $_UserAgent = 'User-Agent: gdDnsUpdater/1.0';
-    protected string $baseApiUrl;
+    protected string $_UserAgent = 'User-Agent: goddy/1.0';
+    protected string $productionApiUrl;
     protected string $stagingApiUrl;
     protected $ch;
     protected bool $ipv6Supported;
@@ -51,7 +51,37 @@ class RequesterBase
 
     public function supportedRecords(): array
     {
-        return array();
+        return ['A', 'AAAA', 'MX', 'TXT', 'CNAME'];
+    }
+
+    public function parseResponseInfo($code): string
+    {
+        switch ($code) {
+            case 200:
+                $status = 'Ok';
+                break;
+            case 400:
+                $status = 'Request was malformed';
+                break;
+            case 401:
+                $status = 'Authentication info not sent or invalid';
+                break;
+            case 403:
+                $status = "Authenticated user is not allowed access";
+                break;
+            case 422:
+                $status = "Limit must have a value no greater than 1000";
+                break;
+            case 429:
+                $status = "Too many requests received within interval";
+                break;
+            case 500:
+                $status = "Internal server error";
+                break;
+            default:
+                $status = "Undefined error occur.";
+        }
+        return $status;
     }
 
 }

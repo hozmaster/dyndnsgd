@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.5.4 Released - 2021-12-27
+
+### Added
+Add animation when save changes from the Settings-view (short but still visible for users)
+
+### Changed
+Name of the plugin
+Moved some functionality to the Library from /etc/rc.goddy side. (e.g. Record update)
+
+### Fixed
+Plugin should not crash when there is no accounts or domains listed in the models 
+
 ## 0.5.3 [Released] - 2021-12-11
 
 - PLug in renamed to Goddy

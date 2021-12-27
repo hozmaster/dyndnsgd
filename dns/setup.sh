@@ -36,6 +36,7 @@ rm -r $TARGET_BASE_PATH/views/OPNsense/Goddy
 rm -r $TARGET_BASE_PATH/controllers/OPNsense/Goddy
 rm -r $TARGET_BASE_PATH/library/OPNsense/Goddy
 rm -r /usr/local/opnsense/scripts/OPNsense/Goddy
+rm -r /usr/local/etc/inc/plugins.inc.d/goddy
 
 #
 if [ ! -d $TARGET_BASE_PATH/models/OPNsense/Goddy ]; then
@@ -64,6 +65,7 @@ fi
 # library
 if [ ! -d $TARGET_BASE_PATH/library/OPNsense/Goddy ]; then
   mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy
+  mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
 fi
 
 # template
@@ -88,6 +90,7 @@ cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/Api/* $TARGET_BASE_PATH/cont
 
 ## library
 cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/
+cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/Service/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
 
 ## script
 cp -vf goddy/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
@@ -103,10 +106,8 @@ cp -vf  goddy/src/opnsense/service/templates/OPNsense/Goddy/* /usr/local/opnsens
 cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
 
 cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
-cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/GoDaddy.inc /usr/local/etc/inc/plugins.inc.d/goddy/GoDaddy.inc
-cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/RequesterBase.inc /usr/local/etc/inc/plugins.inc.d/goddy/RequesterBase.inc
 
 if [ ! -d /usr/local/etc/inc/plugins.inc.d/goddy ]; then
   mkdir /usr/local/etc/inc/plugins.inc.d/goddy
 fi
-cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc /usr/local/etc/inc/plugins.inc.d/goddy/gdDnsUpdater.inc
+cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/* /usr/local/etc/inc/plugins.inc.d/goddy
