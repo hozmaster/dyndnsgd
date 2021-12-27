@@ -30,7 +30,7 @@ namespace OPNsense\Goddy;
 
 use OPNsense\Goddy\Accounts;
 
-abstract class Common
+abstract class GdAccountModel
 {
     protected $uuid;                # config object uuid
 
@@ -39,7 +39,6 @@ abstract class Common
     private $config = null;
 
     protected const ACCOUNT_CONFIG_PATH = 'accounts.account';
-
 
     protected function getId()
     {

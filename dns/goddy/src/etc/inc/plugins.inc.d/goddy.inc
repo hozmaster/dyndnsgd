@@ -91,7 +91,12 @@ function goddy_configure_do($verbose = true, $param = '')
         }
 
         $accounts = array_pop($goddy['accounts']);
-        $domains = array_pop($goddy['domains']['domains']);
+        $domains = array_pop($goddy['domains']);
+
+        if (empty($accounts) || empty($domains['domain'])) {
+            syslog(LOG_ERR, "Goddy: No valid account and/or domains. Exit now");
+            return -1;
+        }
 
         $gw_groups = return_gateway_groups_array();
         if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
@@ -100,7 +105,7 @@ function goddy_configure_do($verbose = true, $param = '')
                 $wan_if,
                 $verbose,
                 $accounts,
-                $domains
+                $domains['domain']
             );
 
             // do actual verification and the update process if needed
@@ -108,7 +113,7 @@ function goddy_configure_do($verbose = true, $param = '')
             sleep(1);
         } else {
             $str = "Goddy: " . $param . " " . $wan_if;
-            syslog(LOG_ERR, $str );
+            syslog(LOG_ERR, $str);
         }
 
     } else {

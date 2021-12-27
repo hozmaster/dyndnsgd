@@ -36,7 +36,7 @@ class GdDomains
     private $mdl_domain;
     private $config;
 
-    public function loadDomain(string $uuid)
+    public function loadDomain(string $uuid): bool
     {
         // Get config object
         $model = new Domains();

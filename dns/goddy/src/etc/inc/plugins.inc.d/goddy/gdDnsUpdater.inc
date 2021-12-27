@@ -26,6 +26,8 @@
  */
 
 use OPNsense\Goddy\GDDatabase;
+use OPNsense\Goddy\GdUtils;
+use OPNsense\Goddy\Service\GdRecord;
 
 class gdDnsUpdater
 {
@@ -34,12 +36,9 @@ class gdDnsUpdater
     private bool $_useIPv6;
     private array $_accounts = [];
     private array $_domains = [];
-    private $handler;
     private bool $verboseLogging = false;
     private array $cachedRecords = [];
     private $gdDb = null;
-
-    const LOG_PREFIX = "Goddy";
 
     public function __construct(
         $if,
@@ -93,7 +92,7 @@ class gdDnsUpdater
                         $name = "@";
                         $type = 'A';
                         $this->log_message("Updating records for domain : " . $domain['domain']);
-                        $result = $this->handler->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
+                        $result = $this->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
                         if ($result['status'] != 'failed') {
                             $db_result = $this->gdDb->setCachedIpForDomain($domainUuid, $type, $name, $this->_if_addr4, "");
                             $this->log_message("[{$domain['domain']}]: '@'-Record updated, db: {$db_result} ", true);
@@ -163,8 +162,23 @@ class gdDnsUpdater
             $do_log = true;
         }
         if ($do_log) {
-            log_error(self::LOG_PREFIX . ' ' . $msg);
+            GdUtils::log_error($msg);
         }
+    }
+
+    public function updateA1Records($domain, $keys, $name, $if_ip_addr): array
+    {
+        $data = [
+            'domain' => $domain,
+            'name' => $name,
+            'type' => 'A',
+            'payload' => $if_ip_addr,
+        ];
+
+        $record = new GdRecord($keys, $data, 'put');
+        $record->doRequest();
+        return $record->getResponse();
+
     }
 
 }
