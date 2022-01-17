@@ -28,6 +28,7 @@ namespace OPNsense\Goddy;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+@include_once("interfaces.inc");
 @include_once("util.inc");
 
 class GdUtils
@@ -49,6 +50,30 @@ class GdUtils
         if ($debug) {
             syslog(LOG_NOTICE, "Goddy: ${msg}");
         }
+    }
+
+
+    public static function getDynDnsIP($if_index, $ip_family = 4)
+    {
+        $ip_address = $ip_family == 6 ? get_interface_ipv6($if_index) : get_interface_ip($if_index);
+        if (empty($ip_address)) {
+            log_error("Aborted IPv{$ip_family} detection: no address for {$if_index}");
+            return 'down';
+        }
+
+        if ($ip_family != 6 && is_private_ip($ip_address)) {
+            $ip_address = '';
+        } elseif ($ip_family == 6 && is_linklocal($ip_address)) {
+            log_error('Aborted IPv6 detection: cannot bind to link-local address');
+            $ip_address = '';
+        }
+
+        if (($ip_family == 6 && !is_ipaddrv6($ip_address)) || ($ip_family != 6 && !is_ipaddrv4($ip_address))) {
+            return 'down';
+        }
+
+        return $ip_address;
+
     }
 
     /**

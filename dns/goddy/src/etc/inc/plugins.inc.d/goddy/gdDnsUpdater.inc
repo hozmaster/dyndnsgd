@@ -31,7 +31,7 @@ use OPNsense\Goddy\Service\GdRecord;
 
 class gdDnsUpdater
 {
-    private $_if;
+    private $_if;       // index of wan address
     private string $_if_addr4;
     private bool $_useIPv6;
     private array $_accounts = [];
@@ -72,9 +72,6 @@ class gdDnsUpdater
             unlock($updater_lck);
             return;
         }
-
-        include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GoDaddy.inc');
-        $this->handler = new GoDaddy();
 
         $this->log_message(" Count of domains  : " . count($this->_domains));
         $this->log_message(" Count of accounts : " . count($this->_accounts));
