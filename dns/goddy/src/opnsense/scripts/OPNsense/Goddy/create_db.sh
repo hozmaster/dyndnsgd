@@ -28,7 +28,7 @@
 #
 # create a database for cached ip's.
 
-sqlite3 /var/goddy/goddy.db <<EOF
+sqlite3 /var/db/goddy.db <<EOF
 CREATE TABLE IF NOT EXISTS record (uuid TEXT NOT NULL, type TEXT NOT NULL, name TEXT NOT NULL, ipv4_address TEXT, ipv6_address TEXT, \
  insert_at TEXT DEFAULT (datetime()), updated_at TEXT DEFAULT (datetime()), active BOOLEAN DEFAULT (TRUE), PRIMARY KEY (uuid, type, name) );
 CREATE TABLE IF NOT EXISTS migration (id INT PRIMARY KEY, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );

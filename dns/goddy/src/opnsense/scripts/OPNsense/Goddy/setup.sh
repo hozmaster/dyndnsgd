@@ -33,5 +33,13 @@ mkdir -p /var/goddy
 chown -R root:wheel /var/goddy
 chmod 755 /var/goddy
 
-mkdir -p /var/log/goddy
-chmod 755 /var/log/goddy
+# if file is on old position, move it
+old_db_file="/var/goddy/goddy.db"
+if [ -f "$old_db_file" ]
+then
+    mv $old_db_file  /var/db/goddy.db
+    echo 'the database file moved'
+elif [ ! -f '/var/db/goddy.db' ]
+then
+   sudo ./create_db.sh
+fi
