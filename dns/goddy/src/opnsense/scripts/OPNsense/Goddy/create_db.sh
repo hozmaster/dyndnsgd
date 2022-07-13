@@ -25,9 +25,6 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#
-# create a database for cached ip's.
-
 sqlite3 /var/db/goddy.db <<EOF
 CREATE TABLE IF NOT EXISTS record (uuid TEXT NOT NULL, type TEXT NOT NULL, name TEXT NOT NULL, ipv4_address TEXT, ipv6_address TEXT, \
  insert_at TEXT DEFAULT (datetime()), updated_at TEXT DEFAULT (datetime()), active BOOLEAN DEFAULT (TRUE), PRIMARY KEY (uuid, type, name) );
