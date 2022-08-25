@@ -34,6 +34,6 @@ class GDSettingsController extends \OPNsense\Base\IndexController
     {
         $this->view->formViewSettings = $this->getForm("settings");
         // pick the template to serve to our users.
-        $this->view->pick('OPNsense/Goddy/settings');
+        $this->view->pick('OPNsense/Goddy/gdsettings');
     }
 }
