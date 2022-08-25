@@ -29,11 +29,11 @@
                 </description>
                 <api_key type="TextField">
                     <default></default>
-                    <Required>Y</Required>
+                    <Required>N</Required>
                 </api_key>
                 <api_secret type="TextField">
                     <default></default>
-                    <Required>Y</Required>
+                    <Required>N</Required>
                 </api_secret>
                 <description type="TextField">
                     <default></default>
