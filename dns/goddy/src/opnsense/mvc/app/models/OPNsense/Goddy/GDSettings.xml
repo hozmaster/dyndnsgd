@@ -3,7 +3,7 @@
     <description>
         The OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.2.2</version>
+    <version>0.3.0</version>
     <items>
         <enabled type="BooleanField">
             <default>1</default>
@@ -17,13 +17,13 @@
                 <enable>/^(?!0).*$/</enable>
             </filters>
         </interface>
-        <api_key type="TextField"> 
-            <default> </default>
-            <Required>Y</Required>
+        <api_key type="TextField">
+            <default></default>
+            <Required>N</Required>
         </api_key>
         <api_secret type="TextField">
              <default> </default>
-             <Required>Y</Required>
+             <Required>N</Required>
         </api_secret>
         <atrecord type="BooleanField">
             <default>1</default>
