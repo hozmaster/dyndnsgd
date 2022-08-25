@@ -74,7 +74,6 @@ class gdDnsUpdater
         }
 
         $this->log_message(" Count of domains  : " . count($this->_domains));
-        $this->log_message(" Count of accounts : " . count($this->_accounts));
 
         $this->cachedRecords = $this->gdDb->getCachedDomainRecords();
 

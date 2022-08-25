@@ -34,7 +34,7 @@ use OPNsense\Goddy\GDDatabase;
 
 class GDDomainsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelClass = '\OPNsense\Goddy\Domains';
+    protected static $internalModelClass = '\OPNsense\Goddy\GDDomains';
     protected static $internalModelName = 'domains';
 
     public function getAction($uuid = null)

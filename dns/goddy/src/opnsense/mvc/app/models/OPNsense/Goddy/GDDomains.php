@@ -30,6 +30,6 @@ namespace OPNsense\Goddy;
 
 use OPNsense\Base\BaseModel;
 
-class Domains extends BaseModel
+class GDDomains extends BaseModel
 {
 }

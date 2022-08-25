@@ -33,6 +33,6 @@ use OPNsense\Base\ApiMutableModelControllerBase;
 
 class GDSettingsController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelClass = '\OPNsense\Goddy\Settings';
+    protected static $internalModelClass = '\OPNsense\Goddy\GDSettings';
     protected static $internalModelName = 'settings';
 }

@@ -39,13 +39,13 @@
         <help>Set a default interface used by this plugin.</help>
     </field>
     <field>
-        <id>account.api_key</id>
+        <id>settings.api_key</id>
         <label>Key</label>
         <type>text</type>
         <help>Set a key for account.</help>
     </field>
     <field>
-        <id>account.api_secret</id>
+        <id>settings.api_secret</id>
         <label>Secret key</label>
         <type>password</type>
         <help>Set a secret key for account.</help>

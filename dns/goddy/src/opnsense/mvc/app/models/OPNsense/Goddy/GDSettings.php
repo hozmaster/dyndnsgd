@@ -29,6 +29,6 @@ namespace OPNsense\Goddy;
 
 use OPNsense\Base\BaseModel;
 
-class Settings extends BaseModel
+class GDSettings extends BaseModel
 {
 }
