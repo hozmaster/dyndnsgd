@@ -17,14 +17,14 @@
                 <enable>/^(?!0).*$/</enable>
             </filters>
         </interface>
-        <api_key type="TextField">  
+        <apikey type="TextField">  
             <default></default>
             <Required>Y</Required>
-        </api_key>
-        <api_secret type="TextField">
+        </apikey>
+        <apisecret type="TextField">
              <default></default>
              <Required>Y</Required>
-        </api_secret>
+        </apisecret>
         <atrecord type="BooleanField">
             <default>1</default>
             <Required>Y</Required>
