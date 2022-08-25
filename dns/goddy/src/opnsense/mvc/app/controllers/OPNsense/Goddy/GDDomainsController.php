@@ -28,7 +28,7 @@
 
 namespace OPNsense\Goddy;
 
-class DomainsController extends \OPNsense\Base\IndexController
+class GDDomainsController extends \OPNsense\Base\IndexController
 {
     public function indexAction()
     {

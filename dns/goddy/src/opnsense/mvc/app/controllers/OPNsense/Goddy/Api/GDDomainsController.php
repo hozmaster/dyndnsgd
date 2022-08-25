@@ -32,7 +32,7 @@ use OPNsense\Base\ApiMutableModelControllerBase;
 use OPNsense\Goddy\GDDatabase;
 
 
-class DomainsController extends ApiMutableModelControllerBase
+class GDDomainsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelClass = '\OPNsense\Goddy\Domains';
     protected static $internalModelName = 'domains';

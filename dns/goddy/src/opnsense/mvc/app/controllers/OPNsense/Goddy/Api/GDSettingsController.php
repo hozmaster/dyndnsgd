@@ -26,10 +26,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OPNsense\Goddy;
+namespace OPNsense\Goddy\Api;
 
-use OPNsense\Base\BaseModel;
+use OPNsense\Base\ApiMutableModelControllerBase;
 
-class Accounts extends BaseModel
+
+class GDSettingsController extends ApiMutableModelControllerBase
 {
+    protected static $internalModelClass = '\OPNsense\Goddy\Settings';
+    protected static $internalModelName = 'settings';
 }

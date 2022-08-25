@@ -17,24 +17,17 @@
                 <enable>/^(?!0).*$/</enable>
             </filters>
         </interface>
+        <api_key type="TextField">
+            <default></default>
+            <Required>Y</Required>
+        </api_key>
+        <api_secret type="TextField">
+             <default></default>
+             <Required>Y</Required>
+        </api_secret>
         <atrecord type="BooleanField">
             <default>1</default>
             <Required>Y</Required>
         </atrecord>
-        <logsize type="IntegerField">
-            <default>5</default>
-            <Required>Y</Required>
-            <MinimumValue>1</MinimumValue>
-            <MaximumValue>100</MaximumValue>
-            <ValidationMessage>Choose a value between 1 and 100.</ValidationMessage>
-        </logsize>
-        <log_level type="OptionField">
-            <Required>Y</Required>
-            <default>normal</default>
-            <OptionValues>
-                <normal>normal</normal>
-                <debug>debug</debug>
-            </OptionValues>
-        </log_level>
     </items>
 </model>

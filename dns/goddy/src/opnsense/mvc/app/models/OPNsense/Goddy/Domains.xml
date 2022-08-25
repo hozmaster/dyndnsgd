@@ -18,20 +18,6 @@
                     <default></default>
                     <Required>Y</Required>
                 </domain>
-                <account type="ModelRelationField">
-                    <Model>
-                        <accounts>
-                            <source>OPNsense.Goddy.Accounts</source>
-                            <items>accounts.account</items>
-                            <display>name</display>
-                            <filters>
-                                <enabled>/^(?!0).*$/</enabled>
-                            </filters>
-                        </accounts>
-                    </Model>
-                    <multiple>N</multiple>
-                    <Required>Y</Required>
-                </account>
                 <interface type="InterfaceField">
                     <Required>Y</Required>
                     <multiple>N</multiple>

@@ -28,15 +28,12 @@
 
 namespace OPNsense\Goddy;
 
-/**
- * Class LogsController
- * @package OPNsense\Goddy
- */
-class LogsController extends \OPNsense\Base\IndexController
+class GDSettingsController extends \OPNsense\Base\IndexController
 {
     public function indexAction()
     {
-        // choose template
-        $this->view->pick('OPNsense/Goddy/logs');
+        $this->view->formViewSettings = $this->getForm("settings");
+        // pick the template to serve to our users.
+        $this->view->pick('OPNsense/Goddy/settings');
     }
 }
