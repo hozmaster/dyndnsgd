@@ -22,7 +22,7 @@
             <Required>N</Required>
         </api_key>
         <api_secret type="TextField">
-             <default> </default>
+             <default></default>
              <Required>N</Required>
         </api_secret>
         <atrecord type="BooleanField">
