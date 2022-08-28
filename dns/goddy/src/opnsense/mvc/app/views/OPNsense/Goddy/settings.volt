@@ -62,6 +62,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <div class="col-md-12">
                 <hr />
                 <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_progress"></i></button>
+                <button class="btn btn-primary" id="testAct" type="button"><b>{{ lang._('Test') }}</b> <i id="testAct_progress"></i></button>
             </div>
         </div>
     </div>

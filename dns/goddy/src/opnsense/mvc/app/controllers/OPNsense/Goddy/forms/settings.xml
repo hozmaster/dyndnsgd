@@ -57,6 +57,12 @@
         <help>Set a default interface to monitor.</help>
     </field>
     <field>
+        <id>settings.interval_delay</id>
+        <label>Interval</label>
+        <type>text</type>
+        <help>Interval in seconds to check for address changes</help>
+    </field>
+    <field>
         <id>settings.atrecord</id>
         <label>Add @-records by default ?</label>
         <type>checkbox</type>
