@@ -39,7 +39,7 @@ class GdDomains
     public function loadDomain(string $uuid): bool
     {
         // Get config object
-        $model = new GDDomains();
+        $model = new Domains();
         $obj = $model->getNodeByReference(self::DOMAIN_CONFIG_PATH . ".${uuid}");
         if ($obj == null) {
             GdUtils::log_error("config of type domains not found: ${uuid}");
@@ -52,14 +52,14 @@ class GdDomains
 
     public function getAllDomains()
     {
-        $model = new GDDomains();
+        $model = new Domains();
         $obj = $model->getNodes();
         return $obj['domains']['domain'];
     }
 
     public function saveNewRecord($account_uuid, $content)
     {
-        $model = new GDDomains();
+        $model = new Domains();
         $node = $model->domains->domain->add();
 
         $node->enabled = 0;

@@ -63,7 +63,7 @@ class Worker extends GdAccountModel
 
         if ($response_code == GdService::REQUEST_OK) {
             $domains = $this->gd_service->get_data();
-            $gd_domains = new GdDomains();
+            $gd_domains = new Domains();
             $c_domains = $gd_domains->getAllDomains();
             $save_count = 0;
             foreach ($domains as $domain) {
