@@ -1,0 +1,33 @@
+<model>
+    <mount>//OPNsense/Goddy/settings</mount>
+    <description>
+        The OPNsense DynamicDNS mount and model for the Settings-view.
+    </description>
+    <version>0.3.1</version>
+    <items>
+        <enabled type="BooleanField">
+            <default>1</default>
+            <Required>Y</Required>
+        </enabled>
+        <interface type="InterfaceField">
+            <Required>Y</Required>
+            <multiple>N</multiple>
+            <default>wan</default>
+            <filters>
+                <enable>/^(?!0).*$/</enable>
+            </filters>
+        </interface>
+        <api_key type="TextField">
+            <default></default>
+            <Required>N</Required>
+        </api_key>
+        <api_secret type="TextField">
+             <default></default>
+             <Required>N</Required>
+        </api_secret>
+        <atrecord type="BooleanField">
+            <default>1</default>
+            <Required>Y</Required>
+        </atrecord>
+    </items>
+</model>
