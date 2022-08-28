@@ -32,13 +32,6 @@
         <help>Enable or disable Goddy-service</help>
     </field>
     <field>
-        <id>settings.interface</id>
-        <label>Interface</label>
-        <type>dropdown</type>
-        <allownew>false</allownew>
-        <help>Set a default interface used by this plugin.</help>
-    </field>
-    <field>
         <id>settings.api_key</id>
         <label>Key</label>
         <type>text</type>
@@ -49,6 +42,19 @@
         <label>Secret key</label>
         <type>password</type>
         <help>Set a secret key for account.</help>
+    </field>
+    <field>
+        <id>settings.check_method</id>
+        <label>Check ip method</label>
+        <type>dropdown</type>
+        <help>How to determine the address to use for this host</help>
+    </field>
+    <field>
+        <id>settings.interface</id>
+        <label>Interface</label>
+        <type>dropdown</type>
+        <allownew>false</allownew>
+        <help>Set a default interface to monitor.</help>
     </field>
     <field>
         <id>settings.atrecord</id>
