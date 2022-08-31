@@ -35,4 +35,10 @@ class SettingsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelClass = '\OPNsense\Goddy\Settings';
     protected static $internalModelName = 'settings';
+
+    public function testAction()
+    {
+        return array("message" => "bare action");
+    }
+
 }
