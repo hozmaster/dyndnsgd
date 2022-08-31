@@ -28,7 +28,7 @@
         - [ ] Fetch all domains from the service.
         - [ ] Check is there new domains and update database if needed.
         - [ ] Backend should be able to react normal error cases (service is missing)
-        - [ ] Backend should be able to give next results back to frontend.
+        - [ ] Backend should be able to give results from the operation back to frontend.
             - [ ] No domains fetched
             - [ ] New domains fetched x amount
             - [ ] Error during processing request to the Service.
@@ -43,4 +43,6 @@
         - [ ] If update is required, update new ip value to the '@'-record to the GD service.
         - [ ] If ip address has changed, update it to also the database.
 - [ ] Other
-  - [ ] Clean codebase from not used code. 
+  - [ ] Clean codebase from not used code and files. 
+  - [ ] Installation shall create the database for the domains to the /var/db/goddy.db. It should be sqlite3 database.
+  - [ ] Check what is needed for the Log view.
