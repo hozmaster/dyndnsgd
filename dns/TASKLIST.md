@@ -4,7 +4,7 @@
         - [ ] Key functionality :
           - [x] Must have required controls to enter settings to the application 
           - [x] User should be able to save settings
-          - [ ] Should be able to show fetch from domains and show to the alert message box.
+          - [ ] Should be able to fetch all domains and show result of operation to the alert message box.
         - [x] Controls :
             - [x] Enabled
             - [x] Key
@@ -27,7 +27,7 @@
           - [ ] User should be able to enable/disable ip address check from UI.
         - [ ] List all fetched domains
             -  [ ] Save current '@' record content to database (if possible)
-        - [ ] User should be able to enable/disable domains from UI. If disabled, domain is not used to WAN IP checks
+        - [ ] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
 - [ ] Backend
     - [ ] backend should be able to receive the fetch request from UI side.
         - [ ] It should be able to connect to the Service with given key and secret.
