@@ -49,19 +49,17 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         $("#testAct").click(function(){
-            testFormToEndpoint(url="/api/goddy/settings/test", formid='frm_settings',callback_ok=function() {
-            $('.selectpicker').selectpicker('refresh');
-                $("#testAct_progress").addClass("fa fa-spinner fa-pulse");
-                     ajaxCall(url="/api/goddy/settings/testAction", sendData={}, callback=function(data,status) {
-                         $("#responseMsg").html(data['message']);
-                         $("#testAct_progress").removeClass("fa fa-spinner fa-pulse");
-                });
+            $("#responseMsg").removeClass("hidden");
+            ajaxCall(url="/api/goddy/settings/test", sendData={}, callback=function(data,status) {
+                $("#responseMsg").html(data['message']);
+                $("#testAct_progress").removeClass("fa fa-spinner fa-pulse");
+            });
         });
     });
 
 </script>
 
-<div class="alert alert-info hidden" role="alert" id="responseMsg">
+<div class="alert alert-info hidden" role="alert" id="responseMsg"> </div>
 
 <ul class="nav nav-tabs" data-tabs="tabs" id="settings_tabs">
     <li class="active"><a data-toggle="tab" href="#settings">{{ lang._('Settings') }}</a></li>
