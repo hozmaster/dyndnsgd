@@ -1,8 +1,11 @@
 # Task List :
 - [ ] Views:
     - [x] The settings-view
-        - [x] Add the Save-button and complete functionality
-        - [x] Parameters:
+        - [ ] Key functionality :
+          - [x] Must have required controls to enter settings to the application 
+          - [x] User should be able to save settings
+          - [ ] Should be able to show fetch from domains and show to the alert message box.
+        - [x] Controls :
             - [x] Enabled
             - [x] Key
             - [x] Secret key
@@ -12,13 +15,16 @@
                 - [x] List existing interfaces. User should be select used interface.
             - [x] Interval
                 - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
-        - [x] User should be able to save settings
-        - [ ] Should be able to show fetch results on the screen in the alert message box at certain time.
-    - [ ] Add Fetch button and complete functionality
-        - [ ] User should be able to connect to backend side
-        - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
-        - [ ] Return results of the action to the frontend
+        - [x] Add the Save-button and complete functionality 
+        - [ ] Add the Fetch-button and complete its functionality
+            - [ ] User should be able to connect to backend side
+            - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
+            - [ ] Return results of the action on the screen at certain time
     - [ ] The Domains-view:
+        - [ ] Key functionality :
+          - [ ] Show and list fetched domains in the table.
+          - [ ] Show necessary information about specific domain
+          - [ ] User should be able to enable/disable ip address check from UI.
         - [ ] List all fetched domains
             -  [ ] Save current '@' record content to database (if possible)
         - [ ] User should be able to enable/disable domains from UI. If disabled, domain is not used to WAN IP checks
@@ -40,9 +46,9 @@
     - [ ] Remove disabled domains from array
     - [ ] Processed all remaining domains in the array:
         - [ ] Verify existing ip from given interface
-        - [ ] If update is required, update new ip value to the '@'-record to the GD service.
-        - [ ] If ip address has changed, update it to also the database.
+        - [ ] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
+        - [ ] If IP address has been changed, update the IP address also to the database.
 - [ ] Other
   - [ ] Clean codebase from not used code and files. 
   - [ ] Installation shall create the database for the domains to the /var/db/goddy.db. It should be sqlite3 database.
-  - [ ] Check what is needed for the Log view.
+  - [ ] Check what is needed to show the Log view.
