@@ -1,45 +1,99 @@
-# Changelog
+# Task List : 
+- [ ] Views:
+    - [x] The settings-view
+        - [x] Add the Save-button and complete functionality
+        - [x] Parameters:
+            - [x] Enabled
+            - [x] Key
+            - [x] Secret key
+            - [x] Check IP method
+                - [x] Interface
+            - [x] Interface
+                - [x] List existing interfaces. User should be select used interface.
+            - [x] Interval
+                - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
+        - [x] User should be able to save settings
+        - [ ] Should be able to show fetch results on the screen in the alert message box at certain time.
+    - [ ] Add Fetch button and complete functionality
+        - [ ] User should be able to connect to backend side
+        - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
+        - [ ] Return results of the action to the frontend
+    - [ ] The Domains-view:
+        - [ ] List all fetched domains
+          -  [ ] Save current '@' record content to database (if possible)
+        - [ ] User should be able to enable/disable domains from UI. If disabled, domain is not used to WAN IP checks
+- [ ] Backend
+  - [ ] backend should be able to receive the fetch request from UI side.
+    - [ ] It should be able to connect to the Service with given key and secret.
+    - [ ] Fetch all domains from the service.
+    - [ ] Check is there new domains and update database if needed.
+    - [ ] Backend should be able to react normal error cases (service is missing)
+    - [ ] Backend should be able to give next results back to frontend.
+      - [ ] No domains fetched
+      - [ ] New domains fetched x amount
+      - [ ] Error during processing request to the Service.
+- [ ] Service 
+  - [ ] Process the WAN IP check in given periodic
+  - [ ] Periodic check is made.
+  - [ ] Read settings from system's database structure
+  - [ ] Read all domains and it's values from database to array
+  - [ ] Remove disabled domains from array  
+  - [ ] Processed all remaining domains in the array:
+      - [ ] Verify existing ip from given interface
+      - [ ] If update is required, update new ip value to the '@'-record to the GD service.
+      - [ ] If ip address has changed, update it to also the database.
 
-All notable changes to this project will be documented in this file.
+* All notable changes to this project will be documented in this file.
+
+# Changelog
 
 ## 0.5.4 Released - 2021-12-27
 
 ### Added
+
 Add animation when save changes from the Settings-view (short but still visible for users)
 
 ### Changed
+
 Name of the plugin
 Moved some functionality to the Library from /etc/rc.goddy side. (e.g. Record update)
 
 ### Fixed
-Plugin should not crash when there is no accounts or domains listed in the models 
+
+Plugin should not crash when there is no accounts or domains listed in the models
 
 ## 0.5.3 [Released] - 2021-12-11
 
 - PLug in renamed to Goddy
 - Ip change and update functionality improved and simplified.
-- Ui Models changed 
+- Ui Models changed
 
 ### Added
+
 TBD
 
 ### Changed
+
 Name of the plugin
 
 ### Fixed
+
 TBD
 
 ## 0.5.0 Released - 2021-11-25
 
-Key features 
-- Dynamic DNS IP update detection, cached ip's to database 
+Key features
+
+- Dynamic DNS IP update detection, cached ip's to database
 
 ### KNOWN ISSUES
+
 - Interface detection may not work correctly (interface detection fails)
 - Only '@'-record is support at a moment
 - Only Ipv4 addresses is supported currently.
 
 ### Added
+
 - Initial SQLite3 support (database, tables, columns etc)
 - Setup.sh creates now /var/dyndnsgd folder structure
 - Added shell script to create a sqlite3 database for dyndnsgd-plugin
@@ -48,23 +102,24 @@ Key features
 - Show cached ipv4 address in the Domains view.
 
 ### Changed
+
 - Domains model patched to 0.3.1.
-- Removed the ip4 address-row from the Domain details dialog. 
+- Removed the ip4 address-row from the Domain details dialog.
 
 ### Fixed
-- After plugin has been installed, installer will create required folders and files to system
 
+- After plugin has been installed, installer will create required folders and files to system
 
 ## 0.3.8 - 2021-09-27
 
-* Domain fetching from GoDaddy service with valid keys should work 
+* Domain fetching from GoDaddy service with valid keys should work
 * DNS records update should work (hard coded TXT record testing purpose only)
 * Plugin is now listed in the Dashboard as a service.
 
 ### KNOWN ISSUES
 
-Beta product. All db changes are now done. 
-Not yet save a WAN address to the GoDaddy service.   
+Beta product. All db changes are now done.
+Not yet save a WAN address to the GoDaddy service.
 
 ### Added
 

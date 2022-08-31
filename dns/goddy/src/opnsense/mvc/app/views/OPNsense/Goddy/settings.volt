@@ -50,9 +50,13 @@ POSSIBILITY OF SUCH DAMAGE.
 
         $("#testAct").click(function(){
             $("#responseMsg").removeClass("hidden");
+            $("#testAct_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/goddy/settings/test", sendData={}, callback=function(data,status) {
                 $("#responseMsg").html(data['message']);
-                $("#testAct_progress").removeClass("fa fa-spinner fa-pulse");
+                setTimeout(function () {
+                    $("#testAct_progress").removeClass("fa fa-spinner fa-pulse");
+                    $("#responseMsg").addClass("hidden");
+                }, 3500);
             });
         });
     });
