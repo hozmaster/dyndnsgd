@@ -1,0 +1,46 @@
+# Task List :
+- [ ] Views:
+    - [x] The settings-view
+        - [x] Add the Save-button and complete functionality
+        - [x] Parameters:
+            - [x] Enabled
+            - [x] Key
+            - [x] Secret key
+            - [x] Check IP method
+                - [x] Interface
+            - [x] Interface
+                - [x] List existing interfaces. User should be select used interface.
+            - [x] Interval
+                - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
+        - [x] User should be able to save settings
+        - [ ] Should be able to show fetch results on the screen in the alert message box at certain time.
+    - [ ] Add Fetch button and complete functionality
+        - [ ] User should be able to connect to backend side
+        - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
+        - [ ] Return results of the action to the frontend
+    - [ ] The Domains-view:
+        - [ ] List all fetched domains
+            -  [ ] Save current '@' record content to database (if possible)
+        - [ ] User should be able to enable/disable domains from UI. If disabled, domain is not used to WAN IP checks
+- [ ] Backend
+    - [ ] backend should be able to receive the fetch request from UI side.
+        - [ ] It should be able to connect to the Service with given key and secret.
+        - [ ] Fetch all domains from the service.
+        - [ ] Check is there new domains and update database if needed.
+        - [ ] Backend should be able to react normal error cases (service is missing)
+        - [ ] Backend should be able to give next results back to frontend.
+            - [ ] No domains fetched
+            - [ ] New domains fetched x amount
+            - [ ] Error during processing request to the Service.
+- [ ] Service
+    - [ ] Process the WAN IP check in given periodic
+    - [ ] Periodic check is made.
+    - [ ] Read settings from system's database structure
+    - [ ] Read all domains and it's values from database to array
+    - [ ] Remove disabled domains from array
+    - [ ] Processed all remaining domains in the array:
+        - [ ] Verify existing ip from given interface
+        - [ ] If update is required, update new ip value to the '@'-record to the GD service.
+        - [ ] If ip address has changed, update it to also the database.
+- [ ] Other
+  - [ ] Clean codebase from not used code. 
