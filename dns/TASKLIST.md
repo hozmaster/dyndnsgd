@@ -25,9 +25,15 @@
           - [ ] Show and list fetched domains in the table.
           - [ ] Show necessary information about specific domain
           - [ ] User should be able to enable/disable ip address check from UI.
-        - [ ] List all fetched domains
-            -  [ ] Save current '@' record content to database (if possible)
+        - [ ]  Columns 
+           - [ ] Enable/disable checkbox 
+           - [ ] Name 
+           - [ ] Interface
+           - [ ] Ip address
+           - [ ] Last update timestamp
+           - [ ] Delete-button
         - [ ] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
+        - [ ] User should be able to delete obsolete domain from the database.
 - [ ] Backend
     - [ ] backend should be able to receive the fetch request from UI side.
         - [ ] It should be able to connect to the Service with given key and secret.

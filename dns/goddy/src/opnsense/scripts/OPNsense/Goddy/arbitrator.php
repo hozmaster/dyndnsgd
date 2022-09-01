@@ -37,24 +37,19 @@ use OPNsense\Goddy\Worker;
 const ABOUT = <<<TXT
 
 This script acts as a bridge between the OPNsense WebGUI/API and the
-GoDaddy account.
+GoDaddy service.
 
 TXT;
 
 const EXAMPLES = <<<TXT
 - Fetch all users domains from GoDaddy service.
   arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000
-- Validate key and secret key are valid against GoDaddy account
-  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000  
 TXT;
 
 // Supported account actions and their help text
 const MODES = [
-    'validate' => [
-        'description' => 'Verify key and secret key are valid.',
-    ],
     'fetch' => [
-        'description' => 'Fetch all domains for account',
+        'description' => 'Fetch all domains from the GoDaddy service',
     ]
 ];
 
@@ -100,8 +95,6 @@ function main()
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
-    } elseif (($options['mode'] === 'validate') && (isset($options['uuid']))) {
-        log_notice("mode: validate, nothing yet");
     } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
         $worker = new Worker($options['uuid']);
         $worker->fetch_all_domains();
