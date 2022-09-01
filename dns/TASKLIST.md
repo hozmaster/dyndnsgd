@@ -1,5 +1,5 @@
 # Task List :
-- [~] Views:
+- [ ] Views:
     - [x] The settings-view
         - [ ] Key functionality :
           - [x] Must have required controls to enter settings to the application 
@@ -25,7 +25,7 @@
           - [ ] Show and list fetched domains in the table.
           - [ ] Show necessary information about specific domain
           - [ ] User should be able to enable/disable ip address check from UI.
-        - [ ]  Columns 
+        - [ ] Columns 
            - [ ] Enable/disable checkbox 
            - [ ] Name 
            - [ ] Interface
