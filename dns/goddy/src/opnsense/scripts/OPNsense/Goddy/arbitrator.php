@@ -76,7 +76,7 @@ function arb_help()
         . PHP_EOL . PHP_EOL;
 }
 
-function validateMode($mode)
+function validateMode($mode): bool
 {
     $return = false;
     foreach (MODES as $name => $options) {
@@ -96,8 +96,17 @@ function main()
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
     } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
-        $worker = new Worker($options['uuid']);
-        $worker->fetch_all_domains();
+        //        $worker = new Worker($options['uuid']);
+        //        $worker->fetch_all_domains();
+        global $config;
+        $key = $config['OPNsense']['Goddy']['settings']['api_key'];
+        $api_secret = $config['OPNsense']['Goddy']['settings']['api_secret'];
+        $myfile = fopen("/tmp/newfile.txt", "w") or die("Unable to open file!");
+        $txt = "Key : " . $key . "\n";
+        fwrite($myfile, $txt);
+        $txt = "api_secret : " . $api_secret . "\n";
+        fwrite($myfile, $txt);
+        fclose($myfile);
     } else {
         arb_help();
     }

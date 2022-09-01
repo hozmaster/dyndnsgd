@@ -1,5 +1,5 @@
 # Task List :
-- [ ] Views:
+- [~] Views:
     - [x] The settings-view
         - [ ] Key functionality :
           - [x] Must have required controls to enter settings to the application 
@@ -16,8 +16,8 @@
             - [x] Interval
                 - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
         - [x] Add the Save-button and complete functionality 
-        - [ ] Add the Fetch-button and complete its functionality
-            - [ ] User should be able to connect to backend side
+        - [~] Add the Fetch-button and complete its functionality
+            - [x] User should be able to the fetch domains-operation from UI side.
             - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
             - [ ] Return results of the action on the screen at certain time
     - [ ] The Domains-view:
@@ -29,9 +29,11 @@
            - [ ] Enable/disable checkbox 
            - [ ] Name 
            - [ ] Interface
-           - [ ] Ip address
+           - [ ] IPv4 address
+           - [ ] IPv6 address (optional)
            - [ ] Last update timestamp
-           - [ ] Delete-button
+           - [ ] UUID of the object. Hidden by default. 
+           - [ ] Commands (Delete)
         - [ ] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
         - [ ] User should be able to delete obsolete domain from the database.
 - [ ] Backend

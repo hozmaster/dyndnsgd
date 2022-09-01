@@ -77,10 +77,8 @@ class Worker extends GdAccountModel
         } else {
             GdUtils::log('Request failed with code ' . $response_code . ', ' .
                 $this->gd_service->parseResponseInfo($response_code));
-
         }
         return true;
-
     }
 
 }
