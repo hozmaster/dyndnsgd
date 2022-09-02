@@ -31,54 +31,59 @@ namespace OPNsense\Goddy;
 use OPNsense\Core\Config;
 use OPNsense\Goddy\Service\GdService;
 
-class Worker extends GdAccountModel
+class Worker
 {
-    public function __construct($uuid)
+    public function __construct()
     {
-        $this->uuid = $uuid;
-        $this->gd_service = new GdService();
     }
 
-    public function fetch_all_domains()
+    public function fetchAllUserGDDomains()
     {
-        $status = 'ACTIVE';
-        $this->fetch_all_gd_domains($status);
+        $api_params = GdUtils::getApiKeyAndSecret();
+
+        $myfile = fopen("/tmp/fetchallusergddomains.txt", "w") or die("Unable to open file!");
+        $txt = "Key : " . $api_params['api_key'] . "\n";
+        fwrite($myfile, $txt);
+        $txt = "secret : " . $api_params['api_secret'] . "\n";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
     }
 
-    private function fetch_all_gd_domains($status = 'ACTIVE')
-    {
-        $path = self::ACCOUNT_CONFIG_PATH;
-        $loaded = $this->loadAccount($path, $this->uuid);
-        if (!$loaded) {
-            GdUtils::log(' Cant find account for given uuid ' . $this->uuid);
-            return false;
-        }
-
-        $base_url = $this->gd_service->get_base_url();
-        $url = "$base_url/v1/domains?statuses=$status";
-        $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
-
-        $response_code = $this->gd_service->doGetRequest($url, $header);
-        GdUtils::log("Fetching domains, response : " . $response_code);
-
-        if ($response_code == GdService::REQUEST_OK) {
-            $domains = $this->gd_service->get_data();
-            $gd_domains = new Domains();
-            $c_domains = $gd_domains->getAllDomains();
-            $save_count = 0;
-            foreach ($domains as $domain) {
-                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
-                if ($key === false) {
-                    $gd_domains->saveNewRecord($this->uuid, $domain);
-                    $save_count ++;
-                }
-            }
-            GdUtils::log("Count of added domains:" . $save_count);
-        } else {
-            GdUtils::log('Request failed with code ' . $response_code . ', ' .
-                $this->gd_service->parseResponseInfo($response_code));
-        }
-        return true;
-    }
+//    private function fetch_all_gd_domains($status = 'ACTIVE')
+//    {
+//        $path = self::ACCOUNT_CONFIG_PATH;
+//        $loaded = $this->loadAccount($path, $this->uuid);
+//        if (!$loaded) {
+//            GdUtils::log(' Cant find account for given uuid ' . $this->uuid);
+//            return false;
+//        }
+//
+//        $base_url = $this->gd_service->get_base_url();
+//        $url = "$base_url/v1/domains?statuses=$status";
+//        $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
+//
+//        $response_code = $this->gd_service->doGetRequest($url, $header);
+//        GdUtils::log("Fetching domains, response : " . $response_code);
+//
+//        if ($response_code == GdService::REQUEST_OK) {
+//            $domains = $this->gd_service->get_data();
+//            $gd_domains = new Domains();
+//            $c_domains = $gd_domains->getAllDomains();
+//            $save_count = 0;
+//            foreach ($domains as $domain) {
+//                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
+//                if ($key === false) {
+//                    $gd_domains->saveNewRecord($this->uuid, $domain);
+//                    $save_count ++;
+//                }
+//            }
+//            GdUtils::log("Count of added domains:" . $save_count);
+//        } else {
+//            GdUtils::log('Request failed with code ' . $response_code . ', ' .
+//                $this->gd_service->parseResponseInfo($response_code));
+//        }
+//        return true;
+//    }
 
 }

@@ -60,3 +60,4 @@
   - [ ] Clean codebase from not used code and files. 
   - [ ] Installation shall create the database for the domains to the /var/db/goddy.db. It should be sqlite3 database.
   - [ ] Check what is needed to show the Log view.
+  - [ ] Check what is needed IPC communication between frontend and backend (arbitrator.php).

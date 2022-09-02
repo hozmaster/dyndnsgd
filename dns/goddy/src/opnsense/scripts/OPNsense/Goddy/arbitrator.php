@@ -31,6 +31,7 @@ include_once('config.inc');
 include_once('certs.inc');
 include_once('util.inc');
 
+use OPNsense\Goddy\GdUtils;
 use OPNsense\Goddy\Worker;
 
 // Summary that will be displayed in usage information.
@@ -57,7 +58,6 @@ const MODES = [
 const STATIC_OPTIONS = <<<TXT
 -h, --help          Print commandline help
 --mode              Specify the mode of operation
---uuid              The id of the account in the Account-model
 TXT;
 
 function arb_help()
@@ -92,24 +92,17 @@ function main()
 {
     // Parse command line arguments
     $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:']);
+
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
-    } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
-        //        $worker = new Worker($options['uuid']);
-        //        $worker->fetch_all_domains();
-        global $config;
-        $key = $config['OPNsense']['Goddy']['settings']['api_key'];
-        $api_secret = $config['OPNsense']['Goddy']['settings']['api_secret'];
-        $myfile = fopen("/tmp/newfile.txt", "w") or die("Unable to open file!");
-        $txt = "Key : " . $key . "\n";
-        fwrite($myfile, $txt);
-        $txt = "api_secret : " . $api_secret . "\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
+    } elseif (($options['mode'] === 'fetch')) {
+        $worker = new Worker();
+        $worker->fetchAllUserGDDomains();
     } else {
         arb_help();
     }
+    return 0;
 }
 
 function log_notice($msg)

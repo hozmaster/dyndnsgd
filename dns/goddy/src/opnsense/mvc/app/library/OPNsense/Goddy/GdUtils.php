@@ -76,6 +76,21 @@ class GdUtils
 
     }
 
+    public static function getApiKeyAndSecret(): array
+    {
+        global $config;
+        $settings = $config['OPNsense']['Goddy'];
+        ob_start();
+        var_dump($settings);
+        $dump = ob_get_contents();
+        file_put_contents("/tmp/obj_dump", $dump);
+        ob_end_clean();
+
+        return array('api_key' => $config['OPNsense']['Goddy']['settings']['api_key'],
+            'api_secret' => $config['OPNsense']['Goddy']['settings']['api_secret']
+        );
+    }
+
     /**
      * log error messages
      */
