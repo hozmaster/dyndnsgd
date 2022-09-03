@@ -28,6 +28,7 @@ namespace OPNsense\Goddy;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+@include_once("config.inc");
 @include_once("interfaces.inc");
 @include_once("util.inc");
 
@@ -76,20 +77,16 @@ class GdUtils
 
     }
 
-    public static function getApiKeyAndSecret(): array
-    {
-        global $config;
-        $settings = $config['OPNsense']['Goddy'];
-        ob_start();
-        var_dump($settings);
-        $dump = ob_get_contents();
-        file_put_contents("/tmp/obj_dump", $dump);
-        ob_end_clean();
-
-        return array('api_key' => $config['OPNsense']['Goddy']['settings']['api_key'],
-            'api_secret' => $config['OPNsense']['Goddy']['settings']['api_secret']
-        );
-    }
+//    public static function getApiKeyAndSecret(): array
+//    {
+//        $config = OPNsense\Core\Config::getInstance()->object();
+//        $client = $config->OPNsense->Goddy;
+//        $settings = $client->settings;
+//
+//        return array('api_key' => $settings['api_key'],
+//            'api_secret' => $settings['api_secret']
+//        );
+//    }
 
     /**
      * log error messages

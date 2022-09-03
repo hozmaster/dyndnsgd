@@ -19,7 +19,11 @@
         - [ ] Add the Fetch-button and complete its functionality
             - [x] User should be able to the fetch domains-operation from UI side.
             - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
-            - [ ] Return results of the action on the screen at certain time
+            - [ ] Application should show results of the action on the screen in certain time
+              - [ ] If api key and/or api secret is empty/invalid
+              - [ ] Api credentials are not valid.
+              - [ ] Fetch was successfully and domains fetch from the service
+              - [ ] Fetch was successfully and no new domains are not fetched from the service
     - [ ] The Domains-view:
         - [ ] Key functionality :
           - [ ] Show and list fetched domains in the table.

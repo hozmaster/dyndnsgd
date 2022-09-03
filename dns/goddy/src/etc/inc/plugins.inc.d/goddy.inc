@@ -57,7 +57,6 @@ function goddy_services()
             ),
             'nocheck' => true,
             'name' => 'goddy',
-            'pidfile' => '/var/run/goddy.pid'
         );
     }
     return $services;

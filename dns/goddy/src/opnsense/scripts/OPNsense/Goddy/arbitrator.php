@@ -97,8 +97,18 @@ function main()
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
     } elseif (($options['mode'] === 'fetch')) {
-        $worker = new Worker();
-        $worker->fetchAllUserGDDomains();
+
+        $config = OPNsense\Core\Config::getInstance()->object();
+        $client = $config->OPNsense->Goddy;
+
+        //        $worker = new Worker();
+        //        $worker->fetchAllUserGDDomains();
+
+        $result = array('api_key' => $client->settings->api_key);
+        echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
+
+        // print ("api_key : " . $client->settings->api_key);
+        // flush();
     } else {
         arb_help();
     }

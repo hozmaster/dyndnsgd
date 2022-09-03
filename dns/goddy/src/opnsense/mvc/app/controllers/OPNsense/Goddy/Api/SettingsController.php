@@ -32,7 +32,6 @@ use OPNsense\Base\ApiMutableModelControllerBase;
 use OPNsense\Core\Backend;
 use OPNsense\Goddy\GdUtils;
 
-
 class SettingsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelClass = '\OPNsense\Goddy\Settings';
@@ -44,13 +43,10 @@ class SettingsController extends ApiMutableModelControllerBase
         // Start actual process, but we don't have method check actual response
         // from it. Maybe we need sockets ?
         $backend = new Backend();
-        $response = $backend->configdRun("goddy fetch-domains");
-//        } else {
-//            $api_params = GdUtils::getApiKeyAndSecret();
-//            $response = "api_key " . $api_params['api_key'];
-//            // $response = "api_key and api_secret fields must be not empty";
-//        }
-        return array("message" => $response);
+        if ($this->request->isPost()) {
+            $response = json_decode($backend->configdRun("goddy fetch-domains"), true);
+        }
+        return array("message" => $response['api_key']);
     }
 
     private function checkGoDaddyParameters(): bool

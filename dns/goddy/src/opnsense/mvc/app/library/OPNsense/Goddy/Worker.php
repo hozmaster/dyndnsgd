@@ -39,14 +39,14 @@ class Worker
 
     public function fetchAllUserGDDomains()
     {
-        $api_params = GdUtils::getApiKeyAndSecret();
+        //        $api_params = GdUtils::getApiKeyAndSecret();
 
-        $myfile = fopen("/tmp/fetchallusergddomains.txt", "w") or die("Unable to open file!");
-        $txt = "Key : " . $api_params['api_key'] . "\n";
-        fwrite($myfile, $txt);
-        $txt = "secret : " . $api_params['api_secret'] . "\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
+//        $myfile = fopen("/tmp/fetchallusergddomains.txt", "w") or die("Unable to open file!");
+//        $txt = "Key : " . $api_params['api_key'] . "\n";
+//        fwrite($myfile, $txt);
+//        $txt = "secret : " . $api_params['api_secret'] . "\n";
+//        fwrite($myfile, $txt);
+//        fclose($myfile);
 
     }
 
