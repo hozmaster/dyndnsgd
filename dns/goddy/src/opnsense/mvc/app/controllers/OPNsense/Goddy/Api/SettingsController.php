@@ -39,32 +39,13 @@ class SettingsController extends ApiMutableModelControllerBase
 
     public function fetchAction()
     {
-        $response = "passed";
-        // Start actual process, but we don't have method check actual response
-        // from it. Maybe we need sockets ?
+        $response = array ("message" => "Invalid request");
+        // Start actual the fetch()-process
         $backend = new Backend();
         if ($this->request->isPost()) {
             $response = json_decode($backend->configdRun("goddy fetch-domains"), true);
         }
-        return array("message" => $response['api_key']);
-    }
-
-    private function checkGoDaddyParameters(): bool
-    {
-        global $config;
-        $pai_key = $config['OPNsense']['Goddy']['settings']['api_key'];
-        $api_secret = $config['OPNsense']['Goddy']['settings']['api_secret'];
-        if (strlen($pai_key) || strlen($api_secret)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private function parseResponse($response): array
-    {
-        GdUtils::log('Result of the fetching domains:' . $response);
-        return array("message" => "bare action");
+        return array("message" => $response['message']);
     }
 
 }

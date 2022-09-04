@@ -4,7 +4,7 @@
         - [ ] Key functionality :
           - [x] Must have required controls to enter settings to the application 
           - [x] User should be able to save settings
-          - [ ] Should be able to fetch all domains and show result of operation to the alert message box.
+          - [ ] Should be able to fetch all domains and show result of operation in the alert message box.
         - [x] Controls :
             - [x] Enabled
             - [x] Key
@@ -18,10 +18,10 @@
         - [x] Add the Save-button and complete functionality 
         - [ ] Add the Fetch-button and complete its functionality
             - [x] User should be able to the fetch domains-operation from UI side.
-            - [ ] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
-            - [ ] Application should show results of the action on the screen in certain time
-              - [ ] If api key and/or api secret is empty/invalid
-              - [ ] Api credentials are not valid.
+            - [x] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
+            - [ ] Application should show results of the action on the screen certain time
+              - [x] If api key and/or api secret is empty/invalid
+              - [x] Api credentials are not valid.
               - [ ] Fetch was successfully and domains fetch from the service
               - [ ] Fetch was successfully and no new domains are not fetched from the service
     - [ ] The Domains-view:

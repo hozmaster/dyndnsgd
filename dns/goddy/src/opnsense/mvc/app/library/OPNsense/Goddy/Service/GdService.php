@@ -28,7 +28,7 @@
 
 namespace OPNsense\Goddy\Service;
 
-class GdService extends \RequesterBase
+class GdService extends RequesterBase
 {
     const REQUEST_OK = 200;
 

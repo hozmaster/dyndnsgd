@@ -101,14 +101,17 @@ function main()
         $config = OPNsense\Core\Config::getInstance()->object();
         $client = $config->OPNsense->Goddy;
 
-        //        $worker = new Worker();
-        //        $worker->fetchAllUserGDDomains();
+        $worker = new Worker();
+        $result = $worker->fetchAllUserGDDomains($client->settings->api_key, $client->settings->api_secret);
 
-        $result = array('api_key' => $client->settings->api_key);
+        //        ob_start();
+        //        var_dump($result);
+        //        $dump = ob_get_contents();
+        //        file_put_contents("/tmp/obj_dump", $dump);
+        //        ob_end_clean();
+
         echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
 
-        // print ("api_key : " . $client->settings->api_key);
-        // flush();
     } else {
         arb_help();
     }

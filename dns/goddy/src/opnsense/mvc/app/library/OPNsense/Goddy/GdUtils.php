@@ -77,17 +77,6 @@ class GdUtils
 
     }
 
-//    public static function getApiKeyAndSecret(): array
-//    {
-//        $config = OPNsense\Core\Config::getInstance()->object();
-//        $client = $config->OPNsense->Goddy;
-//        $settings = $client->settings;
-//
-//        return array('api_key' => $settings['api_key'],
-//            'api_secret' => $settings['api_secret']
-//        );
-//    }
-
     /**
      * log error messages
      */

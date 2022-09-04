@@ -31,24 +31,44 @@ namespace OPNsense\Goddy;
 use OPNsense\Core\Config;
 use OPNsense\Goddy\Service\GdService;
 
-class Worker
+class Worker extends GdService
 {
-    public function __construct()
+    public function fetchAllUserGDDomains($api_key, $api_secret): array
     {
+        if (!strlen($api_key) || !strlen($api_secret)) {
+            $response = array("results" => "failed",
+                "message" => "Missing or invalid api_key and/or api_secret"
+            );
+
+        } else {
+            $response = array("results" => "success",
+                "message" => $this->fetchAllGDDomains($api_key, $api_secret));
+
+        }
+        return $response;
     }
 
-    public function fetchAllUserGDDomains()
+    private function fetchAllGDDomains($api_key, $api_secret): string
     {
-        //        $api_params = GdUtils::getApiKeyAndSecret();
+        $domainCount = 0;
+        $base_url = $this->get_base_url();
+        $url = "$base_url/v1/domains?statuses=ACTIVE";
+        $header = $this->getHeader($api_key, $api_secret);
+        $response_code = $this->doGetRequest($url, $header);
+        if ($response_code == GdService::REQUEST_OK) {
+            $domains = $this->get_data();
+            foreach ($domains as $domain) {
+                $domainCount++;
+            }
 
-//        $myfile = fopen("/tmp/fetchallusergddomains.txt", "w") or die("Unable to open file!");
-//        $txt = "Key : " . $api_params['api_key'] . "\n";
-//        fwrite($myfile, $txt);
-//        $txt = "secret : " . $api_params['api_secret'] . "\n";
-//        fwrite($myfile, $txt);
-//        fclose($myfile);
-
+            GdUtils::log("Count of fetched domains:" . $domainCount);
+            $message = "Request passed. Amount of domains fetched: " . $domainCount;
+        } else {
+            $message = $this->parseResponseInfo($response_code);
+        }
+        return $message;
     }
+
 
 //    private function fetch_all_gd_domains($status = 'ACTIVE')
 //    {
