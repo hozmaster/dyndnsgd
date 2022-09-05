@@ -35,19 +35,19 @@
         <id>settings.api_key</id>
         <label>Key</label>
         <type>text</type>
-        <help>Set a key for account.</help>
+        <help>Set api key of account.</help>
     </field>
     <field>
         <id>settings.api_secret</id>
         <label>Secret key</label>
         <type>password</type>
-        <help>Set a secret key for account.</help>
+        <help>Set secret key of account.</help>
     </field>
     <field>
         <id>settings.check_method</id>
-        <label>Check ip method</label>
+        <label>Address check method</label>
         <type>dropdown</type>
-        <help>How to determine the address to use for this host</help>
+        <help>Method to check the ip address to use for host</help>
     </field>
     <field>
         <id>settings.interface</id>
@@ -61,12 +61,5 @@
         <label>Interval</label>
         <type>text</type>
         <help>Interval in seconds to check for address changes</help>
-    </field>
-    <field>
-        <id>settings.atrecord</id>
-        <label>Add @-records by default ?</label>
-        <type>checkbox</type>
-        <allownew>false</allownew>
-        <help>Should domains support at records by default.</help>
     </field>
 </form>

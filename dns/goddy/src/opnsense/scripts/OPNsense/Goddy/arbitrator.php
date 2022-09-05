@@ -104,12 +104,6 @@ function main()
         $worker = new Worker();
         $result = $worker->fetchAllUserGDDomains($client->settings->api_key, $client->settings->api_secret);
 
-        //        ob_start();
-        //        var_dump($result);
-        //        $dump = ob_get_contents();
-        //        file_put_contents("/tmp/obj_dump", $dump);
-        //        ob_end_clean();
-
         echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
 
     } else {

@@ -49,7 +49,7 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         $("#fetchAct").click(function(){
-        $("#responseMsg").html("");
+        $("#responseMsg").html("Processing ... ");
             $("#responseMsg").removeClass("hidden");
             $("#fetchAct_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/goddy/settings/fetch", sendData={}, callback=function(data,status) {

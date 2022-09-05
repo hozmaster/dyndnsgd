@@ -3,7 +3,7 @@
     <description>
         The OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.3.3</version>
+    <version>0.3.5</version>
     <items>
         <enabled type="BooleanField">
             <default>1</default>
@@ -38,9 +38,5 @@
             <MinimumValue>1</MinimumValue>
             <MaximumValue>86400</MaximumValue>
         </interval_delay>
-        <atrecord type="BooleanField">
-            <default>1</default>
-            <Required>Y</Required>
-        </atrecord>
     </items>
 </model>
