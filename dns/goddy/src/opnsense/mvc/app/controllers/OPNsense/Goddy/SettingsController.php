@@ -32,7 +32,7 @@ class SettingsController extends \OPNsense\Base\IndexController
 {
     public function indexAction()
     {
-        $this->view->formViewSettings = $this->getForm("settings");
+        $this->view->formViewSettings = $this->getForm("frm_settings");
         // pick the template to serve to our users.
         $this->view->pick('OPNsense/Goddy/settings');
     }
