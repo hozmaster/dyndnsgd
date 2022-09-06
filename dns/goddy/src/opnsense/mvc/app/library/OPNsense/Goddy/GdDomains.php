@@ -57,14 +57,13 @@ class GdDomains
         return $obj['domains']['domain'];
     }
 
-    public function saveNewRecord($account_uuid, $content)
+    public function saveNewRecord($content)
     {
         $model = new Domains();
         $node = $model->domains->domain->add();
 
         $node->enabled = 0;
         $node->domain = $content['domain'];
-        $node->account = $account_uuid;
         $node->domain_id = $content['domainId'];
 
         $validationMessages = $model->performValidation();
@@ -72,7 +71,7 @@ class GdDomains
             GdUtils::log("validation failure on field " . $message->getField() . "  returning message : " . $message->getMessage());
         }
 
-        //
+        // Save a new record to the system provided config path
         if (!$validationMessages->count()) {
             $model->serializeToConfig();
             $cnf = Config::getInstance();

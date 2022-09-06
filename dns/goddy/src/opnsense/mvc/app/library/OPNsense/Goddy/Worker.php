@@ -57,7 +57,15 @@ class Worker extends GdService
         $response_code = $this->doGetRequest($url, $header);
         if ($response_code == GdService::REQUEST_OK) {
             $domains = $this->get_data();
+            $gd_domains = new GdDomains();
+            $c_domains = $gd_domains->getAllDomains();
+            $save_count = 0;
             foreach ($domains as $domain) {
+                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
+                if ($key === false) {
+                    $gd_domains->saveNewRecord($domain);
+                    $save_count ++;
+                }
                 $domainCount++;
             }
 

@@ -12,20 +12,6 @@
         <help>Name of the domain.</help>
     </field>
     <field>
-        <id>domain.account</id>
-        <label>Account</label>
-        <type>dropdown</type>
-        <allownew>false</allownew>
-        <help>Set correct account for this domain.</help>
-    </field>
-    <field>
-        <id>domain.interface</id>
-        <label>Interface to monitor:</label>
-        <type>dropdown</type>
-        <allownew>false</allownew>
-        <help>Set an outgoing interface to listen on.</help>
-    </field>
-    <field>
         <id>domain.description</id>
         <label>Description</label>
         <type>text</type>
@@ -34,11 +20,10 @@
         <help>Set a description.</help>
     </field>
     <field>
-        <id>domain.at_record</id>
-        <label>Maintain @-record ?</label>
-        <type>checkbox</type>
-        <default>0</default>
-        <Required>N</Required>
-        <help>Should this domain maintain the '@'-record by default.</help>
+        <id>domain.interface</id>
+        <label>Interface to monitor:</label>
+        <type>dropdown</type>
+        <allownew>false</allownew>
+        <help>Set an outgoing interface to listen on.</help>
     </field>
 </form>
