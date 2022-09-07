@@ -59,18 +59,21 @@ class Worker extends GdService
             $domains = $this->get_data();
             $gd_domains = new GdDomains();
             $c_domains = $gd_domains->getAllDomains();
-            $save_count = 0;
+            $saveCount = 0;
             foreach ($domains as $domain) {
-                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
+                $key = in_array($domain['domain'], array_column($c_domains, 'domain'));
                 if ($key === false) {
                     $gd_domains->saveNewRecord($domain);
-                    $save_count ++;
+                    $saveCount++;
                 }
                 $domainCount++;
             }
 
-            GdUtils::log("Count of fetched domains:" . $domainCount);
-            $message = "Request passed. Amount of domains fetched: " . $domainCount;
+            if ($saveCount) {
+                $message = "Request passed. Amount of domains added: " . $saveCount;
+            } else {
+                $message = "Request passed. No new domains found. ";
+            }
         } else {
             $message = $this->parseResponseInfo($response_code);
         }
