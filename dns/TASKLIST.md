@@ -49,7 +49,7 @@
 - [x] Backend
     - [x] Backend should ble to receive the fetch request from UI side.
         - [x] It should be able to connect to the Service with given key and secret.
-        - [x Fetch all domains from the service.
+        - [x] Fetch all domains from the service.
         - [x] Check is there new domains and update database if needed.
         - [x] Backend should be able to react normal error cases (service is missing)
         - [x] Backend should be able to give results from the operation back to frontend.
