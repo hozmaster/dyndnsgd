@@ -40,6 +40,7 @@ if (isset($argv[1])) {
 }
 
 if (empty($argument)) {
+    syslog(LOG_NOTICE, "Goddy: domain checks : " . $argc);
     goddy_configure_do(true);
 } else {
     syslog(LOG_NOTICE, "Goddy: argument count : " . $argc);

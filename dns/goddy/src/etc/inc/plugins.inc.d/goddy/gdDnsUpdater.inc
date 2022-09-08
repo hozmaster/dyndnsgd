@@ -31,79 +31,59 @@ use OPNsense\Goddy\Service\GdRecord;
 
 class gdDnsUpdater
 {
-    private $_if;       // index of wan address
     private string $_if_addr4;
     private bool $_useIPv6;
-    private array $_accounts = [];
     private array $_domains = [];
-    private bool $verboseLogging = false;
     private array $cachedRecords = [];
-    private $gdDb = null;
 
-    public function __construct(
-        $if,
-        $verboseLogging,
-        $accounts,
-        $domains
-    )
+    public function __construct()
     {
-        $this->verboseLogging = $verboseLogging;
-
         $this->_useIPv6 = false;
-        $this->_if = $if;
         $this->_if_addr4 = $this->checkIPAddress();
-        $this->_accounts = $accounts;
-        $this->_domains = $domains;
-
-        $this->gdDb = new GDDatabase();
-
     }
 
     public function checkAndDoDNSUpdate()
     {
         $updater_lck = lock("goddy_" . LOCK_EX);
-
         $this->log_message(" updater lock set ");
-        $this->log_message(" wan address : " . $this->_if_addr4);
 
         // Ensure that we were able to look up the IP
         if (!is_ipaddr($this->_if_addr4)) {
-            $this->log_message("There was an error trying to determine the public IP for interface - ({$this->_if}). Probably interface is not a WAN interface.", true);
+            $this->log_message("There was an error trying to determine the public IP for interface. Probably interface is not a WAN interface.", true);
             unlock($updater_lck);
             return;
         }
 
-        $this->log_message(" Count of domains  : " . count($this->_domains));
+        //        $this->log_message(" Count of domains  : " . count($this->_domains));
+        //        $this->cachedRecords = $this->gdDb->getCachedDomainRecords();
 
-        $this->cachedRecords = $this->gdDb->getCachedDomainRecords();
-
-        foreach ($this->_domains as $domain) {
-            if ($domain['enabled']) {
-                // key property uuid of used account
-                $keys = $this->getAccountKeysForDomain($domain['account']);
-                $domainUuid = $domain['@attributes']['uuid'];
-                if ($keys) {
-                    $cachedRecord = $this->getCurrentIPAddress($domainUuid);
-                    if (!$cachedRecord || $cachedRecord['ipv4_address'] != $this->_if_addr4) {
-                        $name = "@";
-                        $type = 'A';
-                        $this->log_message("Updating records for domain : " . $domain['domain']);
-                        $result = $this->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
-                        if ($result['status'] != 'failed') {
-                            $db_result = $this->gdDb->setCachedIpForDomain($domainUuid, $type, $name, $this->_if_addr4, "");
-                            $this->log_message("[{$domain['domain']}]: '@'-Record updated, db: {$db_result} ", true);
-                        } else {
-                            $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason']);
-                        }
-
-                    } else {
-                        $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
-                    }
-                } else {
-                    $this->log_message("No keys can't be from used account. Skip domain.");
-                }
-            }
-        }
+        //        foreach ($this->_domains as $domain) {
+        //            if ($domain['enabled']) {
+        //                // key property uuid of used account
+        //                $keys = $this->getAccountKeysForDomain($domain['account']);
+        //                $domainUuid = $domain['@attributes']['uuid'];
+        //                if ($keys) {
+        //                    $cachedRecord = $this->getCurrentIPAddress($domainUuid);
+        //                    if (!$cachedRecord || $cachedRecord['ipv4_address'] != $this->_if_addr4) {
+        //                        $name = "@";
+        //                        $type = 'A';
+        //                        $this->log_message("Updating records for domain : " . $domain['domain']);
+        //                        $result = $this->updateA1Records($domain['domain'], $keys, $name, $this->_if_addr4);
+        //                        if ($result['status'] != 'failed') {
+        //                            $db_result = $this->gdDb->setCachedIpForDomain($domainUuid, $type, $name, $this->_if_addr4, "");
+        //                            $this->log_message("[{$domain['domain']}]: '@'-Record updated, db: {$db_result} ", true);
+        //                        } else {
+        //                            $this->log_message("[{$domain['domain']}]: Unable to update record : " . $result['reason']);
+        //                        }
+        //
+        //                    } else {
+        //                        $this->log_message("[{$domain['domain']}]: No need to update a ip address to service");
+        //                    }
+        //                } else {
+        //                    $this->log_message("No keys can't be from used account. Skip domain.");
+        //                }
+        //            }
+        //        }
 
         unlock($updater_lck);
         $this->log_message(" updater lock released. ");

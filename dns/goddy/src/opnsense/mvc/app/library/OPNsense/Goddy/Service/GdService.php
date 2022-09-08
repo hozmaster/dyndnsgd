@@ -48,7 +48,7 @@ class GdService extends RequesterBase
 
     public function get_base_url($is_test_url = false): string
     {
-        $is_test_url == false ? $url = "https://$this->production_url" : $url = "https://$this->staging_url";
+        !$is_test_url ? $url = "https://$this->production_url" : $url = "https://$this->staging_url";
         return $url;
     }
 

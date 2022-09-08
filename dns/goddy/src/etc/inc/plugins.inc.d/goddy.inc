@@ -34,21 +34,28 @@ function goddy_configure(): array
     return array(
         'bootup' => array('goddy_configure_do'),
         'local' => array('goddy_configure_do'),
-        'newwanip' => array('goddy_configure_do:2'),
+        'newwanip' => array('goddy_configure_do'),
     );
 }
 
-function goddy_enabled(): bool
+function goddyEnabled(): bool
 {
     global $config;
     return isset($config['OPNsense']['Goddy']['settings']['enabled']) &&
         $config['OPNsense']['Goddy']['settings']['enabled'] == 1;
 }
 
+function getDefaultInterfaceName()
+{
+    global $config;
+    return isset($config['OPNsense']['Goddy']['settings']['interface']);
+
+}
+
 function goddy_services()
 {
     $services = array();
-    if (goddy_enabled()) {
+    if (goddyEnabled()) {
         $services[] = array(
             'description' => gettext('GoDaddy specific Dynamic DNS updater'),
             'configd' => array(
@@ -78,42 +85,26 @@ function goddy_configure_do($verbose = true, $param = '')
         $opnsense = $config['OPNsense'];
         $goddy = $opnsense['Goddy'];
 
-//        if (empty($goddy)) {
-//            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, Quit now.");
-//            return -1;
-//        }
-//
-//        $verbose = $goddy['settings']['log_level'] == 'debug';
-//        $wan_if = $goddy['settings']['interface'];
-//        if (empty($wan_if)) {
-//            $wan_if = "wan";
-//        }
-//
-//        $accounts = array_pop($goddy['accounts']);
-//        $domains = array_pop($goddy['domains']);
-//
-//        if (empty($accounts) || empty($domains['domain'])) {
-//            syslog(LOG_ERR, "Goddy: No valid account and/or domains. Exit now");
-//            return -1;
-//        }
-//
-//        $gw_groups = return_gateway_groups_array();
-//        if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
-//
-//            $updater = new gdDnsUpdater(
-//                $wan_if,
-//                $verbose,
-//                $accounts,
-//                $domains['domain']
-//            );
-//
-//            // do actual verification and the update process if needed
-//            $updater->checkAndDoDNSUpdate();
-//            sleep(1);
-//        } else {
-//            $str = "Goddy: " . $param . " " . $wan_if;
-//            syslog(LOG_ERR, $str);
-//        }
+        if (empty($goddy)) {
+            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, Quit now.");
+            return -1;
+        }
+
+        $wan_if = $goddy['settings']['interface'];
+        if (empty($wan_if)) {
+            $wan_if = "wan";
+        }
+
+        $gw_groups = return_gateway_groups_array();
+        if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
+            $updater = new gdDnsUpdater();
+            // do actual verification and the update process if needed
+            $updater->checkAndDoDNSUpdate();
+            sleep(1);
+        } else {
+            $str = "Goddy: " . $param . " " . $wan_if;
+            syslog(LOG_ERR, $str);
+        }
         sleep(1);
     } else {
         syslog(LOG_NOTICE, "Goddy: plugin is disabled");

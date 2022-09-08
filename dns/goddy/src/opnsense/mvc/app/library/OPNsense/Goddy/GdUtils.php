@@ -53,7 +53,6 @@ class GdUtils
         }
     }
 
-
     public static function getDynDnsIP($if_index, $ip_family = 4)
     {
         $ip_address = $ip_family == 6 ? get_interface_ipv6($if_index) : get_interface_ip($if_index);
