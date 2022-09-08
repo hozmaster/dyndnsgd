@@ -44,7 +44,7 @@ TXT;
 
 const EXAMPLES = <<<TXT
 - Fetch all users domains from GoDaddy service.
-  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000
+  arbitrator.php --mode fetch 
 TXT;
 
 // Supported account actions and their help text
@@ -91,7 +91,7 @@ function validateMode($mode): bool
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:']);
+    $options = getopt('h::', ['account:', 'help', 'mode:']);
 
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
