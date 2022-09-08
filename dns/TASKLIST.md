@@ -46,6 +46,10 @@
           -  [x] Interface selection combo-box.
         - [x] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
         - [x] User should be able to delete obsolete domain from the config registry.
+      - [ ] The Log-view
+        - [ ] Key functionality 
+          - Keep track all logs related to Goddy-service
+          - Minimal implementation 
 - [x] Backend
     - [x] Backend should ble to receive the fetch request from UI side.
         - [x] It should be able to connect to the Service with given key and secret.
