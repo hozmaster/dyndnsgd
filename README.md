@@ -2,11 +2,11 @@
 
 GoDaddy specific Dynamic DNS plugin for OPNsense
 
-This plugin allows you to update public ip address to dns service provider when it's changed by ISP. This plugin will be at first GoDaddy specific, it will be handle all settings what user can do their via web page. 
+This plugin allows system to update public ip address of the '@'-service records to the goDaddy service. 
 
 ## WHY
 
-Current functionality of dynamic dns in OPNSense platform is quite limited and will handle all most popular dns service providers.
+For mots use cases it's just need to update '@'-record to allow web and mail traffic to reach target system.  
 
 ## STATUS
 
@@ -18,21 +18,16 @@ Views and dialogs are more and less ready. Still some opens issues still exist b
 
 This plugin should be able to :
 
-Account : 
-* Support to add, edit, delete accounts (v.0.9.0). Enable, disable account.
-* Support to fetch all owned domains from service (v.0.9.0).
-* Check and update status of domains repeatedly owned by account
-* Log activity
+Settins:
+* Ability to save required settings to system config storage.
 
 Domains :
-* Ability to fetch subdomains from service.
-* Ability maintain records for domain.
+* Ability to check current ip address of the '@'-record and update if it's needed.
 
 GoDaddy :
 
-* Fetch all aquired domains from the GoDaddy service
-* Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
-                                                                                                     
+* Fetch all acquired domains from the GoDaddy service
+                                                                                                    
 
 ## Instructions
 
@@ -41,11 +36,10 @@ user which have Admin level privileges.
 
 ### After installation.
 
-Verify that this plugin is visible at Service-manu. It should menu item the 'DynDNSGD'. If not plugin is not installed correctly.
+Verify that this plugin is visible at Service-manu. It should have a menu item called **'Dynamic DNS (goddy)**.
 
-Open and verify opened sub menu contains next sub items: 'Settings', 'Accounts', 'Domains' and 'Log Files'.
+Open and verify opened sub menu contains next sub items: 'Settings', 'Domains' and 'Log'.
 
-* Some key point from component: user can't enter any of domain for accounts. They are fetched from Account-view. 
 ### Settings-view
 
 The Settings view contains next controls : 'Enable', 'Interface' and 'Log Level'
@@ -60,21 +54,6 @@ correct interface which connected ISP service.
 #### Log level
 This component controls how the logging verbose level during operations. Default level is 'normal'. 
 If this is selected, only fatal errors are logged. Use debug when there is problems during activity.  
-
-### Accounts-view
-
-In this view, user is able to add GoDaddy accounts details for plugin usage. Until proper account credentials,
-plugin can't work properly. Normally, this view contains only one or two records. 
-
-Admin user can create production or test account as GoDaddy supports both types. However, only production keys are 
-supported currently.
-
-On right side of this view, there is '+'-icon where user can create new record for account. When user press it,
-an 'Add Account'-dialog is opened on screen.
-
-#### Add Account dialog
-
-The Add Account dialog contains next components : 
 
 ##### Name
 
