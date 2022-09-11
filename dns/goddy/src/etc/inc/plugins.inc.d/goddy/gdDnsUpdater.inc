@@ -33,12 +33,14 @@ class gdDnsUpdater
 {
     private string $_if_addr4;
     private bool $_useIPv6;
+    private bool $verboseLogging;
     private array $_domains = [];
     private array $cachedRecords = [];
 
     public function __construct()
     {
         $this->_useIPv6 = false;
+        $this->verboseLogging = false;
         $this->_if_addr4 = $this->checkIPAddress();
     }
 
@@ -102,22 +104,6 @@ class gdDnsUpdater
         return $data;
     }
 
-    private function getAccountKeysForDomain($uuid): ?array
-    {
-        $keys = null;
-        foreach ($this->_accounts as $account) {
-            $is_match = $account['@attributes']['uuid'] == $uuid;
-            if ($is_match) {
-                $keys = [
-                    'api.key' => $account['api_key'],
-                    'api.secret' => $account['api_secret']
-                ];
-                break;
-            }
-        }
-        return $keys;
-    }
-
     private function checkIPAddress()
     {
         $ip_address = get_dyndns_ip($this->_if, $this->_useIPv6 ? 6 : 4);
@@ -154,7 +140,6 @@ class gdDnsUpdater
         $record = new GdRecord($keys, $data, 'put');
         $record->doRequest();
         return $record->getResponse();
-
     }
 
 }
