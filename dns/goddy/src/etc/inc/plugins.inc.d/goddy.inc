@@ -38,7 +38,7 @@ function goddy_configure(): array
     );
 }
 
-function goddyEnabled(): bool
+function isGoddyEnabled(): bool
 {
     global $config;
     return isset($config['OPNsense']['Goddy']['settings']['enabled']) &&
@@ -55,7 +55,7 @@ function getDefaultInterfaceName()
 function goddy_services()
 {
     $services = array();
-    if (goddyEnabled()) {
+    if (isGoddyEnabled()) {
         $services[] = array(
             'description' => gettext('GoDaddy specific Dynamic DNS updater'),
             'configd' => array(
@@ -81,7 +81,7 @@ function goddy_configure_do($verbose = true, $param = '')
 {
     global $config;
 
-    if (goddy_enabled()) {
+    if (isGoddyEnabled()) {
         $opnsense = $config['OPNsense'];
         $goddy = $opnsense['Goddy'];
 

@@ -4,6 +4,7 @@
         <Goddy VisibleName="Dynamic DNS (goddy)"  cssClass="fa fa-tags">
             <Settings url="/ui/goddy/settings/index" order="10"/>
             <Domains url="/ui/goddy/domains/index" order="20"/>
+            <log order="100" VisibleName="Log File" url="/ui/diagnostics/log/core/goddy"/>
         </Goddy>
     </Services>
 </menu>

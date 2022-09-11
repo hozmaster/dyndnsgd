@@ -2,8 +2,6 @@
 # create plugin runtime folders and files.
 /usr/local/opnsense/scripts/OPNsense/Goddy/setup.sh
 
-/usr/local/opnsense/scripts/OPNsense/Goddy/create_db.sh
-
 if /usr/local/etc/rc.d/configd status > /dev/null; then
         /usr/local/etc/rc.d/configd restart
 fi
