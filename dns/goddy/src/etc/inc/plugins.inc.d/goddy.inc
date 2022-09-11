@@ -69,6 +69,16 @@ function goddy_services()
     return $services;
 }
 
+
+function goddy_syslog()
+{
+    $logfacilities = array();
+    $logfacilities['goddy'] = array(
+        'facility' => ['goddy']
+    );
+    return $logfacilities;
+}
+
 function goddy_list()
 {
     return array(
