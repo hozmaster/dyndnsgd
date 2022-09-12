@@ -69,7 +69,6 @@ function goddy_services()
     return $services;
 }
 
-
 function goddy_syslog()
 {
     $logfacilities = array();
@@ -90,6 +89,8 @@ function goddy_list()
 function goddy_configure_do($verbose = true, $param = '')
 {
     global $config;
+
+    syslog(LOG_ERR, "Goddy: goddy Internal model structure can't be found, Quit now.");
 
     if (isGoddyEnabled()) {
         $opnsense = $config['OPNsense'];
@@ -112,7 +113,7 @@ function goddy_configure_do($verbose = true, $param = '')
             $updater->checkAndDoDNSUpdate();
             sleep(1);
         } else {
-            $str = "Goddy: " . $param . " " . $wan_if;
+            $str = "Goddy: No gateway groups or required interface not found. Interface : " . $param . " " . $wan_if;
             syslog(LOG_ERR, $str);
         }
         sleep(1);

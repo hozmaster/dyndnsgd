@@ -39,17 +39,31 @@ if (isset($argv[1])) {
     $argument = null;
 }
 
-syslog(LOG_NOTICE, "Goddy: domain checks : " . $argc);
+syslog (LOG_NOTICE, "Goddy: argument  : " . $argument);
 
-if (empty($argument)) {
-    syslog(LOG_NOTICE, "Goddy: domain checks : " . $argc);
-    goddy_configure_do(true);
-} else {
-    syslog(LOG_NOTICE, "Goddy: argument count : " . $argc);
-    $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
-    if (empty($interface)) {
-        $interface = $argument;
-    }
+$interface = 'wan';
+$interface_real = get_real_interface($interface);
+syslog(LOG_NOTICE, "Goddy: the wan  : " . $interface_real);
 
-    goddy_configure_do(true, $interface);
+if (!isset($config['interfaces'][$interface]['enable'])) {
+    log_error("Interface '{$interface}' ($interface_real) is disabled or empty, nothing to do.");
+    return;
 }
+
+$ip = get_interface_ip($interface);
+syslog(LOG_NOTICE, "Goddy: the real4 ipaddress  : " . $ip);
+
+goddy_configure_do(true, $interface);
+
+//if (!empty($interface_real) && !empty($interface)) {
+//    syslog(LOG_NOTICE, "Goddy: found default interface and do ip checks : " . $interface);
+////    goddy_configure_do(true);
+//} else {
+//    syslog(LOG_NOTICE, "Goddy: argument count : " . $argc);
+//    $interface = get_real_interface($argument);
+//    if (empty($interface)) {
+//        $interface = $argument;
+//    }
+//
+//    goddy_configure_do(true, $interface);
+//}

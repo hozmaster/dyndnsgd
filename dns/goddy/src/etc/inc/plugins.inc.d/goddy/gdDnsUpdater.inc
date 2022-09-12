@@ -25,6 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+require_once("interfaces.inc");
+
 use OPNsense\Goddy\GDDatabase;
 use OPNsense\Goddy\GdUtils;
 use OPNsense\Goddy\Service\GdRecord;
