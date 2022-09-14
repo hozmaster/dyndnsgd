@@ -26,6 +26,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+use OPNsense\Goddy\GdDomains;
+use OPNsense\Goddy\GdUtils;
+
 require_once("interfaces.inc");
 require_once('plugins.inc.d/goddy/gdDnsUpdater.inc');
 
@@ -90,9 +93,8 @@ function goddy_configure_do($verbose = true, $param = '')
 {
     global $config;
 
-    syslog(LOG_ERR, "Goddy: goddy Internal model structure can't be found, Quit now.");
-
     if (isGoddyEnabled()) {
+
         $opnsense = $config['OPNsense'];
         $goddy = $opnsense['Goddy'];
 
@@ -106,11 +108,23 @@ function goddy_configure_do($verbose = true, $param = '')
             $wan_if = "wan";
         }
 
+        $gd_domains = new GdDomains();
+        $domains = $gd_domains->getAllDomains();
+
+        syslog(LOG_NOTICE, " leght ". sizeof($domains,1));
+
+        foreach($domains as $key => $domain ) {
+            syslog(LOG_NOTICE, " domain : " . $domain['domain'] );
+            foreach ($domain['interface'] as $code => $interface) {
+                syslog(LOG_NOTICE, " interfaace " . $code . ' is selected : ' . $interface['selected'] );
+            }
+        }
+
         $gw_groups = return_gateway_groups_array();
         if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
-            $updater = new gdDnsUpdater();
+            // $updater = new gdDnsUpdater();
             // do actual verification and the update process if needed
-            $updater->checkAndDoDNSUpdate();
+            // $updater->checkAndDoDNSUpdate();
             sleep(1);
         } else {
             $str = "Goddy: No gateway groups or required interface not found. Interface : " . $param . " " . $wan_if;

@@ -58,21 +58,21 @@ class DomainsController extends ApiMutableModelControllerBase
         return $this->delBase('domains.domain', $uuid);
     }
 
-    public function searchAction()
+    public function searchAction(): array
     {
-        $domains = $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
-            'cachedip4address', 'description', 'domain_id'), 'domain');
-        $theDb = new GDDatabase();
-        foreach ($domains['rows'] as &$row) {
-            $uuid = $row['uuid'];
-            $record = $theDb->getsSingleDomainRecord($uuid);
-            if ($record) {
-                $row['ipv4_address'] = $record['ipv4_address'];
-                $row['ipv6_address'] = $record['ipv6_address'];
-            }
-        }
+        //        $domains = $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
+//            'cachedip4address', 'description', 'domain_id'), 'domain');
+//        $theDb = new GDDatabase();
+//        foreach ($domains['rows'] as &$row) {
+//            $uuid = $row['uuid'];
+//            $record = $theDb->getsSingleDomainRecord($uuid);
+//            if ($record) {
+//                $row['ipv4_address'] = $record['ipv4_address'];
+//                $row['ipv6_address'] = $record['ipv6_address'];
+//            }
+//        }
 
-        return $domains;
+        return [];
     }
 
 }
