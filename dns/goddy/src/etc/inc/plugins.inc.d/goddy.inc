@@ -28,8 +28,10 @@
 
 use OPNsense\Goddy\GdDomains;
 use OPNsense\Goddy\GdUtils;
+use OPNsense\Goddy\Service\GdRecord;
 
 require_once("interfaces.inc");
+require_once("util.inc");
 require_once('plugins.inc.d/goddy/gdDnsUpdater.inc');
 
 function goddy_configure(): array
@@ -99,14 +101,13 @@ function goddy_configure_do()
         $goddy = $opnsense['Goddy'];
 
         if (empty($goddy)) {
-            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, Quit now.");
+            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, quit now.");
             return -1;
         }
 
-        $wan_if = $goddy['settings']['interface'];
-        if (empty($wan_if)) {
-            $wan_if = "wan";
-        }
+        $api_keys = ['api.key' => $goddy['settings']['api_key'],
+            'api.secret' => $goddy['settings']['api_secret']
+        ];
 
         $gd_domains = new GdDomains();
         $domains = $gd_domains->getAllDomains();
@@ -119,9 +120,14 @@ function goddy_configure_do()
                 if (strcmp($domain['ip4_address'], $ip) == 0) {
                     syslog(LOG_NOTICE, "ip matches with current one");
                 } else {
-                    // ip address need to update.
-                    syslog(LOG_NOTICE, "interface ip address " . $ip);
-                    syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                    // ipv4 address need to update.
+                    if (is_private_ip($ip)) {
+                        syslog(LOG_ERR, $domain['domain'] . ": Unable to update DNS record because interface is connected to private ip range.");
+                    } else {
+                        // updateA1Record($domain['domain'],);
+                        syslog(LOG_NOTICE, "interface ip address " . $ip);
+                        syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                    }
                 }
             }
         }
@@ -142,3 +148,19 @@ function getDomainInterface($interfaces): string|null
     }
     return $the_interface;
 }
+
+//function updateA1Record($domain, $keys, $name, $if_ip_addr): array
+//{
+//    $data = [
+//        'domain' => $domain,
+//        'name' => $name,
+//        'type' => 'A',
+//        'payload' => $if_ip_addr,
+//    ];
+//
+//
+//    $record = new GdRecord($keys, $data, 'put');
+//    $record->doRequest();
+//    return $record->getResponse();
+//
+//}

@@ -71,9 +71,21 @@ class GdService extends RequesterBase
         return $this->response_code;
     }
 
-    public function doUpdateRecord($keys, $domain, $recordName, $ipv4Addr, $recordType='A' )
+    /*
+     * Update IPv4 address of the domain to service
+     *
+     * @param keys          Api credentials in the array
+     * @param domain        Name of the domain
+     * @param recordName    Name of the record ( @ )
+     * @param ipv4Addr      Ipv4 address
+     * @param record type   Record type ('A' or 'AA')
+     *
+     * @param \Exception $e  Another parameter description.
+     *
+     *  @return array
+    */
+    public function doUpdateRecord($keys, $domain, $recordName, $ipv4Addr, $recordType = 'A'): array
     {
-
         $this->initCurl();
         $payload = array();
 

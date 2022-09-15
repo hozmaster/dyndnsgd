@@ -24,6 +24,7 @@
               - [x] Api credentials are not valid.
               - [x] Fetch was successfully and domains fetch from the service
               - [x] Fetch was successfully and no new domains are not fetched from the service
+              - [ ] If domains are fetched, also value of the '@' should be fetched.
     - [ ] The Domains-view:
         - [x] Key functionality :
           - [x] Show and list fetched domains in the table.
@@ -48,8 +49,8 @@
         - [x] User should be able to delete obsolete domain from the config registry.
       - [ ] The Log-view
         - [ ] Key functionality 
-          - Keep track all logs related to Goddy-service
-          - Minimal implementation 
+          - [ ] Keep track all logs related to Goddy-service
+          - [ ] Minimal implementation 
 - [x] Backend
     - [x] Backend should ble to receive the fetch request from UI side.
         - [x] It should be able to connect to the Service with given key and secret.
@@ -62,14 +63,15 @@
             - [x] Error during processing request to the Service.
 - [ ] Service
     - [ ] Process the WAN IP check in given periodic
-    - [ ] Read settings from system's config storage.
-    - [ ] Read all domains and it's values from database to array
-    - [ ] Remove disabled domains from array
+    - [x] Read settings from system's config storage.
+    - [x] Read all domains and it's values from database to array
     - [ ] Processed all remaining domains in the array:
-        - [ ] Verify existing ip from given interface
+        - [x] Verify existing ip from given interface
         - [ ] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
         - [ ] If IP address has been changed, update the IP address also to the database.
 - [ ] Other
-  - [ ] Clean codebase from not used code and files. 
+  - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
   - [ ] Check what is needed to show the Log view.
   - [x] Check what is needed IPC communication between frontend and backend (arbitrator.php).
+- [ ] Errors
+  - [ ] Domains view do not properly. It may have connections with deprecated database code.   
