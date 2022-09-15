@@ -89,7 +89,7 @@ function goddy_list()
     );
 }
 
-function goddy_configure_do($verbose = true, $param = '')
+function goddy_configure_do()
 {
     global $config;
 
@@ -111,27 +111,34 @@ function goddy_configure_do($verbose = true, $param = '')
         $gd_domains = new GdDomains();
         $domains = $gd_domains->getAllDomains();
 
-        syslog(LOG_NOTICE, " leght ". sizeof($domains,1));
-
-        foreach($domains as $key => $domain ) {
-            syslog(LOG_NOTICE, " domain : " . $domain['domain'] );
-            foreach ($domain['interface'] as $code => $interface) {
-                syslog(LOG_NOTICE, " interfaace " . $code . ' is selected : ' . $interface['selected'] );
+        foreach ($domains as $key => $domain) {
+            $s_interface = getDomainInterface($domain['interface']);
+            if ($s_interface != null) {
+                $interface_real = get_real_interface(strtolower($s_interface));
+                $ip = get_interface_ip($interface_real);
+                if (strcmp($domain['ip4_address'], $ip) == 0) {
+                    syslog(LOG_NOTICE, "ip matches with current one");
+                } else {
+                    // ip address need to update.
+                    syslog(LOG_NOTICE, "interface ip address " . $ip);
+                    syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                }
             }
         }
 
-        $gw_groups = return_gateway_groups_array();
-        if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
-            // $updater = new gdDnsUpdater();
-            // do actual verification and the update process if needed
-            // $updater->checkAndDoDNSUpdate();
-            sleep(1);
-        } else {
-            $str = "Goddy: No gateway groups or required interface not found. Interface : " . $param . " " . $wan_if;
-            syslog(LOG_ERR, $str);
-        }
         sleep(1);
     } else {
         syslog(LOG_NOTICE, "Goddy: plugin is disabled");
     }
+}
+
+function getDomainInterface($interfaces): string|null
+{
+    $the_interface = null;
+    foreach ($interfaces as $code => $interface) {
+        if ($interface['selected'] === 1) {
+            $the_interface = $interface['value'];
+        }
+    }
+    return $the_interface;
 }

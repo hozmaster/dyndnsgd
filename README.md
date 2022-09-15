@@ -31,6 +31,9 @@ GoDaddy :
 
 ## Instructions
 
+### Requirements
+OPNSense 22.7 or later since part of code requires PHP 8 or later.
+
 Only Admin user is normally use this component since nature of this plugin. So when user is mentioned in here it's 
 user which have Admin level privileges. 
 
