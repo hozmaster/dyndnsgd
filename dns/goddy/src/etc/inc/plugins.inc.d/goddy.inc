@@ -146,6 +146,12 @@ function goddy_configure_do()
     }
 }
 
+function getCurrentInterfaceIPAddress ()
+{
+    //$ip = file_get_contents('https://api.ipify.org');
+    //echo "My public IP address is: " . $ip;
+}
+
 function getDomainInterface($interfaces): string|null
 {
     $the_interface = null;
