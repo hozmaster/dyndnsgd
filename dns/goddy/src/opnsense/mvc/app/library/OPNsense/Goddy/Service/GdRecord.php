@@ -28,6 +28,8 @@
 
 namespace OPNsense\Goddy\Service;
 
+use OPNsense\Goddy\GdUtils;
+
 /**
  *
  */
@@ -51,7 +53,7 @@ class GdRecord
      * @param array $data
      * @param string $requestType
      */
-    public function __construct($keys = [], $data = [], $requestType = 'put')
+    public function __construct(array $keys = [], array $data = [], string $requestType = 'put')
     {
         $this->keys = $keys;
         $this->requestType = strtolower($requestType);
@@ -83,7 +85,7 @@ class GdRecord
         }
 
         $domain = $this->data['domain'];
-        $type = $this->data['type'];
+        $type = $this->data['record'];
         $name = $this->data['name'];
 
         $url = self::theApiUrl . "/v1/domains/$domain/records/$type/$name";
@@ -139,10 +141,9 @@ class GdRecord
                 break;
         }
         //Execute curl request
-        $info = curl_exec($this->curl);
+        curl_exec($this->curl);
         //Get curl execution status information
-        $this->status = $this->getInfo();
-        return json_decode($info);
+        return $this->getResponse();
     }
 
     /**
@@ -150,7 +151,7 @@ class GdRecord
      */
     private function setHeader()
     {
-        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers());
     }
 
     /**
@@ -184,14 +185,14 @@ class GdRecord
     {
         $result = [];
         $info = curl_getinfo($this->curl);
-        switch ($this->status) {
+        switch ($info['http_code']) {
             case 200:
             case 201:
                 $result['status'] = 'ok';
                 if ($this->requestType == 'put') {
                     $result['reason'] = 'Record updated.';
                 } else {
-                    $result['reason'] = 'Operation done.';
+                    $result['reason'] = 'Operation done successful.';
                 }
                 break;
             case 400:

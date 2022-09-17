@@ -1,4 +1,7 @@
 <?php
+
+namespace OPNsense\Goddy\Service;
+
 /*
  * Copyright (c) 2021, Olli-Pekka Wallin
  * All rights reserved.
@@ -61,10 +64,10 @@ class RequesterBase
                 $status = 'Ok';
                 break;
             case 400:
-                $status = 'Request was malformed';
+                $status = 'Request was malformed. Please contact application developer.';
                 break;
             case 401:
-                $status = 'Authentication info not sent or invalid';
+                $status = 'Authentication credentials are invalid';
                 break;
             case 403:
                 $status = "Authenticated user is not allowed access";
@@ -76,7 +79,7 @@ class RequesterBase
                 $status = "Too many requests received within interval";
                 break;
             case 500:
-                $status = "Internal server error";
+                $status = "Internal server error at GoDaddy";
                 break;
             default:
                 $status = "Undefined error occur.";

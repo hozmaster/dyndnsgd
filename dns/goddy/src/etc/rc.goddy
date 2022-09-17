@@ -39,14 +39,8 @@ if (isset($argv[1])) {
     $argument = null;
 }
 
-if (empty($argument)) {
-    goddy_configure_do(true);
-} else {
-    syslog(LOG_NOTICE, "Goddy: argument count : " . $argc);
-    $interface = (new \OPNsense\Routing\Gateways(legacy_interfaces_details()))->getInterfaceName($argument);
-    if (empty($interface)) {
-        $interface = $argument;
-    }
-
-    goddy_configure_do(true, $interface);
+if ($argc > 1) {
+    syslog(LOG_NOTICE, "Goddy: Argument passed to  : " . $argument);
 }
+
+goddy_configure_do();

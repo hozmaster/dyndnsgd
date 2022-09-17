@@ -1,45 +1,55 @@
-# Changelog
 
-All notable changes to this project will be documented in this file.
+* All notable changes to this project will be documented in this file.
+
+# Changelog
 
 ## 0.5.4 Released - 2021-12-27
 
 ### Added
+
 Add animation when save changes from the Settings-view (short but still visible for users)
 
 ### Changed
+
 Name of the plugin
 Moved some functionality to the Library from /etc/rc.goddy side. (e.g. Record update)
 
 ### Fixed
-Plugin should not crash when there is no accounts or domains listed in the models 
+
+Plugin should not crash when there is no accounts or domains listed in the models
 
 ## 0.5.3 [Released] - 2021-12-11
 
 - PLug in renamed to Goddy
 - Ip change and update functionality improved and simplified.
-- Ui Models changed 
+- Ui Models changed
 
 ### Added
+
 TBD
 
 ### Changed
+
 Name of the plugin
 
 ### Fixed
+
 TBD
 
 ## 0.5.0 Released - 2021-11-25
 
-Key features 
-- Dynamic DNS IP update detection, cached ip's to database 
+Key features
+
+- Dynamic DNS IP update detection, cached ip's to database
 
 ### KNOWN ISSUES
+
 - Interface detection may not work correctly (interface detection fails)
 - Only '@'-record is support at a moment
 - Only Ipv4 addresses is supported currently.
 
 ### Added
+
 - Initial SQLite3 support (database, tables, columns etc)
 - Setup.sh creates now /var/dyndnsgd folder structure
 - Added shell script to create a sqlite3 database for dyndnsgd-plugin
@@ -48,23 +58,24 @@ Key features
 - Show cached ipv4 address in the Domains view.
 
 ### Changed
+
 - Domains model patched to 0.3.1.
-- Removed the ip4 address-row from the Domain details dialog. 
+- Removed the ip4 address-row from the Domain details dialog.
 
 ### Fixed
-- After plugin has been installed, installer will create required folders and files to system
 
+- After plugin has been installed, installer will create required folders and files to system
 
 ## 0.3.8 - 2021-09-27
 
-* Domain fetching from GoDaddy service with valid keys should work 
+* Domain fetching from GoDaddy service with valid keys should work
 * DNS records update should work (hard coded TXT record testing purpose only)
 * Plugin is now listed in the Dashboard as a service.
 
 ### KNOWN ISSUES
 
-Beta product. All db changes are now done. 
-Not yet save a WAN address to the GoDaddy service.   
+Beta product. All db changes are now done.
+Not yet save a WAN address to the GoDaddy service.
 
 ### Added
 

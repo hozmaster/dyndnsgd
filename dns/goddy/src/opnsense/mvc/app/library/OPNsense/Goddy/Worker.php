@@ -31,56 +31,53 @@ namespace OPNsense\Goddy;
 use OPNsense\Core\Config;
 use OPNsense\Goddy\Service\GdService;
 
-class Worker extends GdAccountModel
+class Worker extends GdService
 {
-    public function __construct($uuid)
+    public function fetchAllUserGDDomains($api_key, $api_secret): array
     {
-        $this->uuid = $uuid;
-        $this->gd_service = new GdService();
-    }
+        if (!strlen($api_key) || !strlen($api_secret)) {
+            $response = array("results" => "failed",
+                "message" => "Missing or invalid api_key and/or api_secret"
+            );
 
-    public function fetch_all_domains()
-    {
-        $status = 'ACTIVE';
-        $this->fetch_all_gd_domains($status);
-    }
+        } else {
+            $response = array("results" => "success",
+                "message" => $this->fetchAllGDDomains($api_key, $api_secret));
 
-    private function fetch_all_gd_domains($status = 'ACTIVE')
-    {
-        $path = self::ACCOUNT_CONFIG_PATH;
-        $loaded = $this->loadAccount($path, $this->uuid);
-        if (!$loaded) {
-            GdUtils::log(' Cant find account for given uuid ' . $this->uuid);
-            return false;
         }
+        return $response;
+    }
 
-        $base_url = $this->gd_service->get_base_url();
-        $url = "$base_url/v1/domains?statuses=$status";
-        $header = $this->gd_service->getHeader($this->getKey(),$this->getSecretKey() );
-
-        $response_code = $this->gd_service->doGetRequest($url, $header);
-        GdUtils::log("Fetching domains, response : " . $response_code);
-
+    private function fetchAllGDDomains($api_key, $api_secret): string
+    {
+        $domainCount = 0;
+        $base_url = $this->get_base_url();
+        $url = "$base_url/v1/domains?statuses=ACTIVE";
+        $header = $this->getHeader($api_key, $api_secret);
+        $response_code = $this->doGetRequest($url, $header);
         if ($response_code == GdService::REQUEST_OK) {
-            $domains = $this->gd_service->get_data();
+            $domains = $this->get_data();
             $gd_domains = new GdDomains();
             $c_domains = $gd_domains->getAllDomains();
-            $save_count = 0;
+            $saveCount = 0;
             foreach ($domains as $domain) {
-                $key = array_search($domain['domain'], array_column($c_domains, 'domain'));
+                $key = in_array($domain['domain'], array_column($c_domains, 'domain'));
                 if ($key === false) {
-                    $gd_domains->saveNewRecord($this->uuid, $domain);
-                    $save_count ++;
+                    $gd_domains->saveNewRecord($domain);
+                    $saveCount++;
                 }
+                $domainCount++;
             }
-            GdUtils::log("Count of added domains:" . $save_count);
+
+            if ($saveCount) {
+                $message = "Request passed. Amount of domains added: " . $saveCount;
+            } else {
+                $message = "Request passed. No new domains found. ";
+            }
         } else {
-            GdUtils::log('Request failed with code ' . $response_code . ', ' .
-                $this->gd_service->parseResponseInfo($response_code));
-
+            $message = $this->parseResponseInfo($response_code);
         }
-        return true;
-
+        return $message;
     }
 
 }

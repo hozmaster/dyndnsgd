@@ -32,30 +32,34 @@
         <help>Enable or disable Goddy-service</help>
     </field>
     <field>
+        <id>settings.api_key</id>
+        <label>Key</label>
+        <type>text</type>
+        <help>Set api key of account.</help>
+    </field>
+    <field>
+        <id>settings.api_secret</id>
+        <label>Secret key</label>
+        <type>password</type>
+        <help>Set secret key of account.</help>
+    </field>
+    <field>
+        <id>settings.check_method</id>
+        <label>Address check method</label>
+        <type>dropdown</type>
+        <help>Method to check the ip address to use for host</help>
+    </field>
+    <field>
         <id>settings.interface</id>
         <label>Interface</label>
         <type>dropdown</type>
         <allownew>false</allownew>
-        <help>Set a default interface used by this plugin.</help>
+        <help>Set a default interface to monitor.</help>
     </field>
     <field>
-        <id>settings.atrecord</id>
-        <label>Add @-records by default ?</label>
-        <type>checkbox</type>
-        <allownew>false</allownew>
-        <help>Should domains support at records by default.</help>
-    </field>
-    <field>
-        <id>settings.logsize</id>
-        <label>Logsize in MB</label>
+        <id>settings.interval_delay</id>
+        <label>Interval</label>
         <type>text</type>
-        <help>Set the amount how big a logfile can growth.</help>
-    </field>
-    <field>
-        <id>settings.log_level</id>
-        <label>log level: </label>
-        <type>dropdown</type>
-        <allownew>false</allownew>
-        <help><![CDATA[Select logging level.</div>]]></help>
+        <help>Interval in seconds to check for address changes</help>
     </field>
 </form>

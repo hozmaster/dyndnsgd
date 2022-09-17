@@ -29,11 +29,23 @@
 namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
-
+use OPNsense\Core\Backend;
+use OPNsense\Goddy\GdUtils;
 
 class SettingsController extends ApiMutableModelControllerBase
 {
     protected static $internalModelClass = '\OPNsense\Goddy\Settings';
     protected static $internalModelName = 'settings';
+
+    public function fetchAction()
+    {
+        $response = array ("message" => "Invalid request");
+        // Start actual the fetch()-process
+        $backend = new Backend();
+        if ($this->request->isPost()) {
+            $response = json_decode($backend->configdRun("goddy fetch-domains"), true);
+        }
+        return array("message" => $response['message']);
+    }
 
 }

@@ -1,0 +1,29 @@
+<form>
+    <field>
+        <id>domain.enabled</id>
+        <label>Enabled</label>
+        <type>checkbox</type>
+        <help>This will enable or disable the domain.</help>
+    </field>
+    <field>
+        <id>domain.domain</id>
+        <label>Domain</label>
+        <type>info</type>
+        <help>Name of the domain.</help>
+    </field>
+    <field>
+        <id>domain.description</id>
+        <label>Description</label>
+        <type>text</type>
+        <default></default>
+        <Required>N</Required>
+        <help>Set a description.</help>
+    </field>
+    <field>
+        <id>domain.interface</id>
+        <label>Interface to monitor:</label>
+        <type>dropdown</type>
+        <allownew>false</allownew>
+        <help>Set an outgoing interface to listen on.</help>
+    </field>
+</form>

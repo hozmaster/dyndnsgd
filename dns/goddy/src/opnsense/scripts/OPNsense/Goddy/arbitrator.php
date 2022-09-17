@@ -31,30 +31,26 @@ include_once('config.inc');
 include_once('certs.inc');
 include_once('util.inc');
 
+use OPNsense\Goddy\GdUtils;
 use OPNsense\Goddy\Worker;
 
 // Summary that will be displayed in usage information.
 const ABOUT = <<<TXT
 
 This script acts as a bridge between the OPNsense WebGUI/API and the
-GoDaddy account.
+GoDaddy service.
 
 TXT;
 
 const EXAMPLES = <<<TXT
 - Fetch all users domains from GoDaddy service.
-  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000
-- Validate key and secret key are valid against GoDaddy account
-  arbitrator.php --mode fetch --uuid 00000000-0000-0000-0000-000000000000  
+  arbitrator.php --mode fetch 
 TXT;
 
 // Supported account actions and their help text
 const MODES = [
-    'validate' => [
-        'description' => 'Verify key and secret key are valid.',
-    ],
     'fetch' => [
-        'description' => 'Fetch all domains for account',
+        'description' => 'Fetch all domains from the GoDaddy service',
     ]
 ];
 
@@ -62,7 +58,6 @@ const MODES = [
 const STATIC_OPTIONS = <<<TXT
 -h, --help          Print commandline help
 --mode              Specify the mode of operation
---uuid              The id of the account in the Account-model
 TXT;
 
 function arb_help()
@@ -81,7 +76,7 @@ function arb_help()
         . PHP_EOL . PHP_EOL;
 }
 
-function validateMode($mode)
+function validateMode($mode): bool
 {
     $return = false;
     foreach (MODES as $name => $options) {
@@ -96,18 +91,25 @@ function validateMode($mode)
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h::', ['account:', 'help', 'mode:', 'uuid:']);
+    $options = getopt('h::', ['account:', 'help', 'mode:']);
+
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
-    } elseif (($options['mode'] === 'validate') && (isset($options['uuid']))) {
-        log_notice("mode: validate, nothing yet");
-    } elseif (($options['mode'] === 'fetch') && (isset($options['uuid']))) {
-        $worker = new Worker($options['uuid']);
-        $worker->fetch_all_domains();
+    } elseif (($options['mode'] === 'fetch')) {
+
+        $config = OPNsense\Core\Config::getInstance()->object();
+        $client = $config->OPNsense->Goddy;
+
+        $worker = new Worker();
+        $result = $worker->fetchAllUserGDDomains($client->settings->api_key, $client->settings->api_secret);
+
+        echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
+
     } else {
         arb_help();
     }
+    return 0;
 }
 
 function log_notice($msg)

@@ -47,9 +47,24 @@ POSSIBILITY OF SUCH DAMAGE.
                 });
             });
         });
+
+        $("#fetchAct").click(function(){
+        $("#responseMsg").html("Processing ... ");
+            $("#responseMsg").removeClass("hidden");
+            $("#fetchAct_progress").addClass("fa fa-spinner fa-pulse");
+            ajaxCall(url="/api/goddy/settings/fetch", sendData={}, callback=function(data,status) {
+                $("#responseMsg").html(data['message']);
+                $("#fetchAct_progress").removeClass("fa fa-spinner fa-pulse");
+                setTimeout(function () {
+                    $("#responseMsg").addClass("hidden");
+                }, 5000);
+            });
+        });
     });
 
 </script>
+
+<div class="alert alert-info hidden" role="alert" id="responseMsg"> </div>
 
 <ul class="nav nav-tabs" data-tabs="tabs" id="settings_tabs">
     <li class="active"><a data-toggle="tab" href="#settings">{{ lang._('Settings') }}</a></li>
@@ -62,6 +77,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <div class="col-md-12">
                 <hr />
                 <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_progress"></i></button>
+                <button class="btn btn-primary" id="fetchAct" type="button"><b>{{ lang._('Fetch') }}</b> <i id="fetchAct_progress"></i></button>
             </div>
         </div>
     </div>

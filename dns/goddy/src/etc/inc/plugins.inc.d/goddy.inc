@@ -26,29 +26,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+use OPNsense\Goddy\GdDomains;
+use OPNsense\Goddy\GdUtils;
+use OPNsense\Goddy\Service\GdRecord;
+
 require_once("interfaces.inc");
+require_once("util.inc");
 require_once('plugins.inc.d/goddy/gdDnsUpdater.inc');
+
+$use_test_record = 1;
 
 function goddy_configure(): array
 {
     return array(
         'bootup' => array('goddy_configure_do'),
         'local' => array('goddy_configure_do'),
-        'newwanip' => array('goddy_configure_do:2'),
+        'newwanip' => array('goddy_configure_do'),
     );
 }
 
-function goddy_enabled(): bool
+function isGoddyEnabled(): bool
 {
     global $config;
     return isset($config['OPNsense']['Goddy']['settings']['enabled']) &&
         $config['OPNsense']['Goddy']['settings']['enabled'] == 1;
 }
 
+function getDefaultInterfaceName()
+{
+    global $config;
+    return isset($config['OPNsense']['Goddy']['settings']['interface']);
+
+}
+
 function goddy_services()
 {
     $services = array();
-    if (goddy_enabled()) {
+    if (isGoddyEnabled()) {
         $services[] = array(
             'description' => gettext('GoDaddy specific Dynamic DNS updater'),
             'configd' => array(
@@ -57,10 +71,18 @@ function goddy_services()
             ),
             'nocheck' => true,
             'name' => 'goddy',
-            'pidfile' => '/var/run/goddy.pid'
         );
     }
     return $services;
+}
+
+function goddy_syslog()
+{
+    $logfacilities = array();
+    $logfacilities['goddy'] = array(
+        'facility' => ['goddy']
+    );
+    return $logfacilities;
 }
 
 function goddy_list()
@@ -71,52 +93,93 @@ function goddy_list()
     );
 }
 
-function goddy_configure_do($verbose = true, $param = '')
+function goddy_configure_do()
 {
     global $config;
 
-    if (goddy_enabled()) {
+    if (isGoddyEnabled()) {
+
         $opnsense = $config['OPNsense'];
         $goddy = $opnsense['Goddy'];
 
         if (empty($goddy)) {
-            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, Quit now.");
+            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, quit now.");
             return -1;
         }
 
-        $verbose = $goddy['settings']['log_level'] == 'debug';
-        $wan_if = $goddy['settings']['interface'];
-        if (empty($wan_if)) {
-            $wan_if = "wan";
+        $api_keys = ['api.key' => $goddy['settings']['api_key'],
+            'api.secret' => $goddy['settings']['api_secret']
+        ];
+
+        $gd_domains = new GdDomains();
+        $domains = $gd_domains->getAllDomains();
+
+        foreach ($domains as $key => $domain) {
+            if (!$domain['enabled']) {
+                syslog(LOG_NOTICE, "Domain is not enabled :  " . $domain['domains']);
+                continue;   // since domain is not enabled skip to next.
+            }
+            $s_interface = getDomainInterface($domain['interface']);
+            if ($s_interface != null) {
+                $interface_real = get_real_interface(strtolower($s_interface));
+                $ip = get_interface_ip($interface_real);
+                if (strcmp($domain['ip4_address'], $ip) == 0) {
+                    syslog(LOG_NOTICE, "ip matches with current one");
+                } else {
+                    // ipv4 address need to update.
+                    if (is_private_ip($ip)) {
+                        syslog(LOG_ERR, $domain['domain'] . ": Unable to update DNS record because interface is connected to private ip range.");
+                    } else {
+                        $updated = updateA1Record($api_keys, $domain['domain'], $ip);
+                        if ($updated) {
+                            syslog(LOG_NOTICE, "interface ip address " . $ip);
+                            syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                        }
+                    }
+                }
+            }
         }
 
-        $accounts = array_pop($goddy['accounts']);
-        $domains = array_pop($goddy['domains']);
-
-        if (empty($accounts) || empty($domains['domain'])) {
-            syslog(LOG_ERR, "Goddy: No valid account and/or domains. Exit now");
-            return -1;
-        }
-
-        $gw_groups = return_gateway_groups_array();
-        if ((!empty($param)) || ($param == $wan_if) || (is_array($gw_groups[$wan_if]))) {
-
-            $updater = new gdDnsUpdater(
-                $wan_if,
-                $verbose,
-                $accounts,
-                $domains['domain']
-            );
-
-            // do actual verification and the update process if needed
-            $updater->checkAndDoDNSUpdate();
-            sleep(1);
-        } else {
-            $str = "Goddy: " . $param . " " . $wan_if;
-            syslog(LOG_ERR, $str);
-        }
-
+        sleep(1);
     } else {
         syslog(LOG_NOTICE, "Goddy: plugin is disabled");
     }
+}
+
+function getCurrentInterfaceIPAddress ()
+{
+    //$ip = file_get_contents('https://api.ipify.org');
+    //echo "My public IP address is: " . $ip;
+}
+
+function getDomainInterface($interfaces): string|null
+{
+    $the_interface = null;
+    foreach ($interfaces as $code => $interface) {
+        if ($interface['selected'] === 1) {
+            $the_interface = $interface['value'];
+        }
+    }
+    return $the_interface;
+}
+
+function updateA1Record($keys, $domain, $if_ip_addr, $name = '@'): bool
+{
+    $updated = false;
+    // TODO  Fow now. Change this to production or replace with test parameter
+    $data = [
+        'domain' => $domain,
+        'name' => '_foorecttest',
+        'record' => 'TXT',          // 'record' => 'A',
+        'payload' => $if_ip_addr . '_' . time()
+    ];
+
+    $record = new GdRecord($keys, $data, 'put');
+    $results = $record->doRequest();
+
+    if ($results['status'] == 'ok') {
+        $updated = true;
+    }
+
+    return $updated;
 }

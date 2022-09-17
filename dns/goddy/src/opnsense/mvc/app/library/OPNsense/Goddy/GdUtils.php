@@ -28,6 +28,7 @@ namespace OPNsense\Goddy;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+@include_once("config.inc");
 @include_once("interfaces.inc");
 @include_once("util.inc");
 
@@ -51,7 +52,6 @@ class GdUtils
             syslog(LOG_NOTICE, "Goddy: ${msg}");
         }
     }
-
 
     public static function getDynDnsIP($if_index, $ip_family = 4)
     {

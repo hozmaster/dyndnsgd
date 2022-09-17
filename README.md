@@ -2,11 +2,11 @@
 
 GoDaddy specific Dynamic DNS plugin for OPNsense
 
-This plugin allows you to update public ip address to dns service provider when it's changed by ISP. This plugin will be at first GoDaddy specific, it will be handle all settings what user can do their via web page. 
+This plugin allows system to update public ip address of the '@'-service records to the goDaddy service. 
 
 ## WHY
 
-Current functionality of dynamic dns in OPNSense platform is quite limited and will handle all most popular dns service providers.
+For mots use cases it's just need to update '@'-record to allow web and mail traffic to reach target system.  
 
 ## STATUS
 
@@ -18,98 +18,27 @@ Views and dialogs are more and less ready. Still some opens issues still exist b
 
 This plugin should be able to :
 
-Account : 
-* Support to add, edit, delete accounts (v.0.9.0). Enable, disable account.
-* Support to fetch all owned domains from service (v.0.9.0).
-* Check and update status of domains repeatedly owned by account
-* Log activity
+Settings:
+* Ability to save required settings to system config storage.
 
 Domains :
-* Ability to fetch subdomains from service.
-* Ability maintain records for domain.
+* Ability to check current ip address of the '@'-record and update if it's needed.
 
 GoDaddy :
 
-* Fetch all aquired domains from the GoDaddy service
-* Support to add, edit, delete subdomains for all kinds of service type what GoDaddy supports (v1.0).
-                                                                                                     
-
+* Fetch all acquired domains from the GoDaddy service
+                                                                                                    
 ## Instructions
+
+### Requirements
+OPNSense 22.7 or later since part of code requires PHP 8 or later.
 
 Only Admin user is normally use this component since nature of this plugin. So when user is mentioned in here it's 
 user which have Admin level privileges. 
 
 ### After installation.
 
-Verify that this plugin is visible at Service-manu. It should menu item the 'DynDNSGD'. If not plugin is not installed correctly.
+Verify that this plugin is visible at Service-manu. It should have a menu item called **'Dynamic DNS (goddy)**.
 
-Open and verify opened sub menu contains next sub items: 'Settings', 'Accounts', 'Domains' and 'Log Files'.
-
-* Some key point from component: user can't enter any of domain for accounts. They are fetched from Account-view. 
-### Settings-view
-
-The Settings view contains next controls : 'Enable', 'Interface' and 'Log Level'
-
-#### Enabled
-From 'Enable'-component user can disable of enable activity of the plugin. Default value is 'Enabled'.
-
-#### Interface
-This control contains all interfaces which system contains. Default selection is 'WAN' but admin can change this 
-correct interface which connected ISP service.
-
-#### Log level
-This component controls how the logging verbose level during operations. Default level is 'normal'. 
-If this is selected, only fatal errors are logged. Use debug when there is problems during activity.  
-
-### Accounts-view
-
-In this view, user is able to add GoDaddy accounts details for plugin usage. Until proper account credentials,
-plugin can't work properly. Normally, this view contains only one or two records. 
-
-Admin user can create production or test account as GoDaddy supports both types. However, only production keys are 
-supported currently.
-
-On right side of this view, there is '+'-icon where user can create new record for account. When user press it,
-an 'Add Account'-dialog is opened on screen.
-
-#### Add Account dialog
-
-The Add Account dialog contains next components : 
-
-##### Name
-
-User have to give name record for making selection easier.
-
-##### Description
-
-User can to give Description for this record. 
-
-##### Service provider
-                      
-Only 'GoDaddy' selection is available currently.
-
-##### Key
-
-Enter the GoDaddy API key for this records. 
-
-##### Secret Key
-
-Enter the GoDaddy API secret key for used the GoDaddy account 
-
-##### Staging
-
-If selected, this record is test account. Leave unchecked for now. 
-
-##### Buttons
-
-This dialog has two buttons, 'Cancel' and 'Save'. If user press a 'Cancel'-buttons, changes for this dialog 
-are discarded. 
-
-If user press a 'Save'-button, a new record are added to system.
-
-#### Small buttons after record
-
-Each record in the grid contains three buttons, 'Edit', 'Delete' and 'Fetch'-domains buttons. 
-
-Before user edit any domain in the Domains, user have to fetch all domains from service. This can be done using 'Fetch'-domain 
-fetch all domains from the GoDaddy account has.
+Open and verify opened sub menu contains next sub items: 'Settings', 'Domains' and 'Log'. Enter GoDaddy API credentials and other settings 
+and press the Fetch-button. All user owned domains should be now listed in the Domains-view. 

@@ -1,0 +1,80 @@
+# Task List :
+- [ ] Views:
+    - [x] The settings-view
+        - [x] Key functionality :
+          - [x] Must have required controls to enter settings to the application 
+          - [x] User should be able to save settings
+          - [x] Should be able to fetch all domains and show result of operation in the alert message box.
+        - [x] Controls :
+            - [x] Enabled
+            - [x] Key
+            - [x] Secret key
+            - [x] Check IP method
+                - [x] Interface
+            - [x] Interface
+                - [x] List existing interfaces. User should be select used interface.
+            - [x] Interval
+                - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
+        - [x] Add the Save-button and complete functionality 
+        - [ ] Add the Fetch-button and complete its functionality
+            - [x] User should be able to the fetch domains-operation from UI side.
+            - [x] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
+            - [x] Application should show results of the action on the screen certain time
+              - [x] If api key and/or api secret is empty/invalid
+              - [x] Api credentials are not valid.
+              - [x] Fetch was successfully and domains fetch from the service
+              - [x] Fetch was successfully and no new domains are not fetched from the service
+              - [ ] If domains are fetched, also value of the '@' should be fetched.
+    - [ ] The Domains-view:
+        - [x] Key functionality :
+          - [x] Show and list fetched domains in the table.
+          - [x] Show necessary information about specific domain
+          - [x] User should be able to enable/disable ip address check from UI.
+          - [] User should be able to edit domain information.
+        - [ ] Columns 
+           - [x] Enable/disable checkbox 
+           - [x] Domain name
+           - [x] Description
+           - [x] IPv4 address
+           - [x] IPv6 address (optional)
+           - [x] Interface
+           - [x] UUID of the object. Hidden by default. 
+           - [ ] Commands (Edit,Delete)
+        - Edit domain-dialog:
+          -  [x] Disable/enable domain
+          -  [x] Name of the domain. Read-only information
+          -  [x] Description
+          -  [x] Interface selection combo-box.
+        - [x] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
+        - [x] User should be able to delete obsolete domain from the config registry.
+      - [ ] The Log-view
+        - [ ] Key functionality 
+          - [ ] Keep track all logs related to Goddy-service
+          - [ ] Minimal implementation 
+- [x] Backend
+    - [x] Backend should ble to receive the fetch request from UI side.
+        - [x] It should be able to connect to the Service with given key and secret.
+        - [x] Fetch all domains from the service.
+        - [x] Check is there new domains and update database if needed.
+        - [x] Backend should be able to react normal error cases (service is missing)
+        - [x] Backend should be able to give results from the operation back to frontend.
+            - [x] No domains fetched
+            - [x] New domains fetched x amount
+            - [x] Error during processing request to the Service.
+- [ ] Service
+    - [x] OBSOLETE: Process the WAN IP check in given periodic. Use UI cron service instead. 
+    - [x] Read settings from system's config storage.
+    - [x] Read all domains and it's values from database to array
+    - [ ] Processed all users GoDaddy-domains:
+      - [x] Check is domain enabled or disabled  
+      - [x] Verify existing ip from given interface
+      - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
+      - [ ] If IP address has been changed, update the IP address also to the database.
+- [ ] Other
+  - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
+  - [ ] Check what is needed to show the Log view.
+  - [x] Check what is needed IPC communication between frontend and backend (arbitrator.php).
+  - [ ] Check is https://www.ipify.org/ valid service to check ip address
+- [ ] Errors
+  - [ ] IP address update routines currently only TXT record instead of '@'-record 
+  - [x] The Domains-view do not work properly. It may have connections with deprecated database code.   

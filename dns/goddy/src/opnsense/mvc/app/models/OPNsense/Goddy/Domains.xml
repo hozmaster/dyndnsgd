@@ -3,7 +3,7 @@
     <description>
         the OPNsense DynamicDNS mount and model for the domains-view.
     </description>
-    <version>0.4.1</version>
+    <version>0.6.1</version>
     <items>
         <domains>
             <domain type="ArrayField">
@@ -18,20 +18,10 @@
                     <default></default>
                     <Required>Y</Required>
                 </domain>
-                <account type="ModelRelationField">
-                    <Model>
-                        <accounts>
-                            <source>OPNsense.Goddy.Accounts</source>
-                            <items>accounts.account</items>
-                            <display>name</display>
-                            <filters>
-                                <enabled>/^(?!0).*$/</enabled>
-                            </filters>
-                        </accounts>
-                    </Model>
-                    <multiple>N</multiple>
-                    <Required>Y</Required>
-                </account>
+                <description type="TextField">
+                    <default></default>
+                    <Required>N</Required>
+                </description>
                 <interface type="InterfaceField">
                     <Required>Y</Required>
                     <multiple>N</multiple>
@@ -40,14 +30,16 @@
                         <enable>/^(?!0).*$/</enable>
                     </filters>
                 </interface>
-                <description type="TextField">
-                    <default></default>
+                <ipv4_address type="NetworkField">
                     <Required>N</Required>
-                </description>
-                <at_record  type="BooleanField">
-                    <default>0</default>
+                    <Multiple>N</Multiple>
+                    <AddressFamily>ipv4</AddressFamily>
+                </ipv4_address>
+                <ipv6_address type="NetworkField">
                     <Required>N</Required>
-                </at_record>
+                    <Multiple>N</Multiple>
+                    <AddressFamily>ipv6</AddressFamily>
+                </ipv6_address>
                 <domain_id type="TextField">
                     <Required>N</Required>
                 </domain_id>

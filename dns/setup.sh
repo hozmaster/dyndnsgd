@@ -99,8 +99,8 @@ chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/*.php
 ## service
 cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
 
-## templates
-cp -vf  goddy/src/opnsense/service/templates/OPNsense/Goddy/* /usr/local/opnsense/service/templates/OPNsense/Goddy
+#¤ logging
+cp -vf  goddy/src/opnsense/service/templates/OPNsense/Syslog/local/goddy.conf /usr/local/opnsense/service/templates/OPNsense/Syslog/local
 
 ## legacy plugins support
 cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy

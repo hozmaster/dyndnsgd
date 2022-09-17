@@ -1,1 +1,3 @@
-Support for GoDaddy Dynamic DNS service. Rework from dyndns.
+goddy is a dynamic DNS '@'-record updater to GoDaddy service. Rework from dyndns.
+
+WWW: https://github.com/hozmaster/dyndnsgd

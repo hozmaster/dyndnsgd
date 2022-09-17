@@ -32,7 +32,7 @@ class DomainsController extends \OPNsense\Base\IndexController
 {
     public function indexAction()
     {
-        $this->view->formDialogEditDomain = $this->getForm("dlgeditdomain");
+        $this->view->formDialogEditDomain = $this->getForm("frm_domain");
         // pick the template to serve to our users.
         $this->view->pick('OPNsense/Goddy/domains');
     }
