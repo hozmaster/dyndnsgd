@@ -34,6 +34,8 @@ require_once("interfaces.inc");
 require_once("util.inc");
 require_once('plugins.inc.d/goddy/gdDnsUpdater.inc');
 
+$use_test_record = 1;
+
 function goddy_configure(): array
 {
     return array(
@@ -113,6 +115,10 @@ function goddy_configure_do()
         $domains = $gd_domains->getAllDomains();
 
         foreach ($domains as $key => $domain) {
+            if (!$domain['enabled']) {
+                syslog(LOG_NOTICE, "Domain is not enabled :  " . $domain['domains']);
+                continue;   // since domain is not enabled skip to next.
+            }
             $s_interface = getDomainInterface($domain['interface']);
             if ($s_interface != null) {
                 $interface_real = get_real_interface(strtolower($s_interface));
@@ -124,9 +130,11 @@ function goddy_configure_do()
                     if (is_private_ip($ip)) {
                         syslog(LOG_ERR, $domain['domain'] . ": Unable to update DNS record because interface is connected to private ip range.");
                     } else {
-                        // updateA1Record($domain['domain'],);
-                        syslog(LOG_NOTICE, "interface ip address " . $ip);
-                        syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                        $updated = updateA1Record($api_keys, $domain['domain'], $ip);
+                        if ($updated) {
+                            syslog(LOG_NOTICE, "interface ip address " . $ip);
+                            syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                        }
                     }
                 }
             }
@@ -149,18 +157,23 @@ function getDomainInterface($interfaces): string|null
     return $the_interface;
 }
 
-//function updateA1Record($domain, $keys, $name, $if_ip_addr): array
-//{
-//    $data = [
-//        'domain' => $domain,
-//        'name' => $name,
-//        'type' => 'A',
-//        'payload' => $if_ip_addr,
-//    ];
-//
-//
-//    $record = new GdRecord($keys, $data, 'put');
-//    $record->doRequest();
-//    return $record->getResponse();
-//
-//}
+function updateA1Record($keys, $domain, $if_ip_addr, $name = '@'): bool
+{
+    $updated = false;
+    // TODO  Fow now. Change this to production or replace with test parameter
+    $data = [
+        'domain' => $domain,
+        'name' => '_foorecttest',
+        'record' => 'TXT',          // 'record' => 'A',
+        'payload' => $if_ip_addr . '_' . time()
+    ];
+
+    $record = new GdRecord($keys, $data, 'put');
+    $results = $record->doRequest();
+
+    if ($results['status'] == 'ok') {
+        $updated = true;
+    }
+
+    return $updated;
+}

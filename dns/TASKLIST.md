@@ -62,16 +62,19 @@
             - [x] New domains fetched x amount
             - [x] Error during processing request to the Service.
 - [ ] Service
-    - [ ] Process the WAN IP check in given periodic
+    - [x] OBSOLETE: Process the WAN IP check in given periodic. Use UI cron service instead. 
     - [x] Read settings from system's config storage.
     - [x] Read all domains and it's values from database to array
-    - [ ] Processed all remaining domains in the array:
-        - [x] Verify existing ip from given interface
-        - [ ] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
-        - [ ] If IP address has been changed, update the IP address also to the database.
+    - [ ] Processed all users GoDaddy-domains:
+      - [x] Check is domain enabled or disabled  
+      - [x] Verify existing ip from given interface
+      - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
+      - [ ] If IP address has been changed, update the IP address also to the database.
 - [ ] Other
   - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
   - [ ] Check what is needed to show the Log view.
   - [x] Check what is needed IPC communication between frontend and backend (arbitrator.php).
+  - [ ] Check is https://www.ipify.org/ valid service to check ip address
 - [ ] Errors
+  - [ ] IP address update routines currently only TXT record instead of '@'-record 
   - [x] The Domains-view do not work properly. It may have connections with deprecated database code.   
