@@ -104,10 +104,4 @@ cp -vf  goddy/src/opnsense/service/templates/OPNsense/Syslog/local/goddy.conf /u
 
 ## legacy plugins support
 cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
-
 cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
-
-if [ ! -d /usr/local/etc/inc/plugins.inc.d/goddy ]; then
-  mkdir /usr/local/etc/inc/plugins.inc.d/goddy
-fi
-cp -vf goddy/src/etc/inc/plugins.inc.d/goddy/* /usr/local/etc/inc/plugins.inc.d/goddy
