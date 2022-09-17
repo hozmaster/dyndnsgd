@@ -116,7 +116,6 @@ function goddy_configure_do()
 
         foreach ($domains as $key => $domain) {
             if (!$domain['enabled']) {
-                syslog(LOG_NOTICE, "Domain is not enabled :  " . $domain['domains']);
                 continue;   // since domain is not enabled skip to next.
             }
             $s_interface = getDomainInterface($domain['interface']);
