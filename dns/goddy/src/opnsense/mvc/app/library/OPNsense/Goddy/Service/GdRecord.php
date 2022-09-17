@@ -51,7 +51,7 @@ class GdRecord
      * @param array $data
      * @param string $requestType
      */
-    public function __construct($keys = [], $data = [], $requestType = 'put')
+    public function __construct(array $keys = [], array $data = [], string $requestType = 'put')
     {
         $this->keys = $keys;
         $this->requestType = strtolower($requestType);

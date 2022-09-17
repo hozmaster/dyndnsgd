@@ -74,4 +74,4 @@
   - [ ] Check what is needed to show the Log view.
   - [x] Check what is needed IPC communication between frontend and backend (arbitrator.php).
 - [ ] Errors
-  - [ ] Domains view do not properly. It may have connections with deprecated database code.   
+  - [x] The Domains-view do not work properly. It may have connections with deprecated database code.   

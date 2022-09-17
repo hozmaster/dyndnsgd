@@ -29,7 +29,6 @@
 namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
-use OPNsense\Goddy\GDDatabase;
 
 
 class DomainsController extends ApiMutableModelControllerBase
@@ -60,19 +59,13 @@ class DomainsController extends ApiMutableModelControllerBase
 
     public function searchAction(): array
     {
-        //        $domains = $this->searchBase('domains.domain', array('enabled', 'domain', 'account', 'interface',
-//            'cachedip4address', 'description', 'domain_id'), 'domain');
-//        $theDb = new GDDatabase();
-//        foreach ($domains['rows'] as &$row) {
-//            $uuid = $row['uuid'];
-//            $record = $theDb->getsSingleDomainRecord($uuid);
-//            if ($record) {
-//                $row['ipv4_address'] = $record['ipv4_address'];
-//                $row['ipv6_address'] = $record['ipv6_address'];
-//            }
-//        }
-
-        return [];
+        return $this->searchBase(
+            "domains.domain",
+            [
+                'enabled', 'domain', 'description', 'interface', 'ipv4_address', 'ipv6_address'
+            ],
+            "domain"
+        );
     }
 
 }

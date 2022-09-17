@@ -33,8 +33,6 @@ use OPNsense\Core\Config;
 class GdDomains
 {
     protected const DOMAIN_CONFIG_PATH = 'domains.domain';
-    private $mdl_domain;
-    private $config;
 
     public function loadDomain(string $uuid): bool
     {
@@ -45,8 +43,6 @@ class GdDomains
             GdUtils::log_error("config of type domains not found: ${uuid}");
             return false;
         }
-        $this->mdl_domain = $model;
-        $this->config = $obj;
         return true;
     }
 
