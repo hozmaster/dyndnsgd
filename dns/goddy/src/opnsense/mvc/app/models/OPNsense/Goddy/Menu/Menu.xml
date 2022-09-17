@@ -3,7 +3,12 @@
     <Services>
         <Goddy VisibleName="Dynamic DNS (goddy)"  cssClass="fa fa-tags">
             <Settings url="/ui/goddy/settings/index" order="10"/>
+<<<<<<< Updated upstream
             <Domains url="/ui/goddy/domains/index" order="20"/>
+=======
+            <Accounts url="/ui/goddy/accounts/index" order="20"/>
+            <Domains url="/ui/goddy/domains/index" order="30"/>
+>>>>>>> Stashed changes
             <log order="100" VisibleName="Log File" url="/ui/diagnostics/log/core/goddy"/>
         </Goddy>
     </Services>
