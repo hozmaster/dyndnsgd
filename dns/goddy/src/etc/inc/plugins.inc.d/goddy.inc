@@ -32,7 +32,6 @@ use OPNsense\Goddy\Service\GdRecord;
 
 require_once("interfaces.inc");
 require_once("util.inc");
-require_once('plugins.inc.d/goddy/gdDnsUpdater.inc');
 
 $use_test_record = 1;
 
@@ -118,16 +117,14 @@ function goddy_configure_do()
             if (!$domain['enabled']) {
                 continue;   // since domain is not enabled skip to next.
             }
-            $s_interface = getDomainInterface($domain['interface']);
-            if ($s_interface != null) {
-                $interface_real = get_real_interface(strtolower($s_interface));
-                $ip = get_interface_ip($interface_real);
+            $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
+            if ($ip != null) {
                 if (strcmp($domain['ip4_address'], $ip) == 0) {
                     syslog(LOG_NOTICE, "ip matches with current one");
                 } else {
                     // ipv4 address need to update.
                     if (is_private_ip($ip)) {
-                        syslog(LOG_ERR, $domain['domain'] . ": Unable to update DNS record because interface is connected to private ip range.");
+                        syslog(LOG_ERR, $domain['domain'] . "goddy: : Unable to update DNS record because interface is connected to private ip range.");
                     } else {
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip);
                         if ($updated) {
@@ -145,10 +142,10 @@ function goddy_configure_do()
     }
 }
 
-function getCurrentInterfaceIPAddress ()
+function getCurrentInterfaceIPAddress($interface): string
 {
-    //$ip = file_get_contents('https://api.ipify.org');
-    //echo "My public IP address is: " . $ip;
+    $interface_real = get_real_interface(strtolower($interface));
+    return get_interface_ip($interface_real);
 }
 
 function getDomainInterface($interfaces): string|null
@@ -162,13 +159,16 @@ function getDomainInterface($interfaces): string|null
     return $the_interface;
 }
 
+// https://ip4only.me/api/
+// https://www.ipify.org/
+
 function updateA1Record($keys, $domain, $if_ip_addr, $name = '@'): bool
 {
     $updated = false;
     // TODO  Fow now. Change this to production or replace with test parameter
     $data = [
         'domain' => $domain,
-        'name' => '_foorecttest',
+        'name' => '_goddyrectest',
         'record' => 'TXT',          // 'record' => 'A',
         'payload' => $if_ip_addr . '_' . time()
     ];
