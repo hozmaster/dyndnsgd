@@ -117,7 +117,33 @@ function goddy_configure_do()
             if (!$domain['enabled']) {
                 continue;   // since domain is not enabled skip to next.
             }
-            $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
+            switch ($goddy['settings']['check_method']) {
+                case 'ip4onlyme':
+                    $raw_str = file_get_contents('https://ip4only.me/api/');
+                    $ip = preg_split ("/\,/", $raw_str)[1];
+                    $ip_type = 'ipv4';
+                    break;
+                case 'ip6onlyme':
+                    $raw_str = file_get_contents('https://ip6.me/api/');
+                    $content = preg_split ("/\,/", $raw_str);
+                    $ip_type = strtolower($content[0]);
+                    $ip = $content[1];
+                    break;
+                case 'ipfy4' :
+                    //  https://www.ipify.org/
+                    $ip = file_get_contents('https://api.ipify.org');
+                    $ip_type = 'ipv4';
+                    break;
+                case 'ipfy6':
+                    $ip = file_get_contents('https://api64.ipify.org');
+                    $ip_type = 'ipv6';
+                    break;
+                default:
+                case 'if':
+                    $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
+                    break;
+            }
+            syslog(LOG_NOTICE, "ip address: " . $ip);
             if ($ip != null) {
                 if (strcmp($domain['ip4_address'], $ip) == 0) {
                     syslog(LOG_NOTICE, "ip matches with current one");
@@ -158,9 +184,6 @@ function getDomainInterface($interfaces): string|null
     }
     return $the_interface;
 }
-
-// https://ip4only.me/api/
-// https://www.ipify.org/
 
 function updateA1Record($keys, $domain, $if_ip_addr, $name = '@'): bool
 {
