@@ -75,6 +75,15 @@ function goddy_services()
     return $services;
 }
 
+function goddy_cron()
+{
+    $jobs = array();
+    if (dyndns_enabled()) {
+        $jobs[]['autocron'] = array('/usr/local/etc/rc.goddy', '11', '1');
+    }
+    return $jobs;
+}
+
 function goddy_syslog()
 {
     $logfacilities = array();
@@ -113,19 +122,19 @@ function goddy_configure_do()
         $gd_domains = new GdDomains();
         $domains = $gd_domains->getAllDomains();
 
-        foreach ($domains as $key => $domain) {
+        foreach ($domains as $uuid => $domain) {
             if (!$domain['enabled']) {
                 continue;   // since domain is not enabled skip to next.
             }
             switch ($goddy['settings']['check_method']) {
                 case 'ip4onlyme':
                     $raw_str = file_get_contents('https://ip4only.me/api/');
-                    $ip = preg_split ("/\,/", $raw_str)[1];
+                    $ip = preg_split("/\,/", $raw_str)[1];
                     $ip_type = 'ipv4';
                     break;
                 case 'ip6onlyme':
                     $raw_str = file_get_contents('https://ip6.me/api/');
-                    $content = preg_split ("/\,/", $raw_str);
+                    $content = preg_split("/\,/", $raw_str);
                     $ip_type = strtolower($content[0]);
                     $ip = $content[1];
                     break;
@@ -154,6 +163,7 @@ function goddy_configure_do()
                     } else {
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip);
                         if ($updated) {
+                            $gd_domains->updateDomainIPv4Address($uuid, $ip);
                             syslog(LOG_NOTICE, "interface ip address " . $ip);
                             syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
                         }

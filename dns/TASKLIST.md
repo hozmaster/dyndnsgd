@@ -11,6 +11,10 @@
             - [x] Secret key
             - [x] Check IP method
                 - [x] Interface
+                - [ ] ip4onlyme
+                - [ ] ip6onlyme
+                - [x] ipfy4. Supported and tested.
+                - [ ] ipfy6
             - [x] Interface
                 - [x] List existing interfaces. User should be select used interface.
             - [x] Interval
@@ -69,12 +73,12 @@
       - [x] Check is domain enabled or disabled  
       - [x] Verify existing ip from given interface
       - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
-      - [ ] If IP address has been changed, update the IP address also to the database.
+      - [x] If IP address has been changed, update the IP address also to the database.
 - [ ] Other
   - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
   - [ ] Check what is needed to show the Log view.
   - [x] Check what is needed IPC communication between frontend and backend (arbitrator.php).
-  - [ ] Check is https://www.ipify.org/ valid service to check ip address
+  - [x] Check is https://www.ipify.org/ and other similar services to check ip address
 - [ ] Errors
   - [ ] IP address update routines currently only TXT record instead of '@'-record 
   - [x] The Domains-view do not work properly. It may have connections with deprecated database code.   

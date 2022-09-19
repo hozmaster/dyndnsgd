@@ -33,11 +33,13 @@ use OPNsense\Core\Config;
 class GdDomains
 {
     protected const DOMAIN_CONFIG_PATH = 'domains.domain';
+    private string $uuid;
 
     public function loadDomain(string $uuid): bool
     {
         // Get config object
         $model = new Domains();
+        $this->uuid = $uuid;
         $obj = $model->getNodeByReference(self::DOMAIN_CONFIG_PATH . ".${uuid}");
         if ($obj == null) {
             GdUtils::log_error("config of type domains not found: ${uuid}");
@@ -46,12 +48,49 @@ class GdDomains
         return true;
     }
 
+    public function updateDomainIPv4Address(string $uuid, string $ip4Address)
+    {
+        // Get config object
+        $model = new Domains();
+        $this->uuid = $uuid;
+        $obj = $model->getNodeByReference(self::DOMAIN_CONFIG_PATH . ".${uuid}");
+        if ($obj == null) {
+            GdUtils::log_error("Domain not found: ${uuid}");
+            return false;
+        }
+
+        $obj->ipv4_address = $ip4Address;
+        // Serialize to config and save
+        $model->serializeToConfig();
+        Config::getInstance()->save();
+    }
+
     public function getAllDomains()
     {
         $model = new Domains();
         $obj = $model->getNodes();
         return $obj['domains']['domain'];
     }
+
+//    /**
+//     * load config object from configuration
+//     * @return bool
+//     */
+//    public function loadConfig(string $path, string $uuid)
+//    {
+//        // Get config object
+//        $model = new \OPNsense\AcmeClient\AcmeClient();
+//        $obj = $model->getNodeByReference("${path}.${uuid}");
+//        if ($obj == null) {
+//            LeUtils::log_error("config of type ${path} not found: ${uuid}");
+//            return false;
+//        }
+//        // Store config objects
+//        $this->config = $obj;
+//        $this->model = $model;
+//        $this->uuid = $uuid;
+//        return true;
+//    }
 
     public function saveNewRecord($content)
     {
