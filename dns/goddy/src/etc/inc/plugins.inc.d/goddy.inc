@@ -165,8 +165,7 @@ function goddy_configure_do()
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip, $ip_type);
                         if ($updated) {
                             $gd_domains->updateDomainIPv4Address($uuid, $ip);
-                            syslog(LOG_NOTICE, "interface ip address " . $ip);
-                            syslog(LOG_NOTICE, "domain ip address " . $domain['ip4_address']);
+                            syslog(LOG_NOTICE, "Domain ip address updated." . $domain['ip4_address']);
                         }
                     }
                 }
