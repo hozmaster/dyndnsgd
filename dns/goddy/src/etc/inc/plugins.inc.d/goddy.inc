@@ -126,6 +126,7 @@ function goddy_configure_do()
             if (!$domain['enabled']) {
                 continue;   // since domain is not enabled skip to next.
             }
+            $ip_type = '';
             switch ($goddy['settings']['check_method']) {
                 case 'ip4onlyme':
                     $raw_str = file_get_contents('https://ip4only.me/api/');
@@ -161,7 +162,7 @@ function goddy_configure_do()
                     if (is_private_ip($ip)) {
                         syslog(LOG_ERR, $domain['domain'] . "goddy: : Unable to update DNS record because interface is connected to private ip range.");
                     } else {
-                        $updated = updateA1Record($api_keys, $domain['domain'], $ip);
+                        $updated = updateA1Record($api_keys, $domain['domain'], $ip, $ip_type);
                         if ($updated) {
                             $gd_domains->updateDomainIPv4Address($uuid, $ip);
                             syslog(LOG_NOTICE, "interface ip address " . $ip);
@@ -195,15 +196,20 @@ function getDomainInterface($interfaces): string|null
     return $the_interface;
 }
 
-function updateA1Record($keys, $domain, $if_ip_addr, $name = '@'): bool
+function updateA1Record($keys, $domain, $if_ip_addr, $ip_type, $name = '@'): bool
 {
     $updated = false;
-    // TODO  Fow now. Change this to production or replace with test parameter
+    if ($ip_type == 'ipv4') {
+        $record = 'A';
+    } else {
+        $record = 'AAAA';
+    }
+
     $data = [
         'domain' => $domain,
-        'name' => '_goddyrectest',
-        'record' => 'TXT',          // 'record' => 'A',
-        'payload' => $if_ip_addr . '_' . time()
+        'name' => $name,
+        'record' => $record,
+        'payload' => $if_ip_addr
     ];
 
     $record = new GdRecord($keys, $data, 'put');
