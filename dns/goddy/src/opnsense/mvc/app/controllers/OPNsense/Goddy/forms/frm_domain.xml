@@ -12,6 +12,12 @@
         <help>Name of the domain.</help>
     </field>
     <field>
+        <id>domain.ipv4_address</id>
+        <label>IPv4 address</label>
+        <type>info</type>
+        <help>Name of the domain.</help>
+    </field>
+    <field>
         <id>domain.description</id>
         <label>Description</label>
         <type>text</type>
