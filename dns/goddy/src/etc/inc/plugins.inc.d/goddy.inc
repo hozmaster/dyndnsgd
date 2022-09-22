@@ -128,25 +128,20 @@ function goddy_configure_do()
             }
             $ip_type = '';
             switch ($goddy['settings']['check_method']) {
+                case 'freedns':
+                    $raw_str = file_get_contents('https://freedns.afraid.org/dynamic/check.php');
+                    $array = preg_split("/\r\n|\n|\r/", $raw_str);
+                    $ip = preg_split('(:\s)', $array[0])[1];
+                    break;
                 case 'ip4onlyme':
                     $raw_str = file_get_contents('https://ip4only.me/api/');
                     $ip = preg_split("/\,/", $raw_str)[1];
                     $ip_type = 'ipv4';
                     break;
-                case 'ip6onlyme':
-                    $raw_str = file_get_contents('https://ip6.me/api/');
-                    $content = preg_split("/\,/", $raw_str);
-                    $ip_type = strtolower($content[0]);
-                    $ip = $content[1];
-                    break;
                 case 'ipfy4' :
                     //  https://www.ipify.org/
                     $ip = file_get_contents('https://api.ipify.org');
                     $ip_type = 'ipv4';
-                    break;
-                case 'ipfy6':
-                    $ip = file_get_contents('https://api64.ipify.org');
-                    $ip_type = 'ipv6';
                     break;
                 default:
                 case 'if':

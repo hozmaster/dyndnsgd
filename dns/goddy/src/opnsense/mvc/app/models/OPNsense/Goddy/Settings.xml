@@ -3,7 +3,7 @@
     <description>
         The OPNsense DynamicDNS mount and model for the Settings-view.
     </description>
-    <version>0.3.7</version>
+    <version>0.3.8</version>
     <items>
         <enabled type="BooleanField">
             <default>1</default>
@@ -21,10 +21,9 @@
             <Required>Y</Required>
             <default>if</default>
             <OptionValues>
+                <freedns>freedns</freedns>
                 <ip4onlyme>ip4only.me</ip4onlyme>
-                <ip6onlyme>ip6only.me</ip6onlyme>
                 <ipfy4>ipfy-ipv4</ipfy4>
-                <ipfy6>ipfy-ipv6</ipfy6>
                 <if>Interface</if>
             </OptionValues>
         </check_method>
