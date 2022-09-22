@@ -139,7 +139,6 @@ function goddy_configure_do()
                     $ip_type = 'ipv4';
                     break;
                 case 'ipfy4' :
-                    //  https://www.ipify.org/
                     $ip = file_get_contents('https://api.ipify.org');
                     $ip_type = 'ipv4';
                     break;
@@ -154,14 +153,14 @@ function goddy_configure_do()
                     syslog(LOG_NOTICE, "ip matches with current one");
                 } else {
                     // ipv4 address need to update.
-                    if (is_private_ip($ip)) {
-                        syslog(LOG_ERR, $domain['domain'] . "goddy: : Unable to update DNS record because interface is connected to private ip range.");
-                    } else {
+                    if (!is_private_ip($ip)) {
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip, $ip_type);
                         if ($updated) {
                             $gd_domains->updateDomainIPv4Address($uuid, $ip);
                             syslog(LOG_NOTICE, "Domain ip address updated." . $domain['ip4_address']);
                         }
+                    } else {
+                        syslog(LOG_ERR, $domain['domain'] . "goddy: : Unable to update DNS record because interface is connected to private ip range.");
                     }
                 }
             }
