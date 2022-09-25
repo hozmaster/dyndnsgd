@@ -1,3 +1,10 @@
-goddy is a dynamic DNS '@'-record updater to GoDaddy service. Rework from dyndns.
+goddy is a dynamic DNS '@'-record updater to GoDaddy service.
 
 WWW: https://github.com/hozmaster/dyndnsgd
+
+Plugin Changelog
+================
+
+0.6.9-devel
+
+Initial release after simplification

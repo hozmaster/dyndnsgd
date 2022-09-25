@@ -12,7 +12,7 @@ For mots use cases it's just need to update '@'-record to allow web and mail tra
 
 Status : In progress.
 
-Views and dialogs are more and less ready. Still some opens issues still exist but this should work pretty reasonably. WAN ip address will updated to the service. Records will updated database and it can be fetched from it. There is some limitations still left but overall situtation is quite good. Not production ready yet but it can used to testing purposes and for study in VM.
+Views and dialogs are more and less ready. Still some opens issues still exist but this should work pretty reasonably. WAN ip address will update to the service. Records will update database, and it can be fetched from it. There is some limitations still left but overall situation is quite good. Not production ready yet, but it can be used to testing purposes and for study in VM.
 
 ## GOALS
 
@@ -42,3 +42,17 @@ Verify that this plugin is visible at Service-manu. It should have a menu item c
 
 Open and verify opened sub menu contains next sub items: 'Settings', 'Domains' and 'Log'. Enter GoDaddy API credentials and other settings 
 and press the Fetch-button. All user owned domains should be now listed in the Domains-view. 
+
+### WAN IP change checking 
+
+To track periodically, create a new cron job via System - Settings - Cron. In the view, pres a '+'-button to crete a new job. In the dialog to create a job which run in every 5 minutes enter next parameters: 
+
+
+> Minutes : */5\
+> Hours: *\
+> Day of month: *\
+> Months: *\
+> Days of weeks: *\
+> Commands: Dynamic DNS GD update\
+
+Parameters and Descriptions text box can be left empty. 

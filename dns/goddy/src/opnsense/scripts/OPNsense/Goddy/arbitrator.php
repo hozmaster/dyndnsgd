@@ -91,7 +91,7 @@ function validateMode($mode): bool
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h::', ['account:', 'help', 'mode:']);
+    $options = getopt('h::', ['help', 'mode:']);
 
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
