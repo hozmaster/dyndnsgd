@@ -5,6 +5,10 @@ WWW: https://github.com/hozmaster/dyndnsgd
 Plugin Changelog
 ================
 
+0.6.10
+
+* Add back cron job section to the actions_goddy.conf
+
 0.6.9-devel
 
-Initial release after simplification
+* Initial release after simplification
