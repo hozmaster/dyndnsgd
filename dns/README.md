@@ -2,6 +2,8 @@
 
 GoDaddy specific Dynamic DNS plugin for OPNsense
 
+[![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
+
 This plugin allows system to update public ip address of the '@'-service records to the goDaddy service. 
 
 ## WHY
@@ -53,6 +55,6 @@ To track periodically, create a new cron job via System - Settings - Cron. In th
 > Day of month: *\
 > Months: *\
 > Days of weeks: *\
-> Commands: Dynamic DNS GD update\
+> Commands: Dynamic DNS update (goddy)\
 
 Parameters and Descriptions text box can be left empty. 

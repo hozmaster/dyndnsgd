@@ -11,7 +11,7 @@
             - [x] Secret key
             - [x] Check IP method
                 - [x] Interface
-                - [ ] ip4onlyme
+                - [x] ip4onlyme
                 - [ ] ip6onlyme
                 - [x] ipfy4. Supported and tested.
                 - [ ] ipfy6
@@ -66,14 +66,14 @@
             - [x] New domains fetched x amount
             - [x] Error during processing request to the Service.
 - [ ] Service
-    - [x] OBSOLETE: Process the WAN IP check in given periodic. Use UI cron service instead. 
     - [x] Read settings from system's config storage.
     - [x] Read all domains and it's values from database to array
     - [x] Processed GoDaddy-domains:
       - [x] Check is domain enabled or disabled  
-      - [x] Verify existing ip from given interface
+      - [x] Verify existing ip from given interface or ip check service
       - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
       - [x] If IP address has been changed, update the IP address also to the database.
+      - [ ] Check if dns ip address is already updated to dns service but is not updated to local storage
 - [ ] Other
   - [ ] Provide plugin details data 
   - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
