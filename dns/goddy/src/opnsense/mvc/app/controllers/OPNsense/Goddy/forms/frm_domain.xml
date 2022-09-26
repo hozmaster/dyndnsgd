@@ -25,11 +25,4 @@
         <Required>N</Required>
         <help>Set a description.</help>
     </field>
-    <field>
-        <id>domain.interface</id>
-        <label>Interface to monitor:</label>
-        <type>dropdown</type>
-        <allownew>false</allownew>
-        <help>Set an outgoing interface to listen on.</help>
-    </field>
 </form>
