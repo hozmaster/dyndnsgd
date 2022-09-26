@@ -75,6 +75,7 @@
       - [x] If IP address has been changed, update the IP address also to the database.
       - [ ] Check if dns ip address is already updated to dns service but is not updated to local storage
 - [ ] Other
+  - [ ] IPv6 support.
   - [ ] Provide plugin details data 
   - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
   - [ ] Check what is needed to show the Log view.
