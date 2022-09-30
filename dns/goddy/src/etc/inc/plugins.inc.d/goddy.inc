@@ -111,7 +111,7 @@ function goddy_configure_do()
         $goddy = $opnsense['Goddy'];
 
         if (empty($goddy)) {
-            syslog(LOG_ERR, "Goddy: Internal model structure can't be found, quit now.");
+            syslog(LOG_ERR, "goddy: Internal model structure can't be found, quit now.");
             return -1;
         }
 
@@ -147,17 +147,17 @@ function goddy_configure_do()
                     $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
                     break;
             }
-            syslog(LOG_NOTICE, "ip address: " . $ip);
+            syslog(LOG_NOTICE, "goddy: Detected ipv4 address: " . $ip);
             if ($ip != null) {
-                if (strcmp($domain['ip4_address'], $ip) == 0) {
-                    syslog(LOG_NOTICE, "ip matches with current one");
+                if (strcmp($domain['ipv4_address'], $ip) == 0) {
+                    syslog(LOG_NOTICE, "goddy: ipv4 address matches with current one");
                 } else {
                     // ipv4 address need to update.
                     if (!is_private_ip($ip)) {
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip, $ip_type);
                         if ($updated) {
                             $gd_domains->updateDomainIPv4Address($uuid, $ip);
-                            syslog(LOG_NOTICE, "Domain ip address updated." . $domain['ip4_address']);
+                            syslog(LOG_NOTICE, "goddy: Ipv4 address of domain " . $domain . " updated." . $domain['ip4_address']);
                         }
                     } else {
                         syslog(LOG_ERR, $domain['domain'] . "goddy: : Unable to update DNS record because interface is connected to private ip range.");

@@ -1,5 +1,5 @@
 # Task List :
-- [ ] Views:
+- [x] Views:
     - [x] The settings-view
         - [x] Key functionality :
           - [x] Must have required controls to enter settings to the application 
@@ -11,10 +11,7 @@
             - [x] Secret key
             - [x] Check IP method
                 - [x] Interface
-                - [x] ip4onlyme
-                - [ ] ip6onlyme
-                - [x] ipfy4. Supported and tested.
-                - [ ] ipfy6
+                - [x] Possible IPv4 online seervices 
             - [x] Interface
                 - [x] List existing interfaces. User should be select used interface.
             - [x] Interval
@@ -28,7 +25,6 @@
               - [x] Api credentials are not valid.
               - [x] Fetch was successfully and domains fetch from the service
               - [x] Fetch was successfully and no new domains are not fetched from the service
-              - [ ] If domains are fetched, also value of the '@' should be fetched.
     - [ ] The Domains-view:
         - [x] Key functionality :
           - [x] Show and list fetched domains in the table.
@@ -51,10 +47,10 @@
           -  [x] Interface selection combo-box.
         - [x] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
         - [x] User should be able to delete obsolete domain from the config registry.
-      - [ ] The Log-view
-        - [ ] Key functionality 
-          - [ ] Keep track all logs related to Goddy-service
-          - [ ] Minimal implementation 
+      - [x] The Log-view
+        - [x] Key functionality 
+          - [x] Keep track all logs related to Goddy-service
+          - [x] Minimal implementation 
 - [x] Backend
     - [x] Backend should ble to receive the fetch request from UI side.
         - [x] It should be able to connect to the Service with given key and secret.
@@ -74,8 +70,9 @@
       - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
       - [x] If IP address has been changed, update the IP address also to the database.
       - [ ] Check if dns ip address is already updated to dns service but is not updated to local storage
-- [ ] Other
+- [ ] Todo:
   - [ ] IPv6 support.
+  - [ ] If domains are fetched, also value of the '@' should be fetched.
   - [ ] Provide plugin details data 
-  - [ ] Clean codebase from deprecated code and files. Simplify folder structure. 
-  - [ ] Check what is needed to show the Log view.
+  - [x] Clean codebase from deprecated code and files. Simplify folder structure. 
+  - [x] Check what is needed to show the Log view.

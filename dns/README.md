@@ -53,7 +53,7 @@ To track periodically, create a new cron job via System - Settings - Cron. In th
 > Day of month: *\
 > Months: *\
 > Days of weeks: *\
-> Commands: Dynamic DNS update (goddy)\
+> Commands: Dynamic DNS update (goddy)
 
 Parameters text field can be left empty.
 Description is needed so write good one  
