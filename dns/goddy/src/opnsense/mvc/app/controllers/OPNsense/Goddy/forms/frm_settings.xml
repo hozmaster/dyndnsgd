@@ -27,7 +27,7 @@
 <form>
     <field>
         <id>settings.enabled</id>
-        <label>Enable: </label>
+        <label>Enable:</label>
         <type>checkbox</type>
         <help>Enable or disable Goddy-service</help>
     </field>
@@ -55,5 +55,11 @@
         <type>dropdown</type>
         <allownew>false</allownew>
         <help>Set a default interface to monitor.</help>
+    </field>
+    <field>
+        <id>settings.verbose</id>
+        <label>Verbose:</label>
+        <type>checkbox</type>
+        <help>Enable verbose logging</help>
     </field>
 </form>
