@@ -1,0 +1,49 @@
+<model>
+    <mount>//OPNsense/Goddy/domains</mount>
+    <description>
+        the OPNsense DynamicDNS mount and model for the domains-view.
+    </description>
+    <version>0.6.1</version>
+    <items>
+        <domains>
+            <domain type="ArrayField">
+                <id type="UniqueIdField">
+                    <Required>N</Required>
+                </id>
+                <enabled type="BooleanField">
+                    <default>1</default>
+                    <Required>Y</Required>
+                </enabled>
+                <domain type="TextField">
+                    <default></default>
+                    <Required>Y</Required>
+                </domain>
+                <description type="TextField">
+                    <default></default>
+                    <Required>N</Required>
+                </description>
+                <interface type="InterfaceField">
+                    <Required>Y</Required>
+                    <multiple>N</multiple>
+                    <default>wan</default>
+                    <filters>
+                        <enable>/^(?!0).*$/</enable>
+                    </filters>
+                </interface>
+                <ipv4_address type="NetworkField">
+                    <Required>N</Required>
+                    <Multiple>N</Multiple>
+                    <AddressFamily>ipv4</AddressFamily>
+                </ipv4_address>
+                <ipv6_address type="NetworkField">
+                    <Required>N</Required>
+                    <Multiple>N</Multiple>
+                    <AddressFamily>ipv6</AddressFamily>
+                </ipv6_address>
+                <domain_id type="TextField">
+                    <Required>N</Required>
+                </domain_id>
+            </domain>
+        </domains>
+    </items>
+</model>

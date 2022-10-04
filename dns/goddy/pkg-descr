@@ -1,0 +1,20 @@
+goddy is a dynamic DNS '@'-record updater to GoDaddy service.
+
+WWW: https://github.com/hozmaster/dyndnsgd
+
+Plugin Changelog
+================
+
+0.6.11
+
+* Use correct database column to get saved ip address.
+* Made the Log-view work again.
+* Added Verbose parameter to the Settings-model and view.
+
+0.6.10
+
+* Add back cron job section to the actions_goddy.conf
+
+0.6.9-devel
+
+* Initial release after simplification
