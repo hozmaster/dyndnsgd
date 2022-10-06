@@ -35,17 +35,12 @@ class GdDomains
     protected const DOMAIN_CONFIG_PATH = 'domains.domain';
     private string $uuid;
 
-    public function loadDomain(string $uuid): bool
+    public function getDomain(string $uuid)
     {
         // Get config object
         $model = new Domains();
         $this->uuid = $uuid;
-        $obj = $model->getNodeByReference(self::DOMAIN_CONFIG_PATH . ".${uuid}");
-        if ($obj == null) {
-            GdUtils::log_error("config of type domains not found: ${uuid}");
-            return false;
-        }
-        return true;
+        return $model->getNodeByReference(self::DOMAIN_CONFIG_PATH . ".${uuid}");
     }
 
     public function updateDomainIPv4Address(string $uuid, string $ip4Address)
@@ -71,26 +66,6 @@ class GdDomains
         $obj = $model->getNodes();
         return $obj['domains']['domain'];
     }
-
-//    /**
-//     * load config object from configuration
-//     * @return bool
-//     */
-//    public function loadConfig(string $path, string $uuid)
-//    {
-//        // Get config object
-//        $model = new \OPNsense\AcmeClient\AcmeClient();
-//        $obj = $model->getNodeByReference("${path}.${uuid}");
-//        if ($obj == null) {
-//            LeUtils::log_error("config of type ${path} not found: ${uuid}");
-//            return false;
-//        }
-//        // Store config objects
-//        $this->config = $obj;
-//        $this->model = $model;
-//        $this->uuid = $uuid;
-//        return true;
-//    }
 
     public function saveNewRecord($content)
     {
