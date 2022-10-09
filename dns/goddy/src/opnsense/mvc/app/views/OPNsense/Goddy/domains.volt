@@ -33,6 +33,7 @@
             get:'/api/goddy/domains/get/',
             set:'/api/goddy/domains/update/',
             del:'/api/goddy/domains/del/',
+            dns:'/api/goddy/domains/dns/',
             toggle:'/api/goddy/domains/toggle/',
         };
 
@@ -45,7 +46,8 @@
             formatters: {
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>" ;
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-trash-o\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-dns-lookup\" data-row-id=\"" + row.uuid + "\"><span class=\"fa fa-refresh\"></span></button>" ;
 
                 },
                 "rowtoggle": function (column, row) {
@@ -177,6 +179,33 @@
                 }
             });
 
+            // Triggers DNS lookup update functionality
+            grid_domains.find(".command-dns-lookup").on("click", function(e)
+            {
+                if (gridParams['dns'] != undefined) {
+                    var uuid=$(this).data("row-id");
+
+                    stdDialogConfirm('{{ lang._('Confirm DNS lookup ?') }}',
+                        '{{ lang._('Do you want to update the IPv4 column using DNS lookup ?') }}',
+                        '{{ lang._('Yes') }}', '{{ lang._('Cancel') }}', function () {
+                            $("#responseMsg").html("Processing ... ");
+                            $("#responseMsg").removeClass("hidden");
+                            ajaxCall(url=gridParams['dns'] + uuid,
+                                sendData={},callback=function(data,status) {
+                                    $("#responseMsg").html(data['message']);
+                                    setTimeout(function () {
+                                        $("#responseMsg").addClass("hidden");
+                                         // reload grid after timeout
+                                         $("#"+gridId).bootgrid("reload");
+                                     }, 3000);
+                                });
+                        });
+                    } else {
+                        console.log("[grid] action dns missing")
+                    }
+            });
+
+
             // toggle item, enable or disable domain
             grid_domains.find(".command-toggle").on("click", function(e)
             {
@@ -199,6 +228,7 @@
 
 </script>
 
+<div class="alert alert-info hidden" role="alert" id="responseMsg"> </div>
 
 <ul class="nav nav-tabs" data-tabs="tabs" id="domaintabs">
     <li class="active"><a data-toggle="tab" href="#domains">{{ lang._('Domains') }}</a></li>

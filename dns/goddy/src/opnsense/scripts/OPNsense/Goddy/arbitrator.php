@@ -44,13 +44,16 @@ TXT;
 
 const EXAMPLES = <<<TXT
 - Fetch all users domains from GoDaddy service.
-  arbitrator.php --mode fetch 
+  arbitrator.php --mode fetch   
 TXT;
 
 // Supported account actions and their help text
 const MODES = [
     'fetch' => [
         'description' => 'Fetch all domains from the GoDaddy service',
+    ],
+    'dns-lookup' => [
+        'description' => 'Resolve ipv4 using dig command and save to config ',
     ]
 ];
 
@@ -91,8 +94,7 @@ function validateMode($mode): bool
 function main()
 {
     // Parse command line arguments
-    $options = getopt('h::', ['help', 'mode:']);
-
+    $options = getopt('h::', ['help', 'mode:', 'uuid:']);
     if (empty($options) || isset($options['h']) || isset($options['help']) ||
         (isset($options['mode']) and !validateMode($options['mode']))) {
         arb_help();
@@ -106,6 +108,10 @@ function main()
 
         echo json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
 
+    } elseif (($options['mode'] === 'dns-lookup')) {
+        $worker = new Worker();
+        $response = $worker->updateIPv4AddressByDNSLookup($options['uuid']);
+        echo json_encode($response, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL;
     } else {
         arb_help();
     }

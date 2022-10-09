@@ -29,6 +29,8 @@
 namespace OPNsense\Goddy\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
+use OPNsense\Core\Backend;
+use OPNsense\Goddy\GdUtils;
 
 
 class DomainsController extends ApiMutableModelControllerBase
@@ -55,6 +57,16 @@ class DomainsController extends ApiMutableModelControllerBase
     public function delAction($uuid)
     {
         return $this->delBase('domains.domain', $uuid);
+    }
+
+    public function dnsAction($uuid)
+    {
+        $backend = new Backend();
+        $result = array ("message" => "foo");
+        if ($this->request->isPost()) {
+            $result = json_decode($backend->configdRun("goddy dns-lookup ${uuid}"), true);
+        }
+        return array("message" => $result['message']);
     }
 
     public function searchAction(): array

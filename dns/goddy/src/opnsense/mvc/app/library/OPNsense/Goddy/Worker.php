@@ -48,6 +48,27 @@ class Worker extends GdService
         return $response;
     }
 
+    // Try to found dns record and update domain ip address.
+    public function updateIPv4AddressByDNSLookup($uuid): array
+    {
+        $message = "Domain record can't be found.";
+        $domains = new GdDomains();
+        $domainObj = $domains->getDomain($uuid);
+        if ($domainObj) {
+            $dns = dns_get_record($domainObj->domain, DNS_A);
+            if (empty($dns)) {
+                // Don't care about if it's empty, just clear existing one and let
+                // update routines to fix the issue.
+                $domains->updateDomainIPv4Address($uuid, "");
+                $message = "DNS record can't be found. Local ip address cleared ";
+            } else {
+                $domains->updateDomainIPv4Address($uuid, $dns[0]['ip']);
+                $message = "Ip address updated with resolved ip address.";
+            }
+        }
+        return array("message" => $message);
+    }
+
     private function fetchAllGDDomains($api_key, $api_secret): string
     {
         $domainCount = 0;

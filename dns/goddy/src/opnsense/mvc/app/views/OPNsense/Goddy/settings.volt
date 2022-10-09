@@ -49,18 +49,18 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         $("#fetchAct").click(function(){
-        $("#responseMsg").html("Processing ... ");
+            $("#responseMsg").html("Processing ... ");
             $("#responseMsg").removeClass("hidden");
             $("#fetchAct_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/goddy/settings/fetch", sendData={}, callback=function(data,status) {
-                $("#responseMsg").html(data['message']);
-                $("#fetchAct_progress").removeClass("fa fa-spinner fa-pulse");
-                setTimeout(function () {
-                    $("#responseMsg").addClass("hidden");
+               $("#responseMsg").html(data['message']);
+               $("#fetchAct_progress").removeClass("fa fa-spinner fa-pulse");
+               setTimeout(function () {
+                   $("#responseMsg").addClass("hidden");
                 }, 5000);
             });
-        });
     });
+});
 
 </script>
 

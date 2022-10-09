@@ -1,56 +1,58 @@
 # Task List :
+
 - [x] Views:
     - [x] The settings-view
         - [x] Key functionality :
-          - [x] Must have required controls to enter settings to the application 
-          - [x] User should be able to save settings
-          - [x] Should be able to fetch all domains and show result of operation in the alert message box.
+            - [x] Must have required controls to enter settings to the application
+            - [x] User should be able to save settings
+            - [x] Should be able to fetch all domains and show result of operation in the alert message box.
         - [x] Controls :
             - [x] Enabled
             - [x] Key
             - [x] Secret key
             - [x] Check IP method
                 - [x] Interface
-                - [x] Possible IPv4 online seervices 
+                - [x] Possible IPv4 online seervices
             - [x] Interface
                 - [x] List existing interfaces. User should be select used interface.
             - [x] Interval
                 - [x] User should be able to give interval how often check will be made. Default 300 (5 minutes).
-        - [x] Add the Save-button and complete functionality 
+        - [x] Add the Save-button and complete functionality
         - [ ] Add the Fetch-button and complete its functionality
             - [x] User should be able to the fetch domains-operation from UI side.
             - [x] The Application should be able to perform to fetch domains from GoDaddy-service using given parameters
             - [x] Application should show results of the action on the screen certain time
-              - [x] If api key and/or api secret is empty/invalid
-              - [x] Api credentials are not valid.
-              - [x] Fetch was successfully and domains fetch from the service
-              - [x] Fetch was successfully and no new domains are not fetched from the service
-    - [ ] The Domains-view:
+                - [x] If api key and/or api secret is empty/invalid
+                - [x] Api credentials are not valid.
+                - [x] Fetch was successfully and domains fetch from the service
+                - [x] Fetch was successfully and no new domains are not fetched from the service
+    - [x] The Domains-view:
         - [x] Key functionality :
-          - [x] Show and list fetched domains in the table.
-          - [x] Show necessary information about specific domain
-          - [x] User should be able to enable/disable ip address check from UI.
-          - [] User should be able to edit domain information.
-        - [ ] Columns 
-           - [x] Enable/disable checkbox 
-           - [x] Domain name
-           - [x] Description
-           - [x] IPv4 address
-           - [x] IPv6 address (optional)
-           - [x] Interface
-           - [x] UUID of the object. Hidden by default. 
-           - [ ] Commands (Edit,Delete)
+            - [x] Show and list fetched domains in the table.
+            - [x] Show necessary information about specific domain
+            - [x] User should be able to enable/disable ip address check from UI.
+            - [] User should be able to edit domain information.
+        - [x] Columns
+            - [x] Enable/disable checkbox
+            - [x] Domain name
+            - [x] Description
+            - [x] IPv4 address
+            - [x] IPv6 address (optional)
+            - [x] Interface
+            - [x] UUID of the object. Hidden by default.
+            - [x] Commands (edit,delete,dns lookup)
         - Edit domain-dialog:
-          -  [x] Disable/enable domain
-          -  [x] Name of the domain. Read-only information
-          -  [x] Description
-          -  [x] Interface selection combo-box.
-        - [x] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to WAN IP checks
+            -  [x] Disable/enable domain
+            -  [x] Name of the domain. Read-only information
+            -  [x] Description
+            -  [x] Interface selection combo-box.
+        - [x] User should be able to enable/disable the ip check for domain from UI. If disabled, domain is not used to
+          WAN IP checks
         - [x] User should be able to delete obsolete domain from the config registry.
-      - [x] The Log-view
-        - [x] Key functionality 
-          - [x] Keep track all logs related to Goddy-service
-          - [x] Minimal implementation 
+        - [x] The Log-view
+            - [x] Key functionality
+                - [x] Keep track all logs related to Goddy-service
+                - [x] Minimal implementation
 - [x] Backend
     - [x] Backend should ble to receive the fetch request from UI side.
         - [x] It should be able to connect to the Service with given key and secret.
@@ -65,14 +67,15 @@
     - [x] Read settings from system's config storage.
     - [x] Read all domains and it's values from database to array
     - [x] Processed GoDaddy-domains:
-      - [x] Check is domain enabled or disabled  
-      - [x] Verify existing ip from given interface or ip check service
-      - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD service.
-      - [x] If IP address has been changed, update the IP address also to the database.
-      - [ ] Check if dns ip address is already updated to dns service but is not updated to local storage
+        - [x] Check is domain enabled or disabled
+        - [x] Verify existing ip from given interface or ip check service
+        - [x] If update is required, update new ip value of the domain must be saved to the '@'-record in the GD
+          service.
+        - [x] If IP address has been changed, update the IP address also to the database.
+        - [ ] Check if dns ip address is already updated to dns service but is not updated to local storage
 - [ ] Todo:
-  - [ ] IPv6 support.
-  - [ ] If domains are fetched, also value of the '@' should be fetched.
-  - [ ] Provide plugin details data 
-  - [x] Clean codebase from deprecated code and files. Simplify folder structure. 
-  - [x] Check what is needed to show the Log view.
+    - [ ] IPv6 support.
+    - [ ] If domains are fetched, also value of the '@' should be fetched.
+    - [x] Provide plugin details data
+    - [x] Clean codebase from deprecated code and files. Simplify folder structure.
+    - [x] Check what is needed to show the Log view.
