@@ -1,5 +1,5 @@
 PLUGIN_NAME=		goddy
-PLUGIN_VERSION=		0.6.12
+PLUGIN_VERSION=		0.6.13
 PLUGIN_REVISION=	1
 PLUGIN_COMMENT=		Dynamic DNS Support for GoDaddy service
 PLUGIN_MAINTAINER=	opwallin@gmail.com
