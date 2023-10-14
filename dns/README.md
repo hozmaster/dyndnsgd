@@ -1,7 +1,7 @@
 # GODDY
 
 [![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-![Static Badge](https://img.shields.io/badge/Status:devepment-blue)
+![Static Badge](https://img.shields.io/badge/Phase-In%20progress-blue)
 
 ## WHAT
 
