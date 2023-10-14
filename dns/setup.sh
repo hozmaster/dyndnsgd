@@ -26,82 +26,98 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# This script is for help development work.
+# This script is to help development work.
 
-TARGET_BASE_PATH=/usr/local/opnsense/mvc/app
-SOURCE_BASE_PATH=goddy/src/opnsense/mvc/app
+unamestr=$(uname)
 
-rm -r $TARGET_BASE_PATH/models/OPNsense/Goddy
-rm -r $TARGET_BASE_PATH/views/OPNsense/Goddy
-rm -r $TARGET_BASE_PATH/controllers/OPNsense/Goddy
-rm -r $TARGET_BASE_PATH/library/OPNsense/Goddy
-rm -r /usr/local/opnsense/scripts/OPNsense/Goddy
-rm -r /usr/local/etc/inc/plugins.inc.d/goddy
+if [ "$unamestr" = 'FreeBSD' ]; then
 
-#
-if [ ! -d $TARGET_BASE_PATH/models/OPNsense/Goddy ]; then
-  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy
-  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
-  mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
+    idusr=$(id -u);
+    rootusr=0;
+
+    if [ "x${idusr}" != x${rootusr} ]; then
+     echo "This script must be run as root"
+     exit;
+    fi
+
+    TARGET_BASE_PATH=/usr/local/opnsense/mvc/app
+    SOURCE_BASE_PATH=goddy/src/opnsense/mvc/app
+
+    rm -r $TARGET_BASE_PATH/models/OPNsense/Goddy
+    rm -r $TARGET_BASE_PATH/views/OPNsense/Goddy
+    rm -r $TARGET_BASE_PATH/controllers/OPNsense/Goddy
+    rm -r $TARGET_BASE_PATH/library/OPNsense/Goddy
+    rm -r /usr/local/opnsense/scripts/OPNsense/Goddy
+    rm -r /usr/local/etc/inc/plugins.inc.d/goddy
+
+    #
+    if [ ! -d $TARGET_BASE_PATH/models/OPNsense/Goddy ]; then
+      mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy
+      mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
+      mkdir $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
+    fi
+
+    # views
+    if [ ! -d $TARGET_BASE_PATH/views/OPNsense/Goddy ]; then
+      mkdir $TARGET_BASE_PATH/views/OPNsense/Goddy
+    fi
+
+    # controller
+    if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/Goddy ]; then
+      mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy
+      mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
+      mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
+    fi
+
+    # scripts
+    if [ ! -d /usr/local/opnsense/scripts/OPNsense/Goddy ]; then
+      mkdir /usr/local/opnsense/scripts/OPNsense/Goddy
+    fi
+
+    # library
+    if [ ! -d $TARGET_BASE_PATH/library/OPNsense/Goddy ]; then
+      mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy
+      mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
+    fi
+
+    # template
+    if [ ! -d /usr/local/opnsense/service/templates/OPNsense/Goddy ]; then
+      mkdir /usr/local/opnsense/service/templates/OPNsense/Goddy
+    fi
+
+    cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/ACL/* $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
+    cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/Menu/* $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
+
+    ## model
+    cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.xml $TARGET_BASE_PATH/models/OPNsense/Goddy/
+    cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.php $TARGET_BASE_PATH/models/OPNsense/Goddy/
+    #
+    ## views
+    cp -vf $SOURCE_BASE_PATH/views/OPNsense/Goddy/*.volt $TARGET_BASE_PATH/views/OPNsense/Goddy/
+    #
+    ## controllers
+    cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/*.php $TARGET_BASE_PATH/controllers/OPNsense/Goddy/
+    cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/forms/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
+    cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/Api/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
+
+    ## library
+    cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/
+    cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/Service/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
+
+    ## script
+    cp -vf goddy/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
+    chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/arbitrator.php
+
+    ## service
+    cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
+
+    #¤ logging
+    cp -vf  goddy/src/opnsense/service/templates/OPNsense/Syslog/local/goddy.conf /usr/local/opnsense/service/templates/OPNsense/Syslog/local
+
+    ## legacy plugins support
+    cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
+    cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
+
+else
+  echo "Unsupported OS. Quit."
 fi
-
-# views
-if [ ! -d $TARGET_BASE_PATH/views/OPNsense/Goddy ]; then
-  mkdir $TARGET_BASE_PATH/views/OPNsense/Goddy
-fi
-
-# controller
-if [ ! -d $TARGET_BASE_PATH/controllers/OPNsense/Goddy ]; then
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
-  mkdir $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
-fi
-
-# scripts
-if [ ! -d /usr/local/opnsense/scripts/OPNsense/Goddy ]; then
-  mkdir /usr/local/opnsense/scripts/OPNsense/Goddy
-fi
-
-# library
-if [ ! -d $TARGET_BASE_PATH/library/OPNsense/Goddy ]; then
-  mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy
-  mkdir $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
-fi
-
-# template
-if [ ! -d /usr/local/opnsense/service/templates/OPNsense/Goddy ]; then
-  mkdir /usr/local/opnsense/service/templates/OPNsense/Goddy
-fi
-
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/ACL/* $TARGET_BASE_PATH/models/OPNsense/Goddy/ACL
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/Menu/* $TARGET_BASE_PATH/models/OPNsense/Goddy/Menu
-
-## model
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.xml $TARGET_BASE_PATH/models/OPNsense/Goddy/
-cp -vf $SOURCE_BASE_PATH/models/OPNsense/Goddy/*.php $TARGET_BASE_PATH/models/OPNsense/Goddy/
-#
-## views
-cp -vf $SOURCE_BASE_PATH/views/OPNsense/Goddy/*.volt $TARGET_BASE_PATH/views/OPNsense/Goddy/
-#
-## controllers
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/*.php $TARGET_BASE_PATH/controllers/OPNsense/Goddy/
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/forms/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/forms
-cp -vf $SOURCE_BASE_PATH/controllers/OPNsense/Goddy/Api/* $TARGET_BASE_PATH/controllers/OPNsense/Goddy/Api
-
-## library
-cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/
-cp -vf $SOURCE_BASE_PATH/library/OPNsense/Goddy/Service/*.php $TARGET_BASE_PATH/library/OPNsense/Goddy/Service
-
-## script
-cp -vf goddy/src/opnsense/scripts/OPNsense/Goddy/* /usr/local/opnsense/scripts/OPNsense/Goddy
-chmod a+x /usr/local/opnsense/scripts/OPNsense/Goddy/*.php
-
-## service
-cp -vf goddy/src/opnsense/service/conf/actions.d/actions_goddy.conf /usr/local/opnsense/service/conf/actions.d/actions_goddy.conf
-
-#¤ logging
-cp -vf  goddy/src/opnsense/service/templates/OPNsense/Syslog/local/goddy.conf /usr/local/opnsense/service/templates/OPNsense/Syslog/local
-
-## legacy plugins support
-cp -vf goddy/src/etc/rc.goddy /usr/local/etc/rc.goddy
-cp -vf goddy/src/etc/inc/plugins.inc.d/goddy.inc /usr/local/etc/inc/plugins.inc.d/goddy.inc
