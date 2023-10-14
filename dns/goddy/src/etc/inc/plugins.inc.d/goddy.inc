@@ -172,7 +172,7 @@ function goddy_configure_do()
     }
 }
 
-function doSysLogging($priority, $message, $verbose = 1)
+function doSysLogging($priority, $message, $verbose = 0)
 {
     if ($verbose) {
         syslog($priority, $message);
