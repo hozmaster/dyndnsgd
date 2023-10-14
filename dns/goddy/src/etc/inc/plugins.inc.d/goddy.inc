@@ -65,7 +65,6 @@ function goddy_services()
         $services[] = array(
             'description' => gettext('GoDaddy specific Dynamic DNS updater'),
             'configd' => array(
-                'restart' => array('goddy reload'),
                 'start' => array('goddy start')
             ),
             'nocheck' => true,
