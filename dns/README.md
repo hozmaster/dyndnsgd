@@ -15,7 +15,7 @@ somehow update current dynamic ip address to DNS service providers. However, in 
 
 ## STATUS
 
-Status : In progress. Suitable for testing in the demo environment.
+Status : Stable. Suitable for working in home environments.
 
 Views and dialogs and models are ready. there is still some opens issues left but this plugin should work pretty reasonably. WAN ip address will update to the service. Records will update database, and it can be fetched from it. There is some limitations still left but overall situation is quite good. Not production ready yet, but it can be used to testing purposes and for study in VM.
 
