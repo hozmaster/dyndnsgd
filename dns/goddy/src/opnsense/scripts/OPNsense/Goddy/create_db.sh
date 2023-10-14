@@ -30,8 +30,7 @@
 # create a database to track IP changes
 
 sqlite3 /var/goddy/goddy.db <<EOF
-CREATE TABLE IF NOT EXISTS record (uuid TEXT NOT NULL, name TEXT NOT NULL, ipv4_address TEXT, ipv6_address TEXT, \
- insert_at TEXT DEFAULT (datetime()), updated_at TEXT DEFAULT (datetime()), active BOOLEAN DEFAULT (TRUE), PRIMARY KEY (uuid) );
-CREATE TABLE IF NOT EXISTS migration (id INT PRIMARY KEY, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );
-INSERT OR IGNORE INTO migration (id, description) VALUES (1, "Created a goddy database.");
+CREATE TABLE IF NOT EXISTS updates (id INTEGER PRIMARY KEY AUTOINCREMENT, domain TEXT NOT NULL, ipv4_address TEXT, ipv6_address TEXT, insert_at TEXT DEFAULT (datetime()) );
+CREATE TABLE IF NOT EXISTS migration (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT NOT NULL, insert_at TEXT DEFAULT (datetime()) );
+INSERT OR IGNORE INTO migration (description) VALUES ('Created a goddy database.');
 EOF
