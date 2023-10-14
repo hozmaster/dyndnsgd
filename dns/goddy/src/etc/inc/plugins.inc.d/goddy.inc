@@ -63,7 +63,7 @@ function goddy_services()
     $services = array();
     if (isGoddyEnabled()) {
         $services[] = array(
-            'description' => gettext('Updates dynamic IP address changes to GoDaddy service.'),
+            'description' => gettext('Updates dynamic IP address to GoDaddy service.'),
             'configd' => array(
                 'start' => array('goddy start')
             ),
