@@ -30,10 +30,10 @@ namespace OPNsense\Goddy;
 
 use \SQLite3;
 
-class GDDatabase
+class GdDatabase
 {
-    private $db_name = "/var/goddy/goddy.db";
-    private ?SQLite3 $db = null;
+    private string $db_name = "/var/goddy/goddy.db";
+    private $db = null;
 
     public function __construct()
     {
@@ -43,10 +43,10 @@ class GDDatabase
         }
     }
 
-    public function insertDomainIPChangeToDatabase($domain, $ipv4_address, $ipv6_address = ""): bool
+    public function insertInterfaceIPChangeToDatabase($interface, $ipv4_address, $ipv6_address = ""): bool
     {
-        $query = $this->db->prepare('INSERT into dynamic_dns_changes (domain, ipv4_address, ipv6_address) values (:domain, :ipv4_address, :ipv6_address)');
-        $query->bindValue(':domain', $domain);
+        $query = $this->db->prepare('INSERT into dynamic_dns_changes (interface, ipv4_address, ipv6_address) values (:interface, :ipv4_address, :ipv6_address)');
+        $query->bindValue(':interface', $interface);
         $query->bindValue(':ipv4_address', $ipv4_address);
         $query->bindValue(':ipv6_address', $ipv6_address);
         $result = $query->execute();

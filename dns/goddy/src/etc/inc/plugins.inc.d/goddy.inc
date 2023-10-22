@@ -27,13 +27,11 @@
  */
 
 use OPNsense\Goddy\GdDomains;
-use OPNsense\Goddy\GdUtils;
+use OPNsense\Goddy\GdDatabase;
 use OPNsense\Goddy\Service\GdRecord;
 
 require_once("interfaces.inc");
 require_once("util.inc");
-
-$use_test_record = 1;
 
 function goddy_configure(): array
 {
@@ -107,6 +105,7 @@ function goddy_configure_do()
     $opnsense = $config['OPNsense'];
     $goddy = $opnsense['Goddy'];
     $verbose = $goddy['settings']['verbose'];
+
     if (isGoddyEnabled()) {
 
         if (empty($goddy)) {
@@ -119,6 +118,7 @@ function goddy_configure_do()
         ];
 
         $gd_domains = new GdDomains();
+        $db = new GdDatabase();
         $domains = $gd_domains->getAllDomains();
 
         foreach ($domains as $uuid => $domain) {
@@ -143,8 +143,12 @@ function goddy_configure_do()
                     break;
                 default:
                 case 'if':
+                    $the_if = $domain['interface'];
                     $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
-                    break;
+                    doSysLogging(LOG_NOTICE, "goddy: ip address." . getDomainInterface($domain['interface']), true);
+                    doSysLogging(LOG_NOTICE, "goddy: ip address." . $ip, true);
+                    $db->insertInterfaceIPChangeToDatabase($the_if, $ip, "");
+                break;
             }
             doSysLogging(LOG_NOTICE, "goddy: Detected ipv4 address: " . $ip, $verbose);
             if ($ip != null) {
@@ -156,6 +160,7 @@ function goddy_configure_do()
                         $updated = updateA1Record($api_keys, $domain['domain'], $ip, $ip_type);
                         if ($updated) {
                             $gd_domains->updateDomainIPv4Address($uuid, $ip);
+
                             doSysLogging(LOG_NOTICE, "goddy: Ipv4 address of domain " . $domain['domain'] . " updated." . $domain['ip4_address'], $verbose);
                         }
                     } else {
