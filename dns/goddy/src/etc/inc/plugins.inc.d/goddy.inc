@@ -143,9 +143,9 @@ function goddy_configure_do()
                     break;
                 default:
                 case 'if':
-                    $the_if = $domain['interface'];
+                    $the_if = getDomainInterface($domain['interface']);
                     $ip = getCurrentInterfaceIPAddress(getDomainInterface($domain['interface']));
-                    doSysLogging(LOG_NOTICE, "goddy: ip address." . getDomainInterface($domain['interface']), true);
+                    doSysLogging(LOG_NOTICE, "goddy: interface " . $the_if, true);
                     doSysLogging(LOG_NOTICE, "goddy: ip address." . $ip, true);
                     $db->insertInterfaceIPChangeToDatabase($the_if, $ip, "");
                 break;
